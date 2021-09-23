@@ -1,0 +1,83 @@
+:root {
+  --dark-blue1: #0f2c7f;
+  --dark-blue2: #002D84;
+  --dark-red: #aa3937;
+  --light-blue: #80aaff;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: yoon-gothic-330, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  overflow: hidden;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: yoon-gothic-350;
+}
+
+/* 온글잎 윤우체 */
+@font-face {
+  font-family: yoon-u;
+  src: url("./font/yoonu.ttf");
+}
+/* 윤고딕 310 */
+@font-face {
+  font-family: yoon-gothic-310;
+  src: url("./font/yoonGothic310.ttf");
+}
+/* 윤고딕 320 */
+@font-face {
+  font-family: yoon-gothic-320;
+  src: url("./font/yoonGothic320.ttf");
+}
+/* 윤고딕 330 */
+@font-face {
+  font-family: yoon-gothic-330;
+  src: url("./font/yoonGothic330.ttf");
+}
+/* 윤고딕 340 */
+@font-face {
+  font-family: yoon-gothic-340;
+  src: url("./font/yoonGothic340.ttf");
+}
+/* 윤고딕 350 */
+@font-face {
+  font-family: yoon-gothic-350;
+  src: url("./font/yoonGothic350.ttf");
+}
+/* 윤고딕 360 */
+@font-face {
+  font-family: yoon-gothic-360;
+  src: url("./font/yoonGothic360.ttf");
+}

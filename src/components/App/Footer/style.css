@@ -1,0 +1,14 @@
+footer {
+    background-color: var(--dark-blue2);
+    color: var(--light-blue);
+    font-family: yoon-gothic-320;
+    font-size: 0.9em;
+}
+footer .container > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 1rem;
+}
