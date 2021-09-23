@@ -1,16 +1,14 @@
 .container {
-    width: 100%;
-    max-width: 1920px;
-    height: 100%;
-}
-.container > div {
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
+  width: 100%;
+  max-width: 1920px;
+  height: 100%;
+
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
 
 /* 링크 걸렸고 밑줄이 필요할 때 */
 .link {
-    cursor: pointer;
-    text-decoration: underline;
+  cursor: pointer;
+  text-decoration: underline;
 }
