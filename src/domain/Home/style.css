@@ -1,29 +1,31 @@
 .home {
   height: calc(100vh - 7.5rem);
-  overflow-y: hidden;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  overflow-y: auto;
 }
 
 /* 깃 헙 로그인 버튼 */
 .home-login-button {
-  margin-top: 3.3em;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 6rem;
+  z-index: 10;
 }
 
 /* 깃포 소개 내용 */
 .home-intro-wrapper {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
 
-  margin-top: 5em;
+  width: 100%;
+  padding: 0 5em;
+  margin-top: 12em;
   color: white;
 }
 .home-intro-wrapper > #left,
 .home-intro-wrapper > #right {
   height: 100vh;
-  margin: 0 -1.5em;
   padding: 2em 3em 2em 3em;
   border-radius: 0.3em;
   transition-duration: 300ms;
@@ -34,7 +36,7 @@
 }
 
 .home-intro-wrapper > #left {
-  width: 43vw;
+  width: 45%;
   background-color: var(--blue);
   transform: rotate(-4deg);
 }
@@ -43,7 +45,7 @@
 }
 
 .home-intro-wrapper > #right {
-  width: 50vw;
+  width: 50%;
   background-color: var(--dark-blue1);
   transform: rotate(4deg);
 }
