@@ -42,7 +42,7 @@ function Home() {
           </div>
         </div>
       </div>
-      <div className={"home-background-title"}>깃-포</div>
+      <div className={"large-text-back"}>깃-포</div>
     </div>
   );
 }
