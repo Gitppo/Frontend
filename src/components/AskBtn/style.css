@@ -1,0 +1,37 @@
+#ask-button {
+  position: fixed;
+  right: 1.2rem;
+  bottom: 4.5rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  padding: 0.3em 1em;
+
+  border: none;
+  border-radius: 2em;
+  box-shadow: 0.2rem 0.3rem lightgray;
+  background-color: var(--dark-blue2);
+
+  font-family: yoon-u;
+  font-size: 1.4em;
+  color: white;
+
+  cursor: pointer;
+  transition: background-color, color;
+  transition-duration: 400ms;
+
+  z-index: 20;
+}
+#ask-button svg {
+  height: 0.8em;
+  margin-left: 0.4em;
+}
+#ask-button path {
+  fill: white;
+}
+
+#ask-button:hover {
+  background-color: var(--dark-red);
+}

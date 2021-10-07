@@ -9,6 +9,7 @@ import Mypage from "../../domain/Mypage";
 import InfoInput from "../../domain/InfoInput";
 import Error from "../../domain/Error";
 import "./style.css";
+import AskBtn from "../AskBtn";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
 
       {/* 통일 양식 적용 */}
       <div className={"container"}>
+        <AskBtn />
         <Switch>
           <Route exact path={"/"} component={Home} />
           <Route exact path={"/agree"} component={Agreement} />

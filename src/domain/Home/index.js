@@ -1,6 +1,5 @@
-import Button from "../../components/Button";
-import "./style.css";
 import {useState} from "react";
+import "./style.css";
 
 const btnMainColor = "#002d84";
 const remToPx = (rem) =>
@@ -25,9 +24,9 @@ function Home() {
 
   return (
     <div className={"home"} onScroll={onHomeScroll}>
-      <Button className={"home-login-button"} style={btnStyle}>
+      <button className={"home-login-button round-button"} style={btnStyle}>
         깃 헙 로그인
-      </Button>
+      </button>
 
       <div className={"home-intro-wrapper"}>
         <div className={"home-intro-card"} id={"left"}>

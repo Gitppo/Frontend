@@ -3,7 +3,7 @@ footer {
 
   font-family: yoon-gothic-320;
   font-size: 0.9em;
-  color: var(--light-blue);
+  color: var(--light-blue1);
   opacity: 0.9;
   z-index: 20;
 }
@@ -13,5 +13,6 @@ footer > div {
   justify-content: space-between;
   align-items: center;
 
+  height: 100%;
   padding: 1rem;
 }

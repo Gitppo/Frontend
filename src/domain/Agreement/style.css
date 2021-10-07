@@ -1,0 +1,34 @@
+.agree > .beautiful-title {
+  width: max-content;
+  padding: 0.2em 0.6em;
+  margin-bottom: 1.2em;
+
+  border: 1px solid var(--dark-blue3);
+  border-radius: 0.5rem;
+}
+
+.agree-contract-title {
+  margin: 1.2em 0 0.5em 0;
+}
+
+.agree-contract-content {
+  height: 10em;
+  padding: 0.8em;
+
+  border-radius: 0.5rem;
+
+  color: var(--dark-blue2);
+  font-size: 0.8em;
+
+  background-color: var(--light-blue2);
+}
+.agree-contract-content > h4 {
+  margin-bottom: 0.4em;
+}
+
+.agree-button-container {
+  display: flex;
+  justify-content: center;
+
+  margin-top: 2em;
+}
