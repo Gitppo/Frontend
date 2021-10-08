@@ -1,9 +1,7 @@
-import "./style.css";
-
 function ErrorLoading() {
   return (
     <div>
-      Loading Error
+      <div className={"large-text-front"}>로딩-실패</div>
     </div>
   );
 }

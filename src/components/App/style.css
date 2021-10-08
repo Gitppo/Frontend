@@ -1,14 +1,67 @@
 .container {
   width: 100%;
   max-width: 1920px;
-  height: 100%;
-
   margin: 0 auto;
-  padding: 0 1.5rem;
+}
+
+.container > div {
+  height: calc(100vh - 7.5rem);
+  padding: 1.5rem;
+
+  overflow-y: auto;
+}
+
+.beautiful-title {
+  font-family: yoon-u;
+  font-weight: normal;
+  color: var(--dark-blue2);
 }
 
 /* 링크 걸렸고 밑줄이 필요할 때 */
 .link {
   cursor: pointer;
   text-decoration: underline;
+}
+
+/* 뒤로가는 큰 글씨들 */
+.large-text-back {
+  font-family: yoon-gothic-350;
+  font-size: 10em;
+  font-weight: 800;
+
+  color: var(--light-blue1);
+  opacity: 0.32;
+
+  z-index: -10;
+}
+
+/* 맨 앞으로 오는 큰 글씨들 */
+.large-text-front {
+  font-family: yoon-gothic-350;
+  font-size: 10em;
+  font-weight: 800;
+
+  color: var(--dark-red);
+  z-index: 10;
+}
+
+/* 둥그런 버튼 */
+.round-button {
+  padding: 0.3em 1em;
+
+  border: none;
+  border-radius: 2em;
+  background-color: var(--dark-blue2);
+
+  font-family: yoon-u;
+  font-size: 1.4em;
+  color: white;
+
+  cursor: pointer;
+  transition: background-color, color;
+  transition-duration: 400ms;
+}
+.round-button:hover {
+  color: white !important;
+  background-color: var(--dark-red) !important;
 }
