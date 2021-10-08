@@ -7,7 +7,7 @@ function Mypage() {
       <div className={"mypage-upper-box"}>
         <div className={"mypage-upper-box-left"}>
           <h3 className={"mypage-new-title"}>새로운 포트폴리오 생성</h3>
-          <button className={"mypage-new-button"}>바로가기</button>
+          <button className={"round-button"}>바로가기</button>
         </div>
 
         <div className={"mypage-upper-box-right"}>

@@ -1,4 +1,6 @@
 .home {
+  max-width: 1700px !important;
+  /*width: 100vh;*/
   overflow-y: auto;
 }
 

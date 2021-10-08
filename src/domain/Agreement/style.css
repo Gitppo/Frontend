@@ -20,6 +20,11 @@
   height: 1.3em;
 }
 
+/* 약관 동의 */
+.agree-container {
+  padding: 0 6rem;
+  max-width: 800px;
+}
 /* 각 항목 별 타이틀 (윤고딕체)*/
 .agree-contract-title {
   display: flex;
@@ -50,4 +55,13 @@
   justify-content: center;
 
   margin-top: 2em;
+}
+
+@media screen and (max-width: 708px){
+  .agree > #round-shadow-wrapper {
+    padding: 0;
+  }
+  .agree > #round-shadow-wrapper-inner {
+    width: 100%;
+  }
 }

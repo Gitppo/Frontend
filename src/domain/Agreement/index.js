@@ -15,7 +15,7 @@ function Agreement() {
         <h2 className={"beautiful-title"}>이용 약관 동의</h2>
       </div>
 
-      <RoundContainer>
+      <RoundContainer className={"agree-container"}>
         <div className={"agree-contract-title"}>
           <h2 className={"beautiful-title"}>
             <div>이용약관, 개인정보 수집 및 이용, 프로모션 알림,</div>

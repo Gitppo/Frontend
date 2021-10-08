@@ -18,7 +18,7 @@
   margin-right: 1em;
   padding: 1em;
 
-  border-radius: 0.3em;
+  border-radius: 0.5rem;
   box-shadow: 5px 5px 0px rgba(15, 44, 127, 0.5);
 
   background-color: var(--dark-blue1);
@@ -29,16 +29,9 @@
   margin-bottom: 0.8em;
 }
 /* 새로운 포트폴리오 생성 버튼 */
-.mypage-new-button {
-  padding: 0.3em 1em;
-  border: none;
-  border-radius: 2em;
+.mypage-upper-box-left > .round-button {
   background-color: white;
-  font-family: yoon-u;
-  font-size: 1.4em;
-  color: #002d84;
-  cursor: pointer;
-  transition-duration: 400ms;
+  color: var(--dark-blue2);
 }
 
 /* 임시 저장 중인 포트폴리오 & 최종 완성 포트폴리오 */
@@ -59,7 +52,7 @@
   padding: 0.5em 0.8em;
 
   color: white;
-  border-radius: 0.3em;
+  border-radius: 0.5rem;
   background-color: var(--dark-blue1);
 }
 .mypage-manage .beautiful-title {
@@ -80,7 +73,7 @@
   margin: 1rem 1rem 1rem 0;
 
   border: 1px solid gray;
-  border-radius: 0.3em;
+  border-radius: 0.5rem;
   box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.16);
 }
 

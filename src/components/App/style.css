@@ -1,14 +1,15 @@
 .container {
   width: 100%;
+  height: calc(100vh - 7.5rem);
+
   overflow-y: auto;
 }
 
 .container > div {
   max-width: 1000px;
-  height: calc(100vh - 7.5rem);
 
   margin: 0 auto;
-  padding: 1.5rem;
+  padding: 2rem 1.5rem;
 }
 
 .beautiful-title {
