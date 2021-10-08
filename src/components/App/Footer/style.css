@@ -7,7 +7,7 @@ footer {
   opacity: 0.9;
   z-index: 20;
 }
-footer .container > div {
+footer > div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

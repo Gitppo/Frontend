@@ -10,9 +10,11 @@
   color: white;
 
   cursor: pointer;
+  transition: background-color, color;
   transition-duration: 400ms;
 }
 
 #ctm-button:hover {
-  background-color: var(--dark-red);
+  color: white !important;
+  background-color: var(--dark-red) !important;
 }

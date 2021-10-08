@@ -1,18 +1,18 @@
 header {
-    height: 4rem;
-    background-color: var(--dark-blue1);
-    color: white;
-    font-family: yoon-u;
-    font-size: 1.6rem;
+  height: 4rem;
+  background-color: var(--dark-blue1);
+  color: white;
+  font-family: yoon-u;
+  font-size: 1.6rem;
 }
-header .container > div {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+header > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
-    padding: 1rem;
+  padding: 1rem;
 }
-header .container a {
-    margin-right: 1em;
+header a {
+  margin-right: 1em;
 }

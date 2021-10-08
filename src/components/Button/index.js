@@ -18,9 +18,15 @@ import "./style.css";
 //   }
 // }
 
-function Button({className, onClick, children}) {
+function Button({className, style, onClick, children, onMouseOver}) {
   return (
-    <button className={className} onClick={onClick} id={"ctm-button"}>
+    <button
+      id={"ctm-button"}
+      className={className}
+      style={style}
+      onClick={onClick}
+      onMouseOver={onMouseOver}
+    >
       {children}
     </button>
   );
