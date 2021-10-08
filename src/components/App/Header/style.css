@@ -1,18 +1,28 @@
 header {
   height: 4rem;
-  background-color: var(--dark-blue1);
   color: white;
   font-family: yoon-u;
   font-size: 1.6rem;
 }
+
 header > div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 
-  padding: 1rem;
+  height: 100%;
+  padding: 1rem 2rem;
 }
+
 header a {
   margin-right: 1em;
+}
+
+/* 헤더 배경 색상 */
+.header-background-color1 {
+  background-color: var(--blue2);
+}
+.header-background-color2 {
+  background-color: var(--dark-blue1);
 }

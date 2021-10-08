@@ -36,7 +36,7 @@
 
 .home-intro-wrapper > #left {
   width: 45%;
-  background-color: var(--blue);
+  background-color: var(--blue1);
   transform: rotate(-4deg);
 }
 .home-intro-wrapper > #left > div {
