@@ -1,24 +1,33 @@
-.mypage {
-  height: 100%;
-}
+.mypage-upper-box {
+  display: flex;
+  flex-wrap: wrap;
 
+  width: 100%;
+  margin-bottom: 4rem;
+}
 /* 새로운 포트폴리오 생성 */
-.mypage-new {
-  width: 350px;
-  height: 150px;
-  margin: 50px;
-  background-color: var(--dark-blue1);
+.mypage-upper-box-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 50%;
+  max-width: 350px;
+
+  margin-right: 1em;
+  padding: 1em;
+
   border-radius: 0.3em;
   box-shadow: 5px 5px 0px rgba(15, 44, 127, 0.5);
-}
 
+  background-color: var(--dark-blue1);
+}
+/* 새로운 포트폴리오 생성 제목 */
 .mypage-new-title {
-  padding: 20px;
-  text-align: center;
   color: white;
-  font-family: yoon-gothic-350;
+  margin-bottom: 0.8em;
 }
-
 /* 새로운 포트폴리오 생성 버튼 */
 .mypage-new-button {
   padding: 0.3em 1em;
@@ -30,71 +39,79 @@
   color: #002d84;
   cursor: pointer;
   transition-duration: 400ms;
-  margin-top: 10px;
-  margin-left: 110px;
-  margin-bottom: 20px;
 }
 
 /* 임시 저장 중인 포트폴리오 & 최종 완성 포트폴리오 */
+.mypage-upper-box-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  width: 50%;
+  max-width: 310px;
+}
 .mypage-manage {
-  width: 300px;
-  height: 50px;
-  margin-top: -115px;
-  margin-left: 440px;
-  background-color: var(--dark-blue1);
-  border-radius: 0.3em;
-  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  padding: 0.5em 0.8em;
+
   color: white;
-  font-family: yoon-gothic-320;
+  border-radius: 0.3em;
+  background-color: var(--dark-blue1);
+}
+.mypage-manage .beautiful-title {
+  margin-left: 0.8em;
+
+  font-size: 1.4em;
+  color: white;
 }
 
 /* 기존 포트폴리오 */
-.mypage-wrapper {
-  width: 1400px;
-  height: 100vh;
-  margin-top: 100px;
-  margin-left: 50px;
-  border: 1.6px solid var(--dark-blue1);
-  border-radius: 0.5em;
-  box-shadow: 5px 5px 0px rgba(15, 44, 127, 0.5);
-}
-
-.mypage-wrapper-title {
-  margin-top: 10px;
-  margin-left: 20px;
-  color: var(--dark-blue1);
-  font-size: 50px;
-  font-family: yoon-u;
-}
-
 .mypage-wrapper-box {
-  width: 300px;
-  height: 150px;
-  margin-top: 30px;
-  margin-left: 40px;
-  border: 2px solid gray;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.mypage-wrapper-box > li {
+  padding: 1rem;
+  margin: 1rem 1rem 1rem 0;
+
+  border: 1px solid gray;
   border-radius: 0.3em;
   box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.16);
 }
 
 .mypage-wrapper-box-title {
-  margin-top: 10px;
-  margin-left: 20px;
   color: var(--dark-blue1);
   font-family: yoon-gothic-350;
 }
 
 .mypage-wrapper-box-date {
-  margin-left: 20px;
   color: gray;
-  font-family: yoon-gothic-350;
 }
 
 .mypage-wrapper-box-button {
-  margin: 10px;
-  margin-left: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mypage-wrapper-box-button-left {
-  margin-right: 10px;
+  margin-right: 0.5em;
+}
+
+@media screen and (max-width: 708px) {
+  .mypage-upper-box-left,
+  .mypage-upper-box-right {
+    width: 100%;
+    max-width: none;
+    margin: 0 0 0.8em 0;
+  }
+
+  .mypage-manage {
+    margin: 0.5em 0;
+  }
 }

@@ -1,4 +1,3 @@
-import Button from "../../../components/Button";
 import "./style.css";
 
 function Popup2() {
@@ -15,8 +14,8 @@ function Popup2() {
             </div>
           </div>
           <div className={"popup2-box-button"}>
-            <Button className={"popup2-box-button-left"}>완료</Button>
-            <Button>취소</Button>
+            <button className={"popup2-box-button-left round-button"}>완료</button>
+            <button className={"round-button"}>취소</button>
           </div>
         </div>
       </div>

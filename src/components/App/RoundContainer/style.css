@@ -1,12 +1,12 @@
 #round-shadow-wrapper {
-  max-width: 800px;
+  /*max-width: 800px;*/
   margin: 0 auto;
   border-radius: 0.5rem;
   border: 1px solid var(--dark-blue1);
   box-shadow: 0.5rem 0.5rem rgba(15, 44, 127, 0.5);
 }
 #round-shadow-wrapper-inner {
-  max-width: 500px;
+  /*max-width: 500px;*/
   margin: 1rem auto;
   padding: 2rem;
 }
