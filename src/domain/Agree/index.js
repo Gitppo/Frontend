@@ -1,6 +1,7 @@
 import RoundContainer from "../../components/RoundContainer";
 import RadioBtn from "../../components/RadioBtn";
 import "./style.css";
+import flagIcon from "../../assets/flag.png";
 
 const contract = [
   "이용약관 동의 내용.... 본 약관은 2021년도부터 적용됩니다. 블라블라블라블라블라블라",
@@ -11,7 +12,7 @@ function Agreement() {
   return (
     <div className={"agree"}>
       <div className={"agree-title"}>
-        <img id={"agree-title-flag"} src={"/icon/flag.png"} alt={"flag icon"} />
+        <img id={"agree-title-flag"} src={flagIcon} alt={""} />
         <h2 className={"beautiful-title"}>이용 약관 동의</h2>
       </div>
 

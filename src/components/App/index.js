@@ -5,7 +5,7 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import Home from "../../domain/Home";
-import Agreement from "../../domain/Agreement";
+import Agreement from "../../domain/Agree";
 import GitRepo from "../../domain/GitRepo";
 import Loading from "../../domain/Loading";
 import Mypage from "../../domain/Mypage";
