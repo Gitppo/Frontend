@@ -1,4 +1,4 @@
-import RoundContainer from "../../components/App/RoundContainer";
+import RoundContainer from "../../components/RoundContainer";
 import RadioBtn from "../../components/RadioBtn";
 import "./style.css";
 

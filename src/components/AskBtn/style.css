@@ -2,6 +2,7 @@
   position: fixed;
   right: 1.2rem;
   bottom: 4.5rem;
+  z-index: 20;
 
   display: flex;
   flex-direction: row;
@@ -19,15 +20,19 @@
   color: white;
 
   cursor: pointer;
-  transition: background-color, color;
-  transition-duration: 400ms;
 
-  z-index: 20;
+  transition: all 400ms;
+  -webkit-transition: all 400ms;
+  -moz-transition: all 400ms;
+  -ms-transition: all 400ms;
+  -o-transition: all 400ms;
 }
+
 #ask-button svg {
   height: 0.8em;
   margin-left: 0.4em;
 }
+
 #ask-button path {
   fill: white;
 }

@@ -1,4 +1,4 @@
-import RoundContainer from "../../components/App/RoundContainer";
+import RoundContainer from "../../components/RoundContainer";
 import "./style.css";
 
 function Mypage() {
@@ -27,25 +27,36 @@ function Mypage() {
 
         <ul className={"mypage-wrapper-box"}>
           <li>
-            <h4 className={"mypage-wrapper-box-title"}>2021 조깃포 삼성 포트폴리오</h4>
+            <h4 className={"mypage-wrapper-box-title"}>
+              2021 조깃포 삼성 포트폴리오
+            </h4>
             <div className={"mypage-wrapper-box-date"}>생성 2021.09.09</div>
-            <div className={"mypage-wrapper-box-date"}>수정 2021.09.09 19:00</div>
+            <div className={"mypage-wrapper-box-date"}>
+              수정 2021.09.09 19:00
+            </div>
             <div className={"mypage-wrapper-box-button"}>
-              <button className={"mypage-wrapper-box-button-left round-button"}>수정</button>
+              <button className={"mypage-wrapper-box-button-left round-button"}>
+                수정
+              </button>
               <button className={"round-button"}>삭제</button>
             </div>
           </li>
 
           <li>
-            <h4 className={"mypage-wrapper-box-title"}>2021 조깃포 삼성 포트폴리오</h4>
+            <h4 className={"mypage-wrapper-box-title"}>
+              2021 조깃포 삼성 포트폴리오
+            </h4>
             <div className={"mypage-wrapper-box-date"}>생성 2021.09.09</div>
-            <div className={"mypage-wrapper-box-date"}>수정 2021.09.09 19:00</div>
+            <div className={"mypage-wrapper-box-date"}>
+              수정 2021.09.09 19:00
+            </div>
             <div className={"mypage-wrapper-box-button"}>
-              <button className={"mypage-wrapper-box-button-left round-button"}>수정</button>
+              <button className={"mypage-wrapper-box-button-left round-button"}>
+                수정
+              </button>
               <button className={"round-button"}>삭제</button>
             </div>
           </li>
-
         </ul>
       </RoundContainer>
     </div>

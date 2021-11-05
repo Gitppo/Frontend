@@ -1,4 +1,7 @@
+import "./style.css";
+
 import {BrowserRouter, Route, Switch} from "react-router-dom";
+
 import Header from "./Header";
 import Footer from "./Footer";
 import Home from "../../domain/Home";
@@ -11,8 +14,6 @@ import Popup1 from "../Popup1";
 import Popup2 from "../Popup2";
 import Error from "../../domain/Error";
 import AskBtn from "../AskBtn";
-import "./style.css";
-
 
 function App() {
   return (

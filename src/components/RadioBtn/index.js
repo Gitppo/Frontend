@@ -1,7 +1,7 @@
 import "./style.css";
 import {useState} from "react";
 
-function RadioBtn({style, onClick}) {
+function RadioBtn({className, style, onClick}) {
   const [isChecked, setIsChecked] = useState(false);
   const changeInner = (e) => {
     setIsChecked(!isChecked);
@@ -9,16 +9,17 @@ function RadioBtn({style, onClick}) {
   };
 
   return (
-    <div id={"radio-btn"} onClick={changeInner} style={style}>
-      <img
-        id={"radio-btn-out"}
-        src={"/icon/radio-btn-out.png"}
-        alt={"radio-btn"}
-      />
+    <div
+      id={"radio-btn"}
+      className={className}
+      style={style}
+      onClick={changeInner}
+    >
+      <img id={"radio-btn-out"} src={"/icon/radio-btn-out.png"} alt={""} />
       <img
         id={"radio-btn-in"}
         src={"/icon/radio-btn-in.png"}
-        alt={"radio-btn"}
+        alt={""}
         style={{display: isChecked ? "block" : "none"}}
       />
     </div>
