@@ -7,8 +7,8 @@ import GitRepo from "../../domain/GitRepo";
 import Loading from "../../domain/Loading";
 import Mypage from "../../domain/Mypage";
 import InfoInput from "../../domain/InfoInput";
-import Popup1 from "../Popup1";
-import Popup2 from "../Popup2";
+import YesNoPopup from "../YesNoPopup";
+import ChoicePopup from "../ChoicePopup";
 import Error from "../../domain/Error";
 import AskBtn from "../AskBtn";
 import "./style.css";
@@ -33,8 +33,8 @@ function App() {
           <Route exact path={"/gitrepo"} component={GitRepo} />
           <Route exact path={"/infoinput"} component={InfoInput} />
 
-          <Route exact path={"/popup1"} component={Popup1} />
-          <Route exact path={"/popup2"} component={Popup2} />
+          <Route exact path={"/YesNoPopup"} component={YesNoPopup} />
+          <Route exact path={"/ChoicePopup"} component={ChoicePopup} />
 
           <Route path={"/error"} component={Error} />
           <Route path={"*"} component={Error} />

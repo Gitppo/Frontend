@@ -1,8 +1,8 @@
-.popup2 {
+.choicepopup {
   height: 1100px;
 }
 
-.popup2-wrapper {
+.choicepopup-wrapper {
   width: 100%;
   height: 100%;
   position: relative;
@@ -10,7 +10,7 @@
 }
 
 /* 팝업 박스 */
-.popup2-box {
+.choicepopup-box {
   width: 500px;
   height: 750px; 
   background-color: white;
@@ -26,7 +26,7 @@
   margin-left: -250px;
 }
 
-.popup2-box-title {
+.choicepopup-box-title {
   margin-top: 30px;
   margin-left: 20px;
   color: #002D84;
@@ -35,7 +35,7 @@
 }
 
 /* 포토폴리오 박스 */
-.popup2-box-portfolio {
+.choicepopup-box-portfolio {
   width: 350px;
   height: 120px;
   border: 1px solid #818181;
@@ -46,7 +46,7 @@
 }
 
 /* 포트폴리오 제목 */
-.popup2-box-portfolio-title {
+.choicepopup-box-portfolio-title {
   margin-top: 15px;
   font-size: 1.2rem;
   text-align: center;
@@ -56,7 +56,7 @@
 
 
 /* 포트폴리오 내용 */
-.popup2-box-portfolio-content {
+.choicepopup-box-portfolio-content {
   margin-top: 15px;
   text-align: center;
   font-size: 0.75rem;
@@ -65,7 +65,7 @@
 }
 
 /* 생성일 & 수정일 */
-.popup2-box-portfolio-date {
+.choicepopup-box-portfolio-date {
   margin-top: 15px;
   margin-left: 60px;
   font-size: 0.8rem;
@@ -75,12 +75,12 @@
 }
 
 /* 버튼 */
-.popup2-box-button {
+.choicepopup-box-button {
   position: sticky;
   margin-top: 450px;
   margin-left: 150px;
 }
 
-.popup2-box-button-left {
+.choicepopup-box-button-left {
   margin-right: 20px;
 }
