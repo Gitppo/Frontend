@@ -1,21 +1,17 @@
-import {useHistory} from "react-router-dom";
+import {useLocation} from "react-router";
 
 function Error404() {
-  // URL 변환
-  const history = useHistory();
-  if (history.location.pathname !== "/error/404-not-found") {
-    history.push("error/404-not-found");
-  }
-  // 렌더링
-  else
+  const location = useLocation();
+  if (location.pathname !== "/error/git-load-fail")
     return (
-      <div>
+      <>
         <div className={"large-text-front"}>
           <div>404</div>
           <div>NOT FOUND</div>
         </div>
-      </div>
+      </>
     );
+  else return <></>;
 }
 
 export default Error404;

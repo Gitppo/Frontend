@@ -1,7 +1,9 @@
+import "./style.css";
+
 import {Route} from "react-router-dom";
+
 import ErrorLoading from "./ErrorLoading";
 import Error404 from "./Error404";
-import "./style.css";
 
 function Error({match}) {
   return (

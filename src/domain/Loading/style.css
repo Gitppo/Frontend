@@ -7,3 +7,30 @@
   width: 100%;
   height: 100%;
 }
+
+.loading-hippo {
+  position: absolute;
+  left: 0;
+
+  width: 300px;
+
+  animation: moveLeftToRight 4s ease-in-out infinite;
+  -webkit-animation: moveLeftToRight 4s ease-in-out infinite;
+  -moz-animation: moveLeftToRight 4s ease-in-out infinite;
+  -ms-animation: moveLeftToRight 4s ease-in-out infinite;
+  -o-animation: moveLeftToRight 4s ease-in-out infinite;
+}
+
+.loading-hippo img {
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes moveLeftToRight {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: 100%;
+  }
+}
