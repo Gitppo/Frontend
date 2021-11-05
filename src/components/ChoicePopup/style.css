@@ -1,5 +1,7 @@
 .choicepopup {
-  height: 1100px;
+  width: 100%;
+  height: 100%;
+  /* height: 1100px; */
 }
 
 .choicepopup-wrapper {
@@ -12,10 +14,10 @@
 /* 팝업 박스 */
 .choicepopup-box {
   width: 500px;
-  height: 750px; 
+  height: 750px;
   background-color: white;
   border-style: solid;
-  border-color: #1B45C8;
+  border-color: #1b45c8;
   border-width: 3.5px 1px 1px 1px;
   border-radius: 0.5em;
   box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.16);
@@ -29,7 +31,7 @@
 .choicepopup-box-title {
   margin-top: 30px;
   margin-left: 20px;
-  color: #002D84;
+  color: #002d84;
   font-family: yoon-gothic-350;
   font-size: 1.3rem;
 }
@@ -50,17 +52,16 @@
   margin-top: 15px;
   font-size: 1.2rem;
   text-align: center;
-  color: #002D84;
+  color: #002d84;
   font-family: yoon-gothic-350;
 }
-
 
 /* 포트폴리오 내용 */
 .choicepopup-box-portfolio-content {
   margin-top: 15px;
   text-align: center;
   font-size: 0.75rem;
-  color: #172B7A;
+  color: #172b7a;
   font-family: yoon-gothic-330;
 }
 

@@ -1,19 +1,19 @@
-import "./style.css";
+import "./App.css";
 
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 
-import Header from "./Header";
-import Footer from "./Footer";
-import Home from "../../domain/Home";
-import Agreement from "../../domain/Agree";
-import GitRepo from "../../domain/GitRepo";
-import Loading from "../../domain/Loading";
-import Mypage from "../../domain/Mypage";
-import InfoInput from "../../domain/InfoInput";
-import YesNoPopup from "../YesNoPopup";
-import ChoicePopup from "../ChoicePopup";
-import Error from "../../domain/Error";
-import AskBtn from "../AskBtn";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Home from "./domain/Home";
+import Agreement from "./domain/Agree";
+import GitRepo from "./domain/GitRepo";
+import Loading from "./domain/Loading";
+import Mypage from "./domain/Mypage";
+import InfoInput from "./domain/InfoInput";
+import YesNoPopup from "./components/YesNoPopup";
+import ChoicePopup from "./components/ChoicePopup";
+import Error from "./domain/Error";
+import AskBtn from "./components/AskBtn";
 
 function App() {
   return (

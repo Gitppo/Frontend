@@ -1,63 +1,51 @@
 .gitrepo {
-  display: flex;
-  flex-wrap: wrap;
   width: 100%;
+  height: 100%;
 }
 
+/* Title */
 .gitrepo-page-manage {
   width: 100%;
-  padding: 2em;
-  text-align: center;
+  margin-bottom: 1em;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  font-family: yoon-u;
+  color: var(--dark-blue2);
 }
 
+/* Buttons */
 .gitrepo-previous {
-  font-family: yoon-u;
-  color: var(--dark-blue2);
   font-size: 1.4em;
-  text-align: left;
-  float: left;
-  width: 33%;
+  margin-right: auto;
 }
-
 .gitrepo-save {
-  font-family: yoon-u;
   color: var(--dark-red);
-  font-size: 2.0em;
-  float: left;
-  width: 33%;
-  margin-top: -0.2em;
+  font-size: 2em;
 }
-
 .gitrepo-next {
-  font-family: yoon-u;
-  color: var(--dark-blue2);
   font-size: 1.4em;
-  text-align: right;
-  float: left;
-  width: 33%;
 }
 
 .gitrepo-wrapper {
-  display: flex;
   width: 100%;
-  padding-bottom: 100%;
-  margin: 0 auto;
+  height: 100%;
+  /* height: 100vh; */
+  padding: 5rem;
+
   background-color: var(--dark-blue2);
+  border-radius: 0.5em;
 }
 
 .gitrepo-inner-box {
   width: 100%;
-  padding-bottom: 20%;
+  padding: 1.2em;
+
   background-color: white;
-  border-style: solid;
-  border-color: #1B45C8;
-  border-width: 3.5px 1px 1px 1px;
-  border-radius: 0.5em;
   box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.16);
-  left: 50%;
-  top: 50%;
-  margin: 10rem 10rem 10rem 10rem;
-  padding: 1em;
+
   text-align: center;
 }
 
@@ -67,18 +55,16 @@
   color: var(--dark-blue2);
 }
 
-.gitrepo-inner-box-text{
+.gitrepo-inner-box-text {
   font-family: yoon-gothic-350;
-  font-size: 1.0em;
+  font-size: 1em;
   color: var(--dark-blue2);
 }
 
 .gitrepo-inner-box-project-name {
-  
 }
 
-.round-button {
-  width: 30%;
-  margin-left: 35%;
-  margin-top: 1rem;
+.gitrepo-inner-box .round-button {
+  width: fit-content;
+  margin: 1rem auto 0 auto;
 }
