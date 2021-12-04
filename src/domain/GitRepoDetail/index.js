@@ -108,7 +108,11 @@ function GitRepoDetail() {
           </div>
           <div className="save-button-container">
             <div className="round-button">저장</div>
-            <img className="gitrepodetail-inner-box-fold-image" src={Fold} />
+            <img
+              className="gitrepodetail-inner-box-fold-image"
+              src={Fold}
+              alt={""}
+            />
           </div>
         </div>
       </div>

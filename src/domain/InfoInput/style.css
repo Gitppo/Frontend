@@ -1,0 +1,12 @@
+.infoInput .mainInfo {
+  display: flex;
+}
+
+.infoInput input,
+.infoInput select {
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid var(--borderColor);
+  border-radius: 2px;
+  height: 2rem;
+}
