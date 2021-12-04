@@ -1,0 +1,17 @@
+#radio-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+  cursor: pointer;
+}
+
+#radio-btn-out {
+  width: 1em;
+}
+
+#radio-btn-in {
+  position: absolute;
+  width: 0.5em;
+}

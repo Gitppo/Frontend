@@ -1,0 +1,110 @@
+.mypage-upper-box {
+  display: flex;
+  flex-wrap: wrap;
+
+  width: 100%;
+  margin-bottom: 4rem;
+}
+/* 새로운 포트폴리오 생성 */
+.mypage-upper-box-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 50%;
+  max-width: 350px;
+
+  margin-right: 1em;
+  padding: 1em;
+
+  border-radius: 0.5rem;
+  box-shadow: 5px 5px 0px rgba(15, 44, 127, 0.5);
+
+  background-color: var(--dark-blue1);
+}
+/* 새로운 포트폴리오 생성 제목 */
+.mypage-new-title {
+  color: white;
+  margin-bottom: 0.8em;
+}
+/* 새로운 포트폴리오 생성 버튼 */
+.mypage-upper-box-left > .round-button {
+  background-color: white;
+  color: var(--dark-blue2);
+}
+
+/* 임시 저장 중인 포트폴리오 & 최종 완성 포트폴리오 */
+.mypage-upper-box-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  width: 50%;
+  max-width: 310px;
+}
+.mypage-manage {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  padding: 0.5em 0.8em;
+
+  color: white;
+  border-radius: 0.5rem;
+  background-color: var(--dark-blue1);
+}
+.mypage-manage .beautiful-title {
+  margin-left: 0.8em;
+
+  font-size: 1.4em;
+  color: white;
+}
+
+/* 기존 포트폴리오 */
+.mypage-wrapper-box {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.mypage-wrapper-box > li {
+  padding: 1rem;
+  margin: 1rem 1rem 1rem 0;
+
+  border: 1px solid gray;
+  border-radius: 0.5rem;
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.16);
+}
+
+.mypage-wrapper-box-title {
+  color: var(--dark-blue1);
+  font-family: yoon-gothic-350;
+}
+
+.mypage-wrapper-box-date {
+  color: gray;
+}
+
+.mypage-wrapper-box-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mypage-wrapper-box-button-left {
+  margin-right: 0.5em;
+}
+
+@media screen and (max-width: 708px) {
+  .mypage-upper-box-left,
+  .mypage-upper-box-right {
+    width: 100%;
+    max-width: none;
+    margin: 0 0 0.8em 0;
+  }
+
+  .mypage-manage {
+    margin: 0.5em 0;
+  }
+}
