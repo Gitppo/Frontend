@@ -36,6 +36,11 @@ a {
   color: inherit;
 }
 
+a,
+button {
+  cursor: pointer;
+}
+
 ul,
 li {
   list-style: none;

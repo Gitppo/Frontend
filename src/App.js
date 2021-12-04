@@ -4,6 +4,12 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+
+import AskBtn from "./components/AskBtn";
+
+import YesNoPopup from "./components/YesNoPopup";
+import ChoicePopup from "./components/ChoicePopup";
+
 import Home from "./domain/Home";
 import Agreement from "./domain/Agree";
 import GitRepo from "./domain/GitRepo";
@@ -11,10 +17,7 @@ import GitRepoDetail from "./domain/GitRepoDetail";
 import Loading from "./domain/Loading";
 import Mypage from "./domain/Mypage";
 import InfoInput from "./domain/InfoInput";
-import YesNoPopup from "./components/YesNoPopup";
-import ChoicePopup from "./components/ChoicePopup";
 import Error from "./domain/Error";
-import AskBtn from "./components/AskBtn";
 
 function App() {
   return (
@@ -33,7 +36,7 @@ function App() {
           <Route exact path={"/loading"} component={Loading} />
 
           <Route exact path={"/gitrepo"} component={GitRepo} />
-          <Route exact path={"/gitrepodetail"} component={GitRepoDetail} />         
+          <Route exact path={"/gitrepodetail"} component={GitRepoDetail} />
           <Route exact path={"/infoinput"} component={InfoInput} />
 
           <Route exact path={"/YesNoPopup"} component={YesNoPopup} />
