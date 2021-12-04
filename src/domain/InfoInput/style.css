@@ -1,0 +1,20 @@
+:root {
+    --borderColor: #172B7A;
+}
+
+.container {
+    border: 1px solid;
+    display: flex;
+    flex-direction: column;
+}
+
+.mainInfo {
+    display: flex;
+}
+
+input {
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid var(--borderColor);
+    border-radius: 2px;
+}
