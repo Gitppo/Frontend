@@ -1,0 +1,57 @@
+/* Buttons Container */
+.gitrepo-top-button-container {
+  width: 100%;
+  margin-bottom: 1em;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  font-family: yoon-u;
+  color: var(--dark-blue2);
+}
+
+/* Buttons */
+.gitrepo-button-container {
+  display: flex;
+  align-items: center;
+}
+.gitrepo-button-title {
+  display: inline-block;
+  margin: 0;
+}
+.gitrepo-button-title:after {
+  width: 0;
+  height: 3px;
+  display: block;
+  content: '';
+  border-bottom: solid 3px  var(--dark-blue2);
+  transform: scaleX(0);  
+  transition: transform 250ms ease-in-out;
+}
+.gitrepo-button-title:hover:after {
+  width: 100%;
+  transform: scaleX(1);
+}
+.gitrepo-before {
+  font-size: 1.5em;
+  margin-right: auto;
+  font-weight: 600;
+}
+.gitrepo-save {
+  color: var(--dark-red);
+  font-size: 2.2em;
+  padding-right: 2%;
+  font-weight: 600;
+}
+.gitrepo-after {
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+/* Button Image */
+.button-image {
+  margin: auto;
+  width: 45%;
+  height: 45%;
+}
