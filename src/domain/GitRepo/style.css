@@ -1,38 +1,12 @@
+/* Screen */
 .gitrepo {
   width: 100%;
   height: 100%;
 }
 
-/* Title */
-.gitrepo-page-manage {
-  width: 100%;
-  margin-bottom: 1em;
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  font-family: yoon-u;
-  color: var(--dark-blue2);
-}
-
-/* Buttons */
-.gitrepo-previous {
-  font-size: 1.4em;
-  margin-right: auto;
-}
-.gitrepo-save {
-  color: var(--dark-red);
-  font-size: 2em;
-}
-.gitrepo-next {
-  font-size: 1.4em;
-}
-
 .gitrepo-wrapper {
   width: 100%;
   height: 100%;
-  /* height: 100vh; */
   padding: 5rem;
 
   background-color: var(--dark-blue2);
@@ -62,6 +36,18 @@
 }
 
 .gitrepo-inner-box-project-name {
+  display: flex;
+  justify-content: center;
+  color: var(--dark-blue2);
+}
+
+.gitrepo-inner-box-project-name .RadioBtn {
+  padding-left: 0.625rem;
+}
+
+.gitrepo-inner-box-project-content {
+  color: #707070;
+  font-family: yoon-gothic-330;
 }
 
 .gitrepo-inner-box .round-button {

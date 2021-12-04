@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import Home from "./domain/Home";
 import Agreement from "./domain/Agree";
 import GitRepo from "./domain/GitRepo";
+import GitRepoDetail from "./domain/GitRepoDetail";
 import Loading from "./domain/Loading";
 import Mypage from "./domain/Mypage";
 import InfoInput from "./domain/InfoInput";
@@ -32,6 +33,7 @@ function App() {
           <Route exact path={"/loading"} component={Loading} />
 
           <Route exact path={"/gitrepo"} component={GitRepo} />
+          <Route exact path={"/gitrepodetail"} component={GitRepoDetail} />         
           <Route exact path={"/infoinput"} component={InfoInput} />
 
           <Route exact path={"/YesNoPopup"} component={YesNoPopup} />
