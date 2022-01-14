@@ -8,13 +8,56 @@
     flex-direction: column;
 }
 
-.mainInfo {
+.mainInfo{
     display: flex;
+    padding: 20px 0px;
 }
 
-input {
-    margin: 5px;
+.etc {
+    padding: 20px 0px;
+}
+
+.intro {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .container input[type=text],
+  .container input[type=date],
+  .container input[type=email],
+  .container textarea,
+  .container select,
+  .button {
+    margin:5px;
     padding: 5px;
     border: 1px solid var(--borderColor);
-    border-radius: 2px;
-}
+    background-color: white;
+    border-radius: 5px;
+    height: 2rem;
+  }
+
+  #introLong {
+    width: 42rem;
+    height:10rem;
+    resize: none
+  }
+
+  #introShort {
+    width: 42rem;
+    height:2rem;
+    resize: none
+  }
+
+  .button {
+    border: none;
+  }
+
+  .imgBlock, #thumbnail {
+    background-color: #efefef;
+    width: 150px;
+    height: 150px;
+  }
+
+  .img {
+    margin-left:30px;
+  }
