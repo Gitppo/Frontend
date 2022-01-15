@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import "./style.css";
 import BeforeAfterBtn from "../../components/BeforeAfterBtn";
 import Star from "../../image/star.png";
@@ -5,7 +6,35 @@ import Pen from "../../image/pen.png";
 import Eye from "../../image/eye.png";
 import Fold from "../../image/fold.png";
 
+const data = {
+  repoTitle: "hyu-likelion/NESI",
+  starNum: "50",
+  creation: "2018.12.12",
+  revision: "2021.12.12",
+  language: "JavaScript",
+  languagePercent: "56.8%"
+}
+
 function GitRepoDetail() {
+  const [inputs, setInputs] = useState({
+    start: '',
+    end: '',
+    role: '',
+    skill: '',
+    domain: '',
+    explain: ''
+  });
+
+  const { start, end, role, skill, domain, explain } = inputs;
+
+  const onChange = (e) => {
+    const { value, name } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value
+    });
+  }
+
   return (
     <div className="gitrepodetail">
       <BeforeAfterBtn />
@@ -21,32 +50,28 @@ function GitRepoDetail() {
           <div className="gitrepodetail-inner-box-info-container">
             <div className="gitrepodetail-inner-box-top-container">
               <div className="gitrepodetail-inner-box-repo-title">
-                hyu-likelion/NESI
+                {data.repoTitle}
               </div>
               <img
                 className="gitrepodetail-inner-box-image"
                 src={Star}
                 alt={""}
               />
-              <div className="gitrepodetail-inner-box-star-num">25</div>
+              <div className="gitrepodetail-inner-box-star-num">{data.starNum}</div>
               <div className="round-button">삭제</div>
             </div>
             <div className="gitrepodetail-inner-box-bottom-container">
               <div className="gitrepodetail-inner-box-bottom-title">생성일</div>
               <div className="gitrepodetail-inner-box-bottom-detail">
-                2017.12.12
+                {data.creation}
               </div>
-              <div className="gitrepodetail-inner-box-bottom-title">
-                최근 업데이트
-              </div>
+              <div className="gitrepodetail-inner-box-bottom-title">최근 업데이트</div>
               <div className="gitrepodetail-inner-box-bottom-detail">
-                2017.12.12
+                {data.revision}
               </div>
-              <div className="gitrepodetail-inner-box-bottom-title">
-                사용언어
-              </div>
+              <div className="gitrepodetail-inner-box-bottom-title">사용언어</div>
               <div className="gitrepodetail-inner-box-bottom-detail">
-                JavaScript 56.8%
+                {data.language} {data.languagePercent}
               </div>
             </div>
           </div>
@@ -67,41 +92,59 @@ function GitRepoDetail() {
             상세 설명
           </div>
           <div className="gitrepodetail-inner-box-title-container-info">
-            기간
+            <div className="container-title">기간</div>
             <input
+              onChange={onChange}
+              value={start}
+              name="start"
               className="gitrepodetail-inner-box-plus-info-title-date"
               placeholder="시작일"
-            ></input>
-            ~
+            />
+            <div className="wave-mark">~</div>
             <input
+              onChange={onChange}
+              value={end}
+              name="end"
               className="gitrepodetail-inner-box-plus-info-title-date"
               placeholder="마감일"
-            ></input>
+            />
           </div>
           <div className="gitrepodetail-inner-box-title-container-info">
-            역할
+            <div className="container-title">역할</div>
             <input
+              onChange={onChange}
+              value={role}
+              name="role"
               className="gitrepodetail-inner-box-plus-info-title-info-box"
               placeholder="프론트엔드개발 / 디자인"
-            ></input>
+            />
           </div>
           <div className="gitrepodetail-inner-box-title-container-info">
-            기술스택
+            <div className="container-title">기술스택</div>
             <input
+              onChange={onChange}
+              value={skill}
+              name="skill"
               className="gitrepodetail-inner-box-plus-info-title-info-box"
               placeholder="기술스택칸은 안 넓어도 괜찮지 않을까아ㅏㅏ"
             ></input>
           </div>
           <div className="gitrepodetail-inner-box-title-container-info">
-            도메인
+            <div className="container-title">도메인</div>
             <input
+              onChange={onChange}
+              value={domain}
+              name="domain"
               className="gitrepodetail-inner-box-plus-info-title-info-box"
               placeholder="000.000.000"
             ></input>
           </div>
           <div className="gitrepodetail-inner-box-title-container-end-info">
-            설명
+            <div className="container-title">설명</div>
             <input
+              onChange={onChange}
+              value={explain}
+              name="explain"
               className="gitrepodetail-inner-box-plus-info-title-plus-info-box"
               placeholder="✧٩(ˊωˋ*)و✧"
             ></input>
