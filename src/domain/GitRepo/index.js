@@ -31,7 +31,7 @@ function GitRepo() {
             <h3 className="gitrepo-inner-box-title">
               포트폴리오를 위해
               <br />
-              가져올 수 있는 레포는 총 <span style={{color: "red"}}>{3}</span>
+              가져올 수 있는 레포는 총 {3}</span>
               개입니다.
             </h3>
             <br />

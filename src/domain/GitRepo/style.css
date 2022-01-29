@@ -24,11 +24,17 @@
 .gitrepo-inner-box-title,
 .gitrepo-inner-box-text {
   color: var(--dark-blue2);
+  cursor: default;
 }
 
 .gitrepo-inner-box-project-name {
   display: flex;
   color: var(--dark-blue2);
+  }
+
+.gitrepo-inner-box-project-name:hover {
+  color: var(--dark-red);
+  cursor: default;
 }
 
 .gitrepo-inner-box-project-name .RadioBtn {

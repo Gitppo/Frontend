@@ -60,7 +60,10 @@
   padding: 0.2rem;
   background-color: white;
   text-align: center;
-  border-radius: 0.5em;
+  border-radius: 0.5em;  
+}
+.gitrepodetail-inner-box:hover{
+  border: 3.5px solid var(--dark-red);
 }
 .gitrepodetail-inner-box-image {
   width: 15px;
@@ -200,9 +203,25 @@
   padding: 1%;
 }
 
-/*input::placeholder {
-  font-size: 10px;
-}*/
+/* 기술스택 */
+.gitrepodetail-inner-box-title-container-info-skill {
+  width: 100%;
+  height: 20%;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  color: #272727;
+  font-size: 1.0rem;
+}
+.gitrepodetail-inner-box-plus-info-title-info-box-skill {
+  background-color: #eef1f7;
+  border-radius: 0.5em;
+  border: none;
+  outline: none;
+  width: 60%;
+  padding: 3%;
+}
 
 /* 하얀색 박스 네번째 칸 - 설명 (컨테이너) */
 .gitrepodetail-inner-box-title-container-end-info {
@@ -221,7 +240,7 @@
   border: none;
   outline: none;
   width: 80%;
-  padding: 3%;
+  padding: 5%;
 }
 
 /* 저장 버튼 */
@@ -247,3 +266,8 @@
   width: 6rem;
   text-align: left;
 }
+
+.gitrepodetail .toc-content {
+  display: none;
+}
+

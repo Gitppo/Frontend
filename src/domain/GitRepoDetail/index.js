@@ -35,6 +35,17 @@ function GitRepoDetail() {
       ...inputs,
       [name]: value,
     });
+    console.log(e.target.value);
+  }
+  
+  function openCloseToc() {
+    if(document.getElementById('toc-content').style.display === 'block') {
+      document.getElementById('toc-content').style.display = 'none';
+    } else {
+      document.getElementById('toc-toggle').style.src = "../../image/open.png";
+      document.getElementById('toc-content').style.display = 'block';
+    }
+  }
   };
 
   const prevPage = () => {
@@ -99,88 +110,92 @@ function GitRepoDetail() {
             </div>
           </div>
 
-          <div className="gitrepodetail-inner-box-title-container">
-            <div className="gitrepodetail-inner-box-title-container-text">
-              바닐라자바스크립트 구현 프로젝트 리액트로 바꿔보기
+          <div id="toc-content">
+            <div className="gitrepodetail-inner-box-title-container">
+              <div className="gitrepodetail-inner-box-title-container-text">
+                바닐라자바스크립트 구현 프로젝트 리액트로 바꿔보기
+              </div>
+              <img className="gitrepodetail-inner-box-image" src={Pen} alt={""} />
             </div>
-            {/* <img className="gitrepodetail-inner-box-image" src={Pen} alt={""} /> */}
-          </div>
-          <div className="gitrepodetail-inner-box-readme-container">
-            <div className="gitrepodetail-inner-box-title-container-text">
-              README.md
+            <div className="gitrepodetail-inner-box-readme-container">
+              <div className="gitrepodetail-inner-box-title-container-text">
+                README.md
+              </div>
+              <img className="gitrepodetail-inner-box-image" src={Eye} alt={""} />
+              <img className="gitrepodetail-inner-box-image" src={Pen} alt={""} />
             </div>
-            {/* <img className="gitrepodetail-inner-box-image" src={Eye} alt={""} />
-            <img className="gitrepodetail-inner-box-image" src={Pen} alt={""} /> */}
+            <div className="gitrepodetail-inner-box-plus-info-title">
+              상세 설명
+            </div>
+            <div className="gitrepodetail-inner-box-title-container-info">
+              <div className="container-title">기간</div>
+              <input
+                onChange={onChange}
+                value={start}
+                name="start"
+                className="gitrepodetail-inner-box-plus-info-title-date"
+                placeholder="시작일"
+              />
+              <div className="wave-mark">~</div>
+              <input
+                onChange={onChange}
+                value={end}
+                name="end"
+                className="gitrepodetail-inner-box-plus-info-title-date"
+                placeholder="마감일"
+              />
+            </div>
+            <div className="gitrepodetail-inner-box-title-container-info">
+              <div className="container-title">역할</div>
+              <input
+                onChange={onChange}
+                value={role}
+                name="role"
+                className="gitrepodetail-inner-box-plus-info-title-info-box"
+                placeholder="프론트엔드개발 / 디자인"
+              />
+            </div>
+            <div className="gitrepodetail-inner-box-title-container-info-skill">
+              <div className="container-title">기술스택</div>
+              <input
+                onChange={onChange}
+                value={skill}
+                name="skill"
+                className="gitrepodetail-inner-box-plus-info-title-info-box-skill"
+                placeholder="기술스택칸은 안 넓어도 괜찮지 않을까아ㅏㅏ"
+              />
+            </div>
+            <div className="gitrepodetail-inner-box-title-container-info">
+              <div className="container-title">도메인</div>
+              <input
+                onChange={onChange}
+                value={domain}
+                name="domain"
+                className="gitrepodetail-inner-box-plus-info-title-info-box"
+                placeholder="000.000.000"
+              />
+            </div>
+            <div className="gitrepodetail-inner-box-title-container-end-info">
+              <div className="container-title">설명</div>
+              <input
+                onChange={onChange}
+                value={explain}
+                name="explain"
+                className="gitrepodetail-inner-box-plus-info-title-plus-info-box"
+                placeholder="✧٩(ˊωˋ*)و✧"
+              />
+            </div>
+            <div className="save-button-container">
+              <button className="round-button">저장</button>             
+            </div>
           </div>
-
-          <h3 className="gitrepodetail-inner-box-plus-info-title">상세 설명</h3>
-          <div className="gitrepodetail-inner-box-title-container-info">
-            <div className="container-title">기간</div>
-            <input
-              onChange={onChange}
-              value={start}
-              name="start"
-              className="gitrepodetail-inner-box-plus-info-title-date"
-              placeholder="시작일"
-            />
-            <div className="wave-mark">~</div>
-            <input
-              onChange={onChange}
-              value={end}
-              name="end"
-              className="gitrepodetail-inner-box-plus-info-title-date"
-              placeholder="마감일"
-            />
-          </div>
-          <div className="gitrepodetail-inner-box-title-container-info">
-            <div className="container-title">역할</div>
-            <input
-              onChange={onChange}
-              value={role}
-              name="role"
-              className="gitrepodetail-inner-box-plus-info-title-info-box"
-              placeholder="프론트엔드개발 / 디자인"
-            />
-          </div>
-          <div className="gitrepodetail-inner-box-title-container-info">
-            <div className="container-title">기술스택</div>
-            <input
-              onChange={onChange}
-              value={skill}
-              name="skill"
-              className="gitrepodetail-inner-box-plus-info-title-info-box"
-              placeholder="기술스택칸은 안 넓어도 괜찮지 않을까아ㅏㅏ"
-            ></input>
-          </div>
-          <div className="gitrepodetail-inner-box-title-container-info">
-            <div className="container-title">도메인</div>
-            <input
-              onChange={onChange}
-              value={domain}
-              name="domain"
-              className="gitrepodetail-inner-box-plus-info-title-info-box"
-              placeholder="000.000.000"
-            ></input>
-          </div>
-          <div className="gitrepodetail-inner-box-title-container-end-info">
-            <div className="container-title">설명</div>
-            <input
-              onChange={onChange}
-              value={explain}
-              name="explain"
-              className="gitrepodetail-inner-box-plus-info-title-plus-info-box"
-              placeholder="✧٩(ˊωˋ*)و✧"
-            ></input>
-          </div>
-
-          <div className="save-button-container">
-            <button className="round-button">저장</button>
-            {/* <img
-              className="gitrepodetail-inner-box-fold-image"
-              src={Fold}
-              alt={""}
-            /> */}
-          </div>
+          <img
+            id="toc-toggle"
+            className="gitrepodetail-inner-box-fold-image"
+            src={Close}
+            alt={""}
+            onClick={openCloseToc}
+          />
         </div>
       </div>
     </div>
