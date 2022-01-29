@@ -1,10 +1,5 @@
 /* Screen */
-.gitrepo {
-  width: 100%;
-  height: 100%;
-}
-
-.gitrepo-wrapper {
+.gitrepo-outer-box {
   width: 100%;
   height: 100%;
   padding: 5rem;
@@ -13,32 +8,27 @@
   border-radius: 0.5em;
 }
 
-.gitrepo-inner-box {
+.gitrepo-box {
   width: 100%;
   padding: 1.2em;
 
   background-color: white;
   box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.16);
-
-  text-align: center;
 }
 
-.gitrepo-inner-box-title {
-  font-family: yoon-gothic-350;
-  font-size: 1.3em;
-  color: var(--dark-blue2);
+.gitrepo-inner-box {
+  max-width: 450px;
+  margin: 0 auto;
 }
 
+.gitrepo-inner-box-title,
 .gitrepo-inner-box-text {
-  font-family: yoon-gothic-350;
-  font-size: 1em;
   color: var(--dark-blue2);
   cursor: default;
 }
 
 .gitrepo-inner-box-project-name {
   display: flex;
-  justify-content: center;
   color: var(--dark-blue2);
   }
 
@@ -53,8 +43,6 @@
 
 .gitrepo-inner-box-project-content {
   color: #707070;
-  font-family: yoon-gothic-330;
-  cursor: default;
 }
 
 .gitrepo-inner-box .round-button {

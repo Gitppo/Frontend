@@ -44,13 +44,22 @@ function Mypage() {
     const div = document.getElementById("contents");
     div.remove();
   }
+
   
+function Mypage() {
+  const history = useHistory();
+  const createPofol = () => {
+    history.push("/git-repo");
+  };
+
   return (
     <div>
       <div className={"mypage-upper-box"}>
         <div className={"mypage-upper-box-left"}>
           <h3 className={"mypage-new-title"}>새로운 포트폴리오 생성</h3>
-          <button className={"round-button"}>바로가기</button>
+          <button className={"round-button"} onClick={createPofol}>
+            바로가기
+          </button>
         </div>
 
         <div className={"mypage-upper-box-right"}>
@@ -60,7 +69,9 @@ function Mypage() {
           </div>
           <div className={"mypage-manage"}>
             <span>최종 완성 포트폴리오</span>
-            <span className={"beautiful-title"}>{num.finishedPortfolio}</span>
+            <span className={"beautiful-title"}>
+              {data.num.finishedPortfolio}
+            </span>
           </div>
         </div>
       </div>
@@ -80,6 +91,7 @@ function Mypage() {
               </div>
             </li>
           ))}
+
         </ul>
       </RoundContainer>
     </div>

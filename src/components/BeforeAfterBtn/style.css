@@ -1,57 +1,56 @@
 /* Buttons Container */
-.gitrepo-top-button-container {
+.bf-at-btn {
   width: 100%;
   margin-bottom: 1em;
 
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
 
-  font-family: yoon-u;
+  font-family: title;
   color: var(--dark-blue2);
 }
 
-/* Buttons */
-.gitrepo-button-container {
-  display: flex;
-  align-items: center;
-}
-.gitrepo-button-title {
+.bf-at-wrapper {
+  cursor: pointer;
   display: inline-block;
-  margin: 0;
 }
-.gitrepo-button-title:after {
-  width: 0;
-  height: 3px;
+
+/* Buttons */
+.bf-at-title {
+  display: inline-block;
+  margin: 0 0.3em;
+  font-family: title;
+  font-size: 1.7rem;
+}
+.bf-at-title::after {
   display: block;
   content: "";
-  border-bottom: solid 3px var(--dark-blue2);
-  transform: scaleX(0);
-  transition: transform 250ms ease-in-out;
+
+  width: 0;
+  height: 3px;
+  border-radius: 10em;
+  background-color: var(--dark-blue2);
+
+  transition: all 300ms ease-in-out;
 }
-.gitrepo-button-title:hover:after {
-  width: 100%;
-  transform: scaleX(1);
-}
-.gitrepo-before {
-  font-size: 1.5em;
-  margin-right: auto;
-  font-weight: 600;
-}
-.gitrepo-save {
+.bf-at-save {
   color: var(--dark-red);
-  font-size: 2em;
-  padding-right: 2%;
+}
+.bf-at-save::after {
+  background-color: var(--dark-red);
+}
+
+.bf-at-wrapper:hover .bf-at-title {
   font-weight: bold;
 }
-.gitrepo-after {
-  font-size: 1.5em;
-  font-weight: 600;
+.bf-at-wrapper:hover .bf-at-title::after {
+  width: 100%;
 }
 
 /* Button Image */
-.button-image {
-  margin: auto;
-  width: 45%;
-  height: 45%;
+.bf-at-img {
+  width: auto;
+  height: 1.5rem;
 }
