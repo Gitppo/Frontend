@@ -8,35 +8,63 @@ import Pen from "../../assets/pen.png";
 import Eye from "../../assets/eye.png";
 import Fold from "../../assets/arrow-no-head.png";
 
-const data = {
-  repoTitle: "hyu-likelion/NESI",
-  starNum: "50",
-  creation: "2018.12.12",
-  revision: "2021.12.12",
-  language: "JavaScript",
-  languagePercent: "56.8%",
-};
-
 function GitRepoDetail() {
   const history = useHistory();
-  const [inputs, setInputs] = useState({
-    start: "",
-    end: "",
-    role: "",
-    skill: "",
-    domain: "",
-    explain: "",
-  });
 
-  const {start, end, role, skill, domain, explain} = inputs;
+  const [repos, setRepos] = useState([
+    {
+      id: 1,
+      title: "2021 조깃포 LG 포트폴리오",
+      state: 0,
+      creation: "2021.04.04",
+      revision: {
+        date: "2021.05.05",
+        time: "19:00",
+      },
+      language: [
+        ["JavaScript", "56.8%"],
+        ["Java", "43.2%"],
+      ],
+      path: "hyu-likelion/NESI",
+      starNum: "50",
+      start: "",
+      end: "",
+      role: "",
+      skill: "",
+      domain: "",
+      explain: "",
+    },
+    {
+      id: 2,
+      title: "2021 조깃포 삼성 포트폴리오",
+      state: 0,
+      creation: "2021.04.04",
+      revision: {
+        date: "2021.05.05",
+        time: "19:00",
+      },
+    },
+    {
+      id: 3,
+      title: "2021 조깃포 현대 포트폴리오",
+      state: 1,
+      creation: "2021.04.04",
+      revision: {
+        date: "2021.05.05",
+        time: "19:00",
+      },
+    },
+  ]);
+
+  const {start, end, role, skill, domain, explain} = {};
 
   const onChange = (e) => {
-    const {value, name} = e.target;
-    setInputs({
-      ...inputs,
-      [name]: value,
-    });
-    console.log(e.target.value);
+    // const {value, name} = e.target;
+    // setInputs({
+    //   ...inputs,
+    //   [name]: value,
+    // });
+    // console.log(e.target.value);
   };
 
   function openCloseToc() {
@@ -78,7 +106,7 @@ function GitRepoDetail() {
           <div className="gitrepodetail-inner-box-info-container">
             <div className="gitrepodetail-inner-box-top-container">
               <h3 className="gitrepodetail-inner-box-repo-title">
-                {data.repoTitle}
+                {/* {data.repoTitle} */}
               </h3>
               <img
                 className="gitrepodetail-inner-box-image"
@@ -86,26 +114,26 @@ function GitRepoDetail() {
                 alt={""}
               />
               <div className="gitrepodetail-inner-box-star-num">
-                {data.starNum}
+                {/* {data.starNum} */}
               </div>
               <div className="round-button">삭제</div>
             </div>
             <div className="gitrepodetail-inner-box-bottom-container">
               <div className="gitrepodetail-inner-box-bottom-title">생성일</div>
               <div className="gitrepodetail-inner-box-bottom-detail">
-                {data.creation}
+                {/* {data.creation} */}
               </div>
               <div className="gitrepodetail-inner-box-bottom-title">
                 최근 업데이트
               </div>
               <div className="gitrepodetail-inner-box-bottom-detail">
-                {data.revision}
+                {/* {data.revision} */}
               </div>
               <div className="gitrepodetail-inner-box-bottom-title">
                 사용언어
               </div>
               <div className="gitrepodetail-inner-box-bottom-detail">
-                {data.language} {data.languagePercent}
+                {/* {data.language} {data.languagePercent} */}
               </div>
             </div>
           </div>
@@ -142,7 +170,10 @@ function GitRepoDetail() {
             <div className="gitrepodetail-inner-box-title-container-info">
               <div className="container-title">기간</div>
               <input
-                onChange={onChange}
+                onChange={(e) => {
+                  // repos[index]?.start = e.target.value;
+                  // setRepos([...repos]);
+                }}
                 value={start}
                 name="start"
                 className="gitrepodetail-inner-box-plus-info-title-date"

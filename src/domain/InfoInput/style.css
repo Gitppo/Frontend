@@ -3,10 +3,10 @@
 }
 
 .container {
-  margin:0px;
+  margin: 0px;
   border: 1px solid;
   -ms-overflow-style: none;
-
+}
 .container ::-webkit-scrollbar {
   display: none;
 }
@@ -18,50 +18,51 @@
 }
 
 .etc {
-    padding: 20px 0px;
+  padding: 20px 0px;
 }
 
 .intro {
-    display: flex;
-    flex-direction: column;
-  }
+  display: flex;
+  flex-direction: column;
+}
 
-  .container input[type=text],
-  .container input[type=date],
-  .container input[type=email],
-  .container textarea,
-  .container select,
-  .btn {
-    margin:5px;
-    padding: 5px;
-    border: 1px solid var(--borderColor);
-    background-color: white;
-    border-radius: 5px;
-    height: 2rem;
-  }
+.container input[type="text"],
+.container input[type="date"],
+.container input[type="email"],
+.container textarea,
+.container select,
+.btn {
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid var(--dark-blue1);
+  background-color: white;
+  border-radius: 5px;
+  height: 2rem;
+}
 
-  #introLong {
-    width: 42rem;
-    height:10rem;
-    resize: none
-  }
+#introLong {
+  width: 42rem;
+  height: 10rem;
+  resize: none;
+}
 
-  #introShort {
-    width: 42rem;
-    height:2rem;
-    resize: none
-  }
+#introShort {
+  width: 42rem;
+  height: 2rem;
+  resize: none;
+}
 
-  .btn {
-    border: none;
-  }
+.btn {
+  border: none;
+}
 
-  .imgBlock, #thumbnail {
-    background-color: #efefef;
-    width: 150px;
-    height: 150px;
-  }
+.imgBlock,
+#thumbnail {
+  background-color: #efefef;
+  width: 150px;
+  height: 150px;
+}
 
-  .img {
-    margin-left:30px;
-  }
+.img {
+  margin-left: 30px;
+}
