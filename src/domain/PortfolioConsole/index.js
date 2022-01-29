@@ -3,16 +3,26 @@ import {useState} from "react";
 import PortfolioBlueGray from "../../components/Portfolio/PortfolioBlueGray/index";
 import PortfolioBluePink from "../../components/Portfolio/PortfolioBluePink/index";
 import RadioBtn from "../../components/RadioBtn/index";
+import BeforeAfterBtn from "../../components/BeforeAfterBtn/index";
+import {useHistory} from "react-router-dom/cjs/react-router-dom.min";
 
 export default function PortfolioConsole() {
+  const history = useHistory();
+
   const pInfo = {
     title: "2021 조깃포 삼성 포트폴리오",
   };
 
   const [pStyleIndex, setPStyleIndex] = useState(0);
 
+  const prevPage = () => {
+    history.push("/git-info");
+  };
+
   return (
     <div className="portfolio-console">
+      <BeforeAfterBtn saveShow={false} nextShow={false} onPrev={prevPage} />
+
       <div className="title-wrapper">
         <h2 className="title">{pInfo?.title}</h2>
         <div className="title-btn-wrapper">

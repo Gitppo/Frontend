@@ -1,23 +1,46 @@
 import "./style.css";
-
 import arrowImg from "../../assets/arrow.png";
 
-function BeforeAfterBtn() {
+function BeforeAfterBtn({
+  style,
+  prevShow = true,
+  nextShow = true,
+  saveShow = false,
+  onPrev,
+  onNext,
+  onSave,
+}) {
   return (
-    <div className="gitrepo-top-button-container">
-      <div className="gitrepo-before">
-        <div className="gitrepo-button-container">
-          <img src={arrowImg} className="button-image" alt={""} />
-          <div className="gitrepo-button-title">이전</div>
+    <div className="bf-at-btn" style={{...style}}>
+      {/* 오른쪽 */}
+      {prevShow && (
+        <div className="bf-at-wrapper" onClick={onPrev}>
+          <img src={arrowImg} className="bf-at-img" alt={""} />
+          <div className="bf-at-title">이전</div>
         </div>
-      </div>
+      )}
 
-      <div className="gitrepo-save">임시저장</div>
-      <div className="gitrepo-after">
-        <div className="gitrepo-button-container">
-          <div className="gitrepo-button-title">다음</div>
-          <img src={arrowImg} className="button-image" alt={""} />
+      {/* 오른쪽 */}
+      <div>
+        <div className="bf-at-wrapper">
+          {saveShow && (
+            <div className="bf-at-title bf-at-save" onClick={onSave}>
+              임시저장
+            </div>
+          )}
         </div>
+
+        {nextShow && (
+          <div className="bf-at-wrapper" onClick={onNext}>
+            <div className="bf-at-title">다음</div>
+            <img
+              src={arrowImg}
+              className="bf-at-img"
+              alt={""}
+              style={{transform: "scaleX(-1)"}}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

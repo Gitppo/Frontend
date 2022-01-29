@@ -1,4 +1,5 @@
-.portfolio-console-body {
+.portfolio-console .title {
+  color: var(--dark-blue2);
 }
 
 .portfolio-console .title-wrapper {
@@ -13,6 +14,12 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+}
+.portfolio-console .title-btn-wrapper .round-button {
+  background-color: var(--dark-red);
+}
+.portfolio-console .title-btn-wrapper .round-button:hover {
+  background-color: var(--dark-blue2) !important;
 }
 
 .portfolio-console-body .preview-section {

@@ -1,10 +1,5 @@
 /* Screen */
-.gitrepo {
-  width: 100%;
-  height: 100%;
-}
-
-.gitrepo-wrapper {
+.gitrepo-outer-box {
   width: 100%;
   height: 100%;
   padding: 5rem;
@@ -13,14 +8,17 @@
   border-radius: 0.5em;
 }
 
-.gitrepo-inner-box {
+.gitrepo-box {
   width: 100%;
   padding: 1.2em;
 
   background-color: white;
   box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.16);
+}
 
-  text-align: center;
+.gitrepo-inner-box {
+  max-width: 450px;
+  margin: 0 auto;
 }
 
 .gitrepo-inner-box-title,
@@ -30,7 +28,6 @@
 
 .gitrepo-inner-box-project-name {
   display: flex;
-  justify-content: center;
   color: var(--dark-blue2);
 }
 

@@ -33,19 +33,15 @@ function App() {
           {/* TOOD : URL 정리 */}
           <Route exact path={"/"} component={Home} />
           <Route exact path={"/agree"} component={Agreement} />
-          <Route exact path={"/mypage"} component={Mypage} />
+          <Route exact path={"/my-page"} component={Mypage} />
 
           <Route exact path={"/loading"} component={Loading} />
 
-          <Route exact path={"/gitrepo"} component={GitRepo} />
-          <Route exact path={"/gitrepodetail"} component={GitRepoDetail} />
-          <Route exact path={"/infoinput"} component={InfoInput} />
+          <Route exact path={"/git-repo"} component={GitRepo} />
+          <Route exact path={"/git-repo-detail"} component={GitRepoDetail} />
+          <Route exact path={"/git-info"} component={InfoInput} />
 
-          <Route
-            exact
-            path={"/portfolio-console"}
-            component={PortfolioConsole}
-          />
+          <Route exact path={"/git-console"} component={PortfolioConsole} />
 
           <Route exact path={"/YesNoPopup"} component={YesNoPopup} />
           <Route exact path={"/ChoicePopup"} component={ChoicePopup} />

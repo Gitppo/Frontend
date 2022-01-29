@@ -1,5 +1,7 @@
 import "./style.css";
 import React from "react";
+import {useHistory} from "react-router-dom/cjs/react-router-dom.min";
+import BeforeAfterBtn from "../../components/BeforeAfterBtn/index";
 
 function UploadImg() {
   document.getElementById("profileImg").src = "b.png";
@@ -40,8 +42,25 @@ function removeItem(obj) {
 }
 
 function InfoInput() {
+  const history = useHistory();
+
+  const prevPage = () => {
+    history.push("/git-repo-detail");
+  };
+  const nextPage = () => {
+    history.push("/git-console");
+  };
+  const tmpSave = () => {};
+
   return (
     <div className="infoInput">
+      <BeforeAfterBtn
+        saveShow={true}
+        onPrev={prevPage}
+        onNext={nextPage}
+        onSave={tmpSave}
+      />
+
       {/* mainInfo: 기본 인적사항, 사진 */}
       <div className="mainInfo">
         {/* generalInfo: 기본 인적사항 */}

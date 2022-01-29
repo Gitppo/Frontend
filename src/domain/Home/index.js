@@ -26,7 +26,7 @@ function Home() {
   };
 
   const login = () => {
-    history.push("/mypage");
+    history.push("/my-page");
   };
 
   return (
