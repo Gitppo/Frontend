@@ -1,12 +1,11 @@
-:root {
-    --borderColor: #172B7A;
+.infoInput .mainInfo {
+  display: flex;
 }
 
 .container {
   margin:0px;
   border: 1px solid;
   -ms-overflow-style: none;
-}
 
 .container ::-webkit-scrollbar {
   display: none;

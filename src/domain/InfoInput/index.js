@@ -64,7 +64,15 @@ function InfoInput() {
       <Modal open={modalOpen} close={closeModal}>
         기존에 입력한 정보를 가져오시겠습니까?
       </Modal>
+
       < div className="container" >
+                <BeforeAfterBtn
+        saveShow={true}
+        onPrev={prevPage}
+        onNext={nextPage}
+        onSave={tmpSave}
+      />
+          
         {/* mainInfo: 기본 인적사항, 사진 */}
         < div className="mainInfo" >
           {/* generalInfo: 기본 인적사항 */}
@@ -391,6 +399,7 @@ function InfoInput() {
       </div >
     </div>
   )
+
 }
 
 export default InfoInput;

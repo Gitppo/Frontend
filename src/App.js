@@ -4,6 +4,12 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+
+import AskBtn from "./components/AskBtn";
+
+import YesNoPopup from "./components/Modal/YesNoPopup";
+import ChoicePopup from "./components/Modal/ChoicePopup";
+
 import Home from "./domain/Home";
 import Agreement from "./domain/Agree";
 import GitRepo from "./domain/GitRepo";
@@ -11,10 +17,8 @@ import GitRepoDetail from "./domain/GitRepoDetail";
 import Loading from "./domain/Loading";
 import Mypage from "./domain/Mypage";
 import InfoInput from "./domain/InfoInput";
-import YesNoPopup from "./components/YesNoPopup";
-import ChoicePopup from "./components/ChoicePopup";
 import Error from "./domain/Error";
-import AskBtn from "./components/AskBtn";
+import PortfolioConsole from "./domain/PortfolioConsole/index";
 
 function App() {
   return (
@@ -26,15 +30,18 @@ function App() {
       <div className={"container"}>
         <AskBtn />
         <Switch>
+          {/* TOOD : URL 정리 */}
           <Route exact path={"/"} component={Home} />
           <Route exact path={"/agree"} component={Agreement} />
-          <Route exact path={"/mypage"} component={Mypage} />
+          <Route exact path={"/my-page"} component={Mypage} />
 
           <Route exact path={"/loading"} component={Loading} />
 
-          <Route exact path={"/gitrepo"} component={GitRepo} />
-          <Route exact path={"/gitrepodetail"} component={GitRepoDetail} />         
-          <Route exact path={"/infoinput"} component={InfoInput} />
+          <Route exact path={"/git-repo"} component={GitRepo} />
+          <Route exact path={"/git-repo-detail"} component={GitRepoDetail} />
+          <Route exact path={"/git-info"} component={InfoInput} />
+
+          <Route exact path={"/git-console"} component={PortfolioConsole} />
 
           <Route exact path={"/YesNoPopup"} component={YesNoPopup} />
           <Route exact path={"/ChoicePopup"} component={ChoicePopup} />

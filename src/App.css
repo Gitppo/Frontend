@@ -1,6 +1,7 @@
 .container {
   width: 100%;
-  height: calc(100vh - 7.5rem);
+  height: 100%;
+  min-height: calc(100vh - 7.5rem);
 
   overflow-y: auto;
 }
@@ -13,7 +14,7 @@
 }
 
 .beautiful-title {
-  font-family: yoon-u;
+  font-family: title;
   font-weight: normal;
   color: var(--dark-blue2);
 }
@@ -26,7 +27,7 @@
 
 /* 뒤로가는 큰 글씨들 */
 .large-text-back {
-  font-family: yoon-gothic-350;
+  font-family: font-bold;
   font-size: 10em;
   font-weight: 800;
 
@@ -38,7 +39,7 @@
 
 /* 맨 앞으로 오는 큰 글씨들 */
 .large-text-front {
-  font-family: yoon-gothic-350;
+  font-family: font-bold;
   font-size: 10em;
   font-weight: 800;
 
@@ -54,7 +55,7 @@
   border-radius: 2em;
   background-color: var(--dark-blue2);
 
-  font-family: yoon-u;
+  font-family: title;
   font-size: 1.4em;
   color: white;
 
