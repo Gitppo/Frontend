@@ -3,14 +3,19 @@
 }
 
 .container {
-    border: 1px solid;
-    display: flex;
-    flex-direction: column;
+  margin:0px;
+  border: 1px solid;
+  -ms-overflow-style: none;
 }
 
-.mainInfo{
-    display: flex;
-    padding: 20px 0px;
+.container ::-webkit-scrollbar {
+  display: none;
+}
+
+.mainInfo {
+  display: flex;
+  padding: 20px 0px;
+  align-items: left;
 }
 
 .etc {
@@ -27,7 +32,7 @@
   .container input[type=email],
   .container textarea,
   .container select,
-  .button {
+  .btn {
     margin:5px;
     padding: 5px;
     border: 1px solid var(--borderColor);
@@ -48,7 +53,7 @@
     resize: none
   }
 
-  .button {
+  .btn {
     border: none;
   }
 
