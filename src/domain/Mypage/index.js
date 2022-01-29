@@ -1,53 +1,54 @@
-import React, { } from "react";
-import RoundContainer from "../../components/RoundContainer";
 import "./style.css";
-import Pin from "../../image/pin.png";
+import {useHistory} from "react-router-dom";
+import RoundContainer from "../../components/RoundContainer";
+import Pin from "../../assets/pin-red.png";
+import {useState} from "react";
 
 function Mypage() {
-  const num = {
-    savedPortfolio: "3",
-    finishedPortfolio: "1",
-    originPortfolio: "1"
-  }
-
-  const portfolioBox = ([
+  const history = useHistory();
+  const [portfolio, setPortfolio] = useState([
     {
       id: 1,
       title: "2021 조깃포 LG 포트폴리오",
-      creation:"2021.04.04",
+      state: 0,
+      creation: "2021.04.04",
       revision: {
         date: "2021.05.05",
-        time: "19:00"
-      }
+        time: "19:00",
+      },
     },
     {
       id: 2,
       title: "2021 조깃포 삼성 포트폴리오",
-      creation:"2021.04.04",
+      state: 0,
+      creation: "2021.04.04",
       revision: {
         date: "2021.05.05",
-        time: "19:00"
-      }
+        time: "19:00",
+      },
     },
     {
       id: 3,
       title: "2021 조깃포 현대 포트폴리오",
-      creation:"2021.04.04",
+      state: 1,
+      creation: "2021.04.04",
       revision: {
         date: "2021.05.05",
-        time: "19:00"
-      }
-    }
+        time: "19:00",
+      },
+    },
   ]);
 
-  function deleteDiv() {
-    const div = document.getElementById("contents");
-    div.remove();
+  function deletePortfolio(id) {
+    for (let i = 0; i < portfolio.length; i++) {
+      if (portfolio[i].id === id) {
+        portfolio.splice(i, 1);
+        break;
+      }
+    }
+    setPortfolio([...portfolio]);
   }
 
-  
-function Mypage() {
-  const history = useHistory();
   const createPofol = () => {
     history.push("/git-repo");
   };
@@ -65,37 +66,60 @@ function Mypage() {
         <div className={"mypage-upper-box-right"}>
           <div className={"mypage-manage"}>
             <span>임시 저장 중인 포트폴리오</span>
-            <span className={"beautiful-title"}>{num.savedPortfolio}</span>
+            <span className={"beautiful-title"}>
+              {portfolio?.filter((e) => e.state === 1).length}
+            </span>
           </div>
           <div className={"mypage-manage"}>
             <span>최종 완성 포트폴리오</span>
             <span className={"beautiful-title"}>
-              {data.num.finishedPortfolio}
+              {portfolio?.filter((e) => e.state === 0).length}
             </span>
           </div>
         </div>
       </div>
-      
+
       <RoundContainer>
-        <h1 className={"beautiful-title"}>기존 포트폴리오 ({num.originPortfolio})</h1>
+        <h1 className={"beautiful-title"}>
+          기존 포트폴리오 ({portfolio?.length})
+        </h1>
+
         <ul className={"mypage-wrapper-box"}>
-          {portfolioBox.map((box, index) => (          
-            <li id={"contents"} key={index}>
-              <img className={"pin-image"} src={Pin} alt={""}/>
+          {portfolio?.map((box, index) => (
+            <li className={"mypage-wrapper"} key={index}>
+              <img className={"pin-image"} src={Pin} alt={""} />
               <h4 className={"mypage-wrapper-box-title"}>{box.title}</h4>
-              <div className={"mypage-wrapper-box-date"}>생성 {box.creation}</div>
-              <div className={"mypage-wrapper-box-date"}>수정 {box.revision.date} {box.revision.time}</div>
+              <div className={"mypage-wrapper-box-date"}>
+                생성 {box.creation}
+              </div>
+              <div className={"mypage-wrapper-box-date"}>
+                수정 {box.revision.date} {box.revision.time}
+              </div>
               <div className={"mypage-wrapper-box-button"}>
-                <button className={"mypage-wrappe r-box-button-left round-button"}>수정</button>        
-                <button className={"round-button"} onClick={deleteDiv}>삭제</button>
+                <button
+                  className={"mypage-wrappe r-box-button-left round-button"}
+                >
+                  수정
+                </button>
+                <button
+                  className={"round-button"}
+                  onClick={() => deletePortfolio(box.id)}
+                >
+                  삭제
+                </button>
               </div>
             </li>
           ))}
 
+          {portfolio?.length === 0 && (
+            <h3 style={{color: "var(--dark-red)"}}>
+              기존 포트폴리오가 없습니다.
+            </h3>
+          )}
         </ul>
       </RoundContainer>
     </div>
   );
 }
- 
+
 export default Mypage;

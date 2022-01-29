@@ -1,11 +1,12 @@
 import "./style.css";
 import {useState} from "react";
+import {useHistory} from "react-router-dom";
+
 import BeforeAfterBtn from "../../components/BeforeAfterBtn";
 import Star from "../../assets/star.png";
-// import Pen from "../../assets/pen.png";
-// import Eye from "../../assets/eye.png";
-// import Fold from "../../assets/fold.png";
-import {useHistory} from "react-router-dom/cjs/react-router-dom.min";
+import Pen from "../../assets/pen.png";
+import Eye from "../../assets/eye.png";
+import Fold from "../../assets/arrow-no-head.png";
 
 const data = {
   repoTitle: "hyu-likelion/NESI",
@@ -36,17 +37,16 @@ function GitRepoDetail() {
       [name]: value,
     });
     console.log(e.target.value);
-  }
-  
+  };
+
   function openCloseToc() {
-    if(document.getElementById('toc-content').style.display === 'block') {
-      document.getElementById('toc-content').style.display = 'none';
+    if (document.getElementById("toc-content").style.display === "block") {
+      document.getElementById("toc-content").style.display = "none";
     } else {
-      document.getElementById('toc-toggle').style.src = "../../image/open.png";
-      document.getElementById('toc-content').style.display = 'block';
+      document.getElementById("toc-toggle").style.src = "../../image/open.png";
+      document.getElementById("toc-content").style.display = "block";
     }
   }
-  };
 
   const prevPage = () => {
     history.push("/git-repo");
@@ -115,14 +115,26 @@ function GitRepoDetail() {
               <div className="gitrepodetail-inner-box-title-container-text">
                 바닐라자바스크립트 구현 프로젝트 리액트로 바꿔보기
               </div>
-              <img className="gitrepodetail-inner-box-image" src={Pen} alt={""} />
+              <img
+                className="gitrepodetail-inner-box-image"
+                src={Pen}
+                alt={""}
+              />
             </div>
             <div className="gitrepodetail-inner-box-readme-container">
               <div className="gitrepodetail-inner-box-title-container-text">
                 README.md
               </div>
-              <img className="gitrepodetail-inner-box-image" src={Eye} alt={""} />
-              <img className="gitrepodetail-inner-box-image" src={Pen} alt={""} />
+              <img
+                className="gitrepodetail-inner-box-image"
+                src={Eye}
+                alt={""}
+              />
+              <img
+                className="gitrepodetail-inner-box-image"
+                src={Pen}
+                alt={""}
+              />
             </div>
             <div className="gitrepodetail-inner-box-plus-info-title">
               상세 설명
@@ -186,13 +198,13 @@ function GitRepoDetail() {
               />
             </div>
             <div className="save-button-container">
-              <button className="round-button">저장</button>             
+              <button className="round-button">저장</button>
             </div>
           </div>
           <img
             id="toc-toggle"
-            className="gitrepodetail-inner-box-fold-image"
-            src={Close}
+            // className={`gitrepodetail-inner-box-fold-image${toggle && "-down"}`}
+            src={Fold}
             alt={""}
             onClick={openCloseToc}
           />
