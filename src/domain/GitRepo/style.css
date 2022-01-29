@@ -23,15 +23,8 @@
   text-align: center;
 }
 
-.gitrepo-inner-box-title {
-  font-family: yoon-gothic-350;
-  font-size: 1.3em;
-  color: var(--dark-blue2);
-}
-
+.gitrepo-inner-box-title,
 .gitrepo-inner-box-text {
-  font-family: yoon-gothic-350;
-  font-size: 1em;
   color: var(--dark-blue2);
 }
 
@@ -47,7 +40,6 @@
 
 .gitrepo-inner-box-project-content {
   color: #707070;
-  font-family: yoon-gothic-330;
 }
 
 .gitrepo-inner-box .round-button {

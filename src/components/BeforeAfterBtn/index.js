@@ -1,14 +1,13 @@
 import "./style.css";
 
-import BeforeButton from "../../image/beforeButton.png";
-import NextButton from "../../image/nextButton.png";
+import arrowImg from "../../assets/arrow.png";
 
 function BeforeAfterBtn() {
   return (
     <div className="gitrepo-top-button-container">
       <div className="gitrepo-before">
         <div className="gitrepo-button-container">
-          <img src={BeforeButton} className="button-image" alt={""} />
+          <img src={arrowImg} className="button-image" alt={""} />
           <div className="gitrepo-button-title">이전</div>
         </div>
       </div>
@@ -17,7 +16,7 @@ function BeforeAfterBtn() {
       <div className="gitrepo-after">
         <div className="gitrepo-button-container">
           <div className="gitrepo-button-title">다음</div>
-          <img src={NextButton} className="button-image" alt={""} />
+          <img src={arrowImg} className="button-image" alt={""} />
         </div>
       </div>
     </div>

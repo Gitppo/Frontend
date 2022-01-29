@@ -23,7 +23,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  font-family: yoon-u;
+  font-family: title;
   padding-bottom: 2rem;
 }
 .gitrepodetail-top-container-title {
@@ -193,9 +193,6 @@
   outline: none;
   width: 60%;
   padding: 1%;
-}
-input::placeholder {
-  /* font-size: 10px; */
 }
 
 /* 하얀색 박스 네번째 칸 - 설명 (컨테이너) */

@@ -1,0 +1,43 @@
+.yesnopopup {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+/* 팝업 박스 */
+.yesnopopup-box {
+  width: 100%;
+  max-width: 500px;
+  min-height: 180px;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+
+  background-color: white;
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.16);
+}
+
+.yesnopopup-box-title {
+  margin-top: 30px;
+  color: #002d84;
+  text-align: center;
+}
+
+/* 버튼 */
+.yesnopopup-box-button-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 30px;
+}
+.yesnopopup-box-button {
+  margin: 0 1em;
+}

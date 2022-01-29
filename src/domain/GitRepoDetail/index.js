@@ -1,9 +1,9 @@
 import "./style.css";
 import BeforeAfterBtn from "../../components/BeforeAfterBtn";
-import Star from "../../image/star.png";
-import Pen from "../../image/pen.png";
-import Eye from "../../image/eye.png";
-import Fold from "../../image/fold.png";
+import Star from "../../assets/star.png";
+// import Pen from "../../assets/pen.png";
+// import Eye from "../../assets/eye.png";
+// import Fold from "../../assets/fold.png";
 
 function GitRepoDetail() {
   return (
@@ -54,14 +54,14 @@ function GitRepoDetail() {
             <div className="gitrepodetail-inner-box-title-container-text">
               바닐라자바스크립트 구현 프로젝트 리액트로 바꿔보기
             </div>
-            <img className="gitrepodetail-inner-box-image" src={Pen} alt={""} />
+            {/* <img className="gitrepodetail-inner-box-image" src={Pen} alt={""} /> */}
           </div>
           <div className="gitrepodetail-inner-box-readme-container">
             <div className="gitrepodetail-inner-box-title-container-text">
               README.md
             </div>
-            <img className="gitrepodetail-inner-box-image" src={Eye} alt={""} />
-            <img className="gitrepodetail-inner-box-image" src={Pen} alt={""} />
+            {/* <img className="gitrepodetail-inner-box-image" src={Eye} alt={""} />
+            <img className="gitrepodetail-inner-box-image" src={Pen} alt={""} /> */}
           </div>
           <div className="gitrepodetail-inner-box-plus-info-title">
             상세 설명
@@ -108,11 +108,11 @@ function GitRepoDetail() {
           </div>
           <div className="save-button-container">
             <div className="round-button">저장</div>
-            <img
+            {/* <img
               className="gitrepodetail-inner-box-fold-image"
               src={Fold}
               alt={""}
-            />
+            /> */}
           </div>
         </div>
       </div>

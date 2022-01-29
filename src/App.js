@@ -7,8 +7,8 @@ import Footer from "./components/Footer";
 
 import AskBtn from "./components/AskBtn";
 
-import YesNoPopup from "./components/YesNoPopup";
-import ChoicePopup from "./components/ChoicePopup";
+import YesNoPopup from "./components/Modal/YesNoPopup";
+import ChoicePopup from "./components/Modal/ChoicePopup";
 
 import Home from "./domain/Home";
 import Agreement from "./domain/Agree";
@@ -18,6 +18,7 @@ import Loading from "./domain/Loading";
 import Mypage from "./domain/Mypage";
 import InfoInput from "./domain/InfoInput";
 import Error from "./domain/Error";
+import PortfolioConsole from "./domain/PortfolioConsole/index";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
       <div className={"container"}>
         <AskBtn />
         <Switch>
+          {/* TOOD : URL 정리 */}
           <Route exact path={"/"} component={Home} />
           <Route exact path={"/agree"} component={Agreement} />
           <Route exact path={"/mypage"} component={Mypage} />
@@ -38,6 +40,12 @@ function App() {
           <Route exact path={"/gitrepo"} component={GitRepo} />
           <Route exact path={"/gitrepodetail"} component={GitRepoDetail} />
           <Route exact path={"/infoinput"} component={InfoInput} />
+
+          <Route
+            exact
+            path={"/portfolio-console"}
+            component={PortfolioConsole}
+          />
 
           <Route exact path={"/YesNoPopup"} component={YesNoPopup} />
           <Route exact path={"/ChoicePopup"} component={ChoicePopup} />

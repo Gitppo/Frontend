@@ -1,4 +1,5 @@
 import {useState} from "react";
+import {useHistory} from "react-router-dom/cjs/react-router-dom.min";
 import "./style.css";
 
 const btnMainColor = "#002d84";
@@ -6,6 +7,8 @@ const remToPx = (rem) =>
   rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 
 function Home() {
+  const history = useHistory();
+
   const [rem4, rem6, rem8] = [remToPx(4), remToPx(6), remToPx(8)];
   const [btnStyle, setBtnStyle] = useState({
     marginTop: `${rem6}px`,
@@ -22,9 +25,17 @@ function Home() {
       setBtnStyle({...btnStyle, marginTop: `${rem6 - scrolled}px`});
   };
 
+  const login = () => {
+    history.push("/mypage");
+  };
+
   return (
     <div className={"home"} onScroll={onHomeScroll}>
-      <button className={"home-login-button round-button"} style={btnStyle}>
+      <button
+        className={"home-login-button round-button"}
+        style={btnStyle}
+        onClick={login}
+      >
         깃 헙 로그인
       </button>
 
