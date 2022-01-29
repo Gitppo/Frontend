@@ -23,7 +23,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  font-family: yoon-u;
+  font-family: title;
   padding-bottom: 2rem;
 }
 .gitrepodetail-top-container-title {
@@ -200,6 +200,7 @@
   width: 60%;
   padding: 1%;
 }
+
 /*input::placeholder {
   font-size: 10px;
 }*/
