@@ -1,11 +1,14 @@
-:root {
-    --borderColor: #172B7A;
+.infoInput .mainInfo {
+  display: flex;
 }
 
-.container {
-    border: 1px solid;
-    display: flex;
-    flex-direction: column;
+.infoInput input,
+.infoInput select {
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid var(--borderColor);
+  border-radius: 2px;
+  height: 2rem;
 }
 
 .mainInfo{

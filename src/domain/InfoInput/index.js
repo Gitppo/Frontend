@@ -47,9 +47,16 @@ function InfoInput() {
   }
 
   return (
-    < div className="container" >
+    <div className="infoInput">
+      <BeforeAfterBtn
+        saveShow={true}
+        onPrev={prevPage}
+        onNext={nextPage}
+        onSave={tmpSave}
+      />
+
       {/* mainInfo: 기본 인적사항, 사진 */}
-      < div className="mainInfo" >
+      <div className="mainInfo">
         {/* generalInfo: 기본 인적사항 */}
         < div className="generalInfo" >
           <h2>기본 인적사항</h2><br />
@@ -372,8 +379,8 @@ function InfoInput() {
           )
         })}
       </div>
-    </div >
-  )
+    </div>
+  );
 }
 
 export default InfoInput;
