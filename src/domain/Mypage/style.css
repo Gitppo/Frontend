@@ -63,6 +63,13 @@
 }
 
 /* 기존 포트폴리오 */
+.pin-image {
+  width: 32px;
+  height: 35px;
+  margin-top: -2.0%;
+  margin-left: -2.0%;
+  position: absolute;
+}
 .mypage-wrapper-box {
   display: flex;
   flex-wrap: wrap;

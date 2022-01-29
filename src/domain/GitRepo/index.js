@@ -15,7 +15,7 @@ function GitRepo() {
         <div className="gitrepo-inner-box round-container-upper-bold">
           <h1 className="gitrepo-inner-box-title">
             포트폴리오를 위해 가져올 수 있는 레포는 총{" "}
-            <span style={{color: "red"}}>{3}</span>개입니다.
+            <span>{3}</span>개입니다.
           </h1>
           <br />
 
