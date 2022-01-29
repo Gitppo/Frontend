@@ -1,6 +1,9 @@
 import "./style.css";
+
 import React, { useEffect, useState } from "react";
 import Modal from '../../components/Modal/modal'
+  import {useHistory} from "react-router-dom";
+import BeforeAfterBtn from "../../components/BeforeAfterBtn";
 
 function InfoInput() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -15,7 +18,6 @@ function InfoInput() {
     openModal()
   }, []);
 
-
   const [imgBase64, setImgBase64] = useState("");
   const [imgFile, setImgFile] = useState(null);
   const handleChangeFile = (event) => {
@@ -25,7 +27,7 @@ function InfoInput() {
       if (base64) {
         setImgBase64(base64.toString());
       }
-    }
+    };
     if (event.target.files[0]) {
       reader.readAsDataURL(event.target.files[0]);
       setImgFile(event.target.files[0]);
@@ -59,6 +61,18 @@ function InfoInput() {
     setList([...List, {}])
   }
 
+  const handleAddClick = (List) => {
+    setCareerList([...List, List]);
+  };
+
+  const prevPage = () => {
+    history.push("/git-repo-detail");
+  };
+  const nextPage = () => {
+    history.push("/git-console");
+  };
+  const tmpSave = () => {};
+  
   return (
     <div className="document">
       <Modal open={modalOpen} close={closeModal}>
@@ -71,8 +85,7 @@ function InfoInput() {
         onPrev={prevPage}
         onNext={nextPage}
         onSave={tmpSave}
-      />
-          
+      />          
         {/* mainInfo: 기본 인적사항, 사진 */}
         < div className="mainInfo" >
           {/* generalInfo: 기본 인적사항 */}

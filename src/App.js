@@ -43,8 +43,8 @@ function App() {
 
           <Route exact path={"/git-console"} component={PortfolioConsole} />
 
-          <Route exact path={"/YesNoPopup"} component={YesNoPopup} />
-          <Route exact path={"/ChoicePopup"} component={ChoicePopup} />
+          {/* <Route exact path={"/YesNoPopup"} component={YesNoPopup} />
+          <Route exact path={"/ChoicePopup"} component={ChoicePopup} /> */}
 
           <Route path={"/error"} component={Error} />
           <Route path={"*"} component={Error} />
