@@ -3,7 +3,7 @@ import errorHippo from "../../assets/hippo-transparent.png";
 
 function Error404() {
   const location = useLocation();
-  if (location.pathname !== "/error/git-load-fail")
+  if (location.pathname !== "/error/load-fail")
     return (
       <>
         <div className={"large-text-front"}>
