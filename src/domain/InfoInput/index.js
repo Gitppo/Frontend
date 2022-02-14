@@ -96,13 +96,14 @@ function InfoInput() {
         </h3>
       </Modal>
 
-      <div className="container">
+      < div className="container" >
         <BeforeAfterBtn
           saveShow={true}
           onPrev={prevPage}
           onNext={nextPage}
           onSave={tmpSave}
         />
+
         {/* mainInfo: 기본 인적사항, 사진 */}
         <div className="mainInfo">
           {/* generalInfo: 기본 인적사항 */}
