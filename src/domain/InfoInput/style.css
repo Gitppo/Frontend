@@ -1,14 +1,18 @@
-:root {
-    --borderColor: #172B7A;
+.infoInput .mainInfo {
+  display: flex;
 }
 
-.container {
-  margin:0px;
+.container .document {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.container{
+  margin: 0px;
   border: 1px solid;
   -ms-overflow-style: none;
 }
-
-.container ::-webkit-scrollbar {
+.container::-webkit-scrollbar{
   display: none;
 }
 
@@ -19,50 +23,91 @@
 }
 
 .etc {
-    padding: 20px 0px;
+  padding: 20px 0px;
 }
 
 .intro {
-    display: flex;
-    flex-direction: column;
-  }
+  display: flex;
+  flex-direction: column;
+}
 
-  .container input[type=text],
-  .container input[type=date],
-  .container input[type=email],
-  .container textarea,
-  .container select,
-  .btn {
-    margin:5px;
-    padding: 5px;
-    border: 1px solid var(--borderColor);
-    background-color: white;
-    border-radius: 5px;
-    height: 2rem;
-  }
+input::placeholder,
+textarea::placeholder {
+  color:#80AAFF;
+  font-size: 0.8rem;
+}
 
-  #introLong {
-    width: 42rem;
-    height:10rem;
-    resize: none
-  }
+.container input[type="text"],
+.container input[type="date"],
+.container input[type="month"],
+.container input[type="email"],
+.container textarea,
+.container select,
+.btn {
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid var(--dark-blue1);
+  background-color: white;
+  border-radius: 5px;
+  height: 2rem;
+  color:#80AAFF;
+}
 
-  #introShort {
-    width: 42rem;
-    height:2rem;
-    resize: none
-  }
+#imgFile {
+  visibility: hidden;
+}
 
-  .btn {
-    border: none;
-  }
+#imgUpload, #imgDefault {
+  color:white;
+  background-color: #AA3937;
+  border:none;
+  width: 100px;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  font-size: 1rem;
+}
+#imgDefault {
+  background-color: #002D84;
+  margin-top: 0.5rem;
+}
 
-  .imgBlock, #thumbnail {
-    background-color: #efefef;
-    width: 150px;
-    height: 150px;
-  }
+#introLong {
+  width: 42rem;
+  height: 10rem;
+  resize: none;
+}
 
-  .img {
-    margin-left:30px;
-  }
+#introShort {
+  width: 42rem;
+  height: 2rem;
+  resize: none;
+}
+
+#link, #des {
+  width: 44.4rem;
+  height: 2rem;
+  resize: none;
+  margin-left: 13.3rem;
+}
+
+.btn {
+  border: none;
+}
+
+.imgBlock,
+#thumbnail {
+  background-color: #efefef;
+  width: 150px;
+  height: 150px;
+}
+
+.img {
+  display: flex;
+  margin-left: 30px;
+}
+
+.imgBtns {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1rem;
+}

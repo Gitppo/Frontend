@@ -6,7 +6,7 @@
     bottom: 0;
     left: 0;
     z-index: 99;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0,45,132,0.62);
   }
   .modal button {
     outline: none;
@@ -15,7 +15,7 @@
   }
   .modal > section {
     width: 90%;
-    max-width: 450px;
+    max-width: 30rem;
     margin: 0 auto;
     border-radius: 0.3rem;
     background-color: #fff;
@@ -24,21 +24,21 @@
     overflow: hidden;
   }
   .modal > section > main {
-    padding: 16px;
+    padding: 2rem;
   }
   .modal > section > footer {
-    padding: 12px 16px;
+    padding: 0rem 4rem;
     text-align: center;
   }
   .modal > section > footer button {
-    padding: 6px 12px;
-    margin-right: 20px;
+    padding: 0.6rem 2rem;
     color: #fff;
-    border-radius: 5px;
-    font-size: 13px;
+    border-radius: 5rem;
+    font-size: 1.2rem;
   }
   .modal > section > footer > .yes{
     background-color: #1C2A75;
+    margin-right: 1rem;
   }
   .modal > section > footer > .no{
     background-color: #9B4337;
