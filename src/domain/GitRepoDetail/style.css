@@ -60,10 +60,11 @@
   padding: 0.2rem;
   background-color: white;
   text-align: center;
-  border-radius: 0.5em;  
+  border-radius: 0.5em;
+  box-sizing: content-box;
 }
-.gitrepodetail-inner-box:hover{
-  border: 3.5px solid var(--dark-red);
+.gitrepodetail-inner-box:hover {
+  outline: 3px solid var(--dark-red);
 }
 .gitrepodetail-inner-box-image {
   width: 15px;
@@ -212,7 +213,7 @@
   align-items: center;
   padding: 1rem;
   color: #272727;
-  font-size: 1.0rem;
+  font-size: 1rem;
 }
 .gitrepodetail-inner-box-plus-info-title-info-box-skill {
   background-color: #eef1f7;
@@ -255,11 +256,18 @@
 }
 
 /* 하얀색 박스 접기 이미지 */
-.gitrepodetail-inner-box-fold-image {
-  width: 20px;
-  height: 10px;
+.gitrepodetail-inner-box-fold-image,
+.gitrepodetail-inner-box-fold-image-down {
+  width: 0.3em;
+  height: auto;
+
   cursor: pointer;
-  margin: 1%;
+}
+.gitrepodetail-inner-box-fold-image {
+  transform: rotate(-90deg);
+}
+.gitrepodetail-inner-box-fold-image-down {
+  transform: rotate(90deg);
 }
 
 .gitrepodetail .container-title {
@@ -270,4 +278,3 @@
 .gitrepodetail .toc-content {
   display: none;
 }
-

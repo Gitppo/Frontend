@@ -1,8 +1,9 @@
 import "./style.css";
 
-import React, { useEffect, useState } from "react";
+
+import React, {useEffect, useState} from "react";
 import Modal from "../../components/Modal/modal";
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import BeforeAfterBtn from "../../components/BeforeAfterBtn";
 
 function InfoInput() {
@@ -59,7 +60,7 @@ function InfoInput() {
   const [patentList, setPatentList] = useState([{ name: "", number: "", company: "", author: "", date: "", link: "", des: "" }]);
 
   const handleInputChange = (List, setList, i, e) => {
-    const { name, value } = e.target;
+    const {name, value} = e.target;
     const list = [...List];
     list[i][name] = value;
     setList(list);
@@ -91,19 +92,19 @@ function InfoInput() {
   return (
     <div className="document">
       <Modal open={modalOpen} close={closeModal}>
-        <h3 style={{ textAlign: "center", color: "var(--dark-blue1)" }}>
+        <h3 style={{textAlign: "center", color: "var(--dark-blue1)"}}>
           기존에 입력한 정보를 가져오시겠습니까?
         </h3>
       </Modal>
 
-      < div className="container" >
+      <div className="container">
         <BeforeAfterBtn
           saveShow={true}
           onPrev={prevPage}
           onNext={nextPage}
           onSave={tmpSave}
         />
-
+            
         {/* mainInfo: 기본 인적사항, 사진 */}
         <div className="mainInfo">
           {/* generalInfo: 기본 인적사항 */}

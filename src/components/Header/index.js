@@ -33,7 +33,7 @@ function Header() {
           <Link to={"/"}>
             <span style={{opacity: isHome ? 1 : 0.3}}>홈</span>
           </Link>
-          <Link to={"/mypage"}>
+          <Link to={"/my-page"}>
             <span style={{opacity: isHome ? 0.3 : 1}}>마이페이지</span>
           </Link>
         </div>
