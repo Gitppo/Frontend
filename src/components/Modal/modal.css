@@ -1,63 +1,69 @@
 .modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 99;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-.modal button {
-  outline: none;
-  cursor: pointer;
-  border: 0;
-}
-.modal > section {
-  width: 90%;
-  max-width: 450px;
-  margin: 0 auto;
-  border-radius: 0.3rem;
-  background-color: #fff;
-  /* 팝업이 열릴때 스르륵 열리는 효과 */
-  animation: modal-show 0.3s;
-  overflow: hidden;
-}
-.modal > section > main {
-  padding: 16px;
-}
-.modal > section > footer {
-  padding: 12px 16px;
-  text-align: center;
-}
-
-.modal > section > footer > .no {
-  background-color: var(--dark-red);
-}
-.modal > section > footer > .no:hover {
-  background-color: var(--dark-blue1) !important;
-}
-.modal.openModal {
-  display: flex;
-  align-items: center;
-  /* 팝업이 열릴때 스르륵 열리는 효과 */
-  animation: modal-bg-show 0.3s;
-}
-@keyframes modal-show {
-  from {
-    opacity: 0;
-    margin-top: -50px;
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+    background-color: rgba(0,45,132,0.62);
   }
-  to {
-    opacity: 1;
-    margin-top: 0;
+  .modal button {
+    outline: none;
+    cursor: pointer;
+    border: 0;
   }
-}
-@keyframes modal-bg-show {
-  from {
-    opacity: 0;
+  .modal > section {
+    width: 90%;
+    max-width: 30rem;
+    margin: 0 auto;
+    border-radius: 0.3rem;
+    background-color: #fff;
+    /* 팝업이 열릴때 스르륵 열리는 효과 */
+    animation: modal-show 0.3s;
+    overflow: hidden;
   }
-  to {
-    opacity: 1;
+  .modal > section > main {
+    padding: 2rem;
   }
-}
+  .modal > section > footer {
+    padding: 0rem 4rem;
+    text-align: center;
+  }
+  .modal > section > footer button {
+    padding: 0.6rem 2rem;
+    color: #fff;
+    border-radius: 5rem;
+    font-size: 1.2rem;
+  }
+  .modal > section > footer > .yes{
+    background-color: #1C2A75;
+    margin-right: 1rem;
+  }
+  .modal > section > footer > .no{
+    background-color: #9B4337;
+  }
+  .modal.openModal {
+    display: flex;
+    align-items: center;
+    /* 팝업이 열릴때 스르륵 열리는 효과 */
+    animation: modal-bg-show 0.3s;
+  }
+  @keyframes modal-show {
+    from {
+      opacity: 0;
+      margin-top: -50px;
+    }
+    to {
+      opacity: 1;
+      margin-top: 0;
+    }
+  }
+  @keyframes modal-bg-show {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }

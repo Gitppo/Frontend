@@ -2,12 +2,17 @@
   display: flex;
 }
 
-.container {
+.container .document {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.container{
   margin: 0px;
   border: 1px solid;
   -ms-overflow-style: none;
 }
-.container ::-webkit-scrollbar {
+.container::-webkit-scrollbar{
   display: none;
 }
 
@@ -26,8 +31,15 @@
   flex-direction: column;
 }
 
+input::placeholder,
+textarea::placeholder {
+  color:#80AAFF;
+  font-size: 0.8rem;
+}
+
 .container input[type="text"],
 .container input[type="date"],
+.container input[type="month"],
 .container input[type="email"],
 .container textarea,
 .container select,
@@ -38,6 +50,25 @@
   background-color: white;
   border-radius: 5px;
   height: 2rem;
+  color:#80AAFF;
+}
+
+#imgFile {
+  visibility: hidden;
+}
+
+#imgUpload, #imgDefault {
+  color:white;
+  background-color: #AA3937;
+  border:none;
+  width: 100px;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  font-size: 1rem;
+}
+#imgDefault {
+  background-color: #002D84;
+  margin-top: 0.5rem;
 }
 
 #introLong {
@@ -52,6 +83,13 @@
   resize: none;
 }
 
+#link, #des {
+  width: 44.4rem;
+  height: 2rem;
+  resize: none;
+  margin-left: 13.3rem;
+}
+
 .btn {
   border: none;
 }
@@ -64,5 +102,12 @@
 }
 
 .img {
+  display: flex;
   margin-left: 30px;
+}
+
+.imgBtns {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1rem;
 }

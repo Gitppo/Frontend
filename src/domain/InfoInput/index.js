@@ -1,5 +1,6 @@
 import "./style.css";
 
+
 import React, {useEffect, useState} from "react";
 import Modal from "../../components/Modal/modal";
 import {useHistory} from "react-router-dom";
@@ -36,26 +37,27 @@ function InfoInput() {
   };
 
   const [infoList, setInfoList] = useState([
-    {name: "", mail: "", birth: "", tel: ""},
+    { name: "", mail: "", birth: "", tel: "" },
   ]);
   const [careerList, setCareerList] = useState([
-    {company: "", depart: "", start: "", end: "", position: "", job: ""},
+    { company: "", depart: "", start: "", end: "", position: "", job: "" },
   ]);
   const [schoolList, setSchoolList] = useState([
-    {schoolType: "", start: "", end: "", schoolStat: ""},
+    { schoolType: "", start: "", end: "", schoolStat: "" },
   ]);
   const [certList, setCertList] = useState([
-    {cert: "", level: "", auth: "", issueDate: ""},
+    { cert: "", level: "", auth: "", issueDate: "" },
   ]);
   const [awardList, setAwardList] = useState([
-    {award: "", place: "", auth: "", issueDate: ""},
+    { award: "", place: "", auth: "", issueDate: "" },
   ]);
   const [etcList, setEtcList] = useState([
-    {etc: "", about: "", start: "", end: ""},
+    { etc: "", about: "", start: "", end: "" },
   ]);
-  const [introList, setIntroList] = useState([{introShort: "", introLong: ""}]);
-  const [snsList, setSnsList] = useState([{sns: "", link: ""}]);
-  const [stackList, setStackList] = useState([{stack: "", level: ""}]);
+  const [introList, setIntroList] = useState([{ introShort: "", introLong: "" }]);
+  const [snsList, setSnsList] = useState([{ sns: "", link: "" }]);
+  const [stackList, setStackList] = useState([{ stack: "", level: "" }]);
+  const [patentList, setPatentList] = useState([{ name: "", number: "", company: "", author: "", date: "", link: "", des: "" }]);
 
   const handleInputChange = (List, setList, i, e) => {
     const {name, value} = e.target;
@@ -74,13 +76,18 @@ function InfoInput() {
     setList([...List, {}]);
   };
 
+  const handleUpload = () => {
+    const inputImg = document.getElementById("imgFile");
+    inputImg.click();
+  }
+
   const prevPage = () => {
     history.push("/git-repo-detail");
   };
   const nextPage = () => {
     history.push("/git-console");
   };
-  const tmpSave = () => {};
+  const tmpSave = () => { };
 
   return (
     <div className="document">
@@ -97,6 +104,7 @@ function InfoInput() {
           onNext={nextPage}
           onSave={tmpSave}
         />
+            
         {/* mainInfo: 기본 인적사항, 사진 */}
         <div className="mainInfo">
           {/* generalInfo: 기본 인적사항 */}
@@ -156,11 +164,17 @@ function InfoInput() {
             <div className="imgBlock">
               <img id="thumbnail" src={imgBase64 || ""} alt={""} />
             </div>
-            <div>
+            <div className="imgBtns">
+              <button id="imgUpload" onClick={handleUpload}>
+                수정
+              </button>
+              <button id="imgDefault">
+                기본 이미지
+              </button>
               <input
                 type="file"
-                name="imgFile"
                 id="imgFile"
+                name="imgFile"
                 onChange={handleChangeFile}
               />
             </div>
@@ -482,27 +496,27 @@ function InfoInput() {
           <div id="intro">
             자기소개
             {introList.map((x, i) => {
-              return (
-                <div id="introList">
-                  <textarea
-                    id="introShort"
-                    placeholder="한줄소개"
-                    value={x?.introShort}
-                    onChange={(e) => {
-                      handleInputChange(introList, setIntroList, i, e);
-                    }}
-                  />
-                  <textarea
-                    id="introLong"
-                    placeholder="자기소개"
-                    value={x?.introLong}
-                    onChange={(e) => {
-                      handleInputChange(introList, setIntroList, i, e);
-                    }}
-                  />
-                </div>
-              );
-            })}
+            return (
+              <div id="introList">
+                <textarea
+                  id="introShort"
+                  placeholder="한줄소개"
+                  value={x?.introShort}
+                  onChange={(e) => {
+                    handleInputChange(introList, setIntroList, i, e);
+                  }}
+                />
+                <textarea
+                  id="introLong"
+                  placeholder="자기소개"
+                  value={x?.introLong}
+                  onChange={(e) => {
+                    handleInputChange(introList, setIntroList, i, e);
+                  }}
+                />
+              </div>
+            );
+          })}
           </div>
           <br />
           SNS
@@ -569,7 +583,11 @@ function InfoInput() {
                   onChange={(e) =>
                     handleInputChange(stackList, setStackList, i, e)
                   }
+                  list="stackoption"
                 />
+                <datalist id="stackoption">
+                  <option value="asdf" />
+                </datalist>
                 <select
                   name="level"
                   value={x?.level}
@@ -585,9 +603,81 @@ function InfoInput() {
               </div>
             );
           })}
+
+          <br />
+          출판 / 논문 / 특허
+          <input
+            className="btn"
+            type="button"
+            value="+"
+            onClick={(e) => {
+              handleAddClick(patentList, setPatentList, e);
+            }}
+          />
+          {patentList.map((x, i) => {
+            return (
+              <div id="patentList">
+                <input
+                  className="btn"
+                  type="button"
+                  value="-"
+                  onClick={(e) => handleRemoveClick(patentList, setPatentList, i)}
+                />
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="이름"
+                  value={x?.name}
+                  onChange={(e) => handleInputChange(patentList, setPatentList, i, e)}
+                />
+                <input
+                  type="text"
+                  name="number"
+                  placeholder="고유번호/출원번호"
+                  value={x?.number}
+                  onChange={(e) => handleInputChange(patentList, setPatentList, i, e)}
+                />
+                <input
+                  type="text"
+                  name="company"
+                  placeholder="출판사/출원국가"
+                  value={x?.company}
+                  onChange={(e) => handleInputChange(patentList, setPatentList, i, e)}
+                />
+                <input
+                  type="text"
+                  name="author"
+                  placeholder="저자/출판인"
+                  value={x?.author}
+                  onChange={(e) => handleInputChange(patentList, setPatentList, i, e)}
+                />
+                <input
+                  type="month"
+                  name="date"
+                  placeholder="발행/출원 연월"
+                  value={x?.date}
+                  onChange={(e) => handleInputChange(patentList, setPatentList, i, e)}
+                />
+                <textarea
+                  id="link"
+                  name="link"
+                  placeholder="링크"
+                  value={x?.link}
+                  onChange={(e) => handleInputChange(patentList, setPatentList, i, e)}
+                />
+                <textarea
+                  id="des"
+                  name="des"
+                  placeholder="설명"
+                  value={x?.des}
+                  onChange={(e) => handleInputChange(patentList, setPatentList, i, e)}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 
