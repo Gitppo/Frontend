@@ -272,9 +272,11 @@
   cursor: pointer;
 }
 .grd-inner-box-fold-image {
+  transition: all 300ms;
   transform: rotate(-90deg);
 }
 .grd-inner-box-fold-image-down {
+  transition: all 300ms;
   transform: rotate(90deg);
 }
 

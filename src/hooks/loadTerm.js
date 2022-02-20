@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const loadTerm = async () => {
-  const result = await axios
+  return await axios
     .get(`${process.env.REACT_APP_BACKEND}/api/term`)
     .then((r) => {
       if (r.status === 200) {
@@ -17,8 +17,6 @@ export const loadTerm = async () => {
       console.error(e);
       throw e;
     });
-
-  return result;
 };
 
 export const saveTermToAgree = async (contract) => {
