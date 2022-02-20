@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import Modal from "../../components/Modal/modal";
 import {useHistory} from "react-router-dom";
 import BeforeAfterBtn from "../../components/BeforeAfterBtn";
+import RoundContainer from "../../components/RoundContainer";
 
 function InfoInput() {
   const history = useHistory();
@@ -56,6 +57,17 @@ function InfoInput() {
   const [introList, setIntroList] = useState([{introShort: "", introLong: ""}]);
   const [snsList, setSnsList] = useState([{sns: "", link: ""}]);
   const [stackList, setStackList] = useState([{stack: "", level: ""}]);
+  const [patentList, setPatentList] = useState([
+    {
+      name: "",
+      number: "",
+      company: "",
+      author: "",
+      date: "",
+      link: "",
+      des: "",
+    },
+  ]);
 
   const handleInputChange = (List, setList, i, e) => {
     const {name, value} = e.target;
@@ -74,6 +86,11 @@ function InfoInput() {
     setList([...List, {}]);
   };
 
+  const handleUpload = () => {
+    const inputImg = document.getElementById("imgFile");
+    inputImg.click();
+  };
+
   const prevPage = () => {
     history.push("/git-repo-detail");
   };
@@ -83,25 +100,26 @@ function InfoInput() {
   const tmpSave = () => {};
 
   return (
-    <div className="document">
+    <div className="info-input">
       <Modal open={modalOpen} close={closeModal}>
         <h3 style={{textAlign: "center", color: "var(--dark-blue1)"}}>
           기존에 입력한 정보를 가져오시겠습니까?
         </h3>
       </Modal>
 
-      <div className="container">
-        <BeforeAfterBtn
-          saveShow={true}
-          onPrev={prevPage}
-          onNext={nextPage}
-          onSave={tmpSave}
-        />
+      <BeforeAfterBtn
+        saveShow={true}
+        onPrev={prevPage}
+        onNext={nextPage}
+        onSave={tmpSave}
+      />
+
+      <RoundContainer blueHeader={true}>
         {/* mainInfo: 기본 인적사항, 사진 */}
-        <div className="mainInfo">
+        <div className="main-info">
           {/* generalInfo: 기본 인적사항 */}
-          <div className="generalInfo">
-            <h2>기본 인적사항</h2>
+          <div>
+            <h1 className="beautiful-title">기본 인적사항</h1>
             <br />
             {infoList.map((x, i) => {
               return (
@@ -152,225 +170,241 @@ function InfoInput() {
               );
             })}
           </div>
-          <div className="img">
-            <div className="imgBlock">
-              <img id="thumbnail" src={imgBase64 || ""} alt={""} />
-            </div>
-            <div>
-              <input
-                type="file"
-                name="imgFile"
-                id="imgFile"
-                onChange={handleChangeFile}
-              />
+
+          {/* 사진 */}
+          <div>
+            <h1 className="beautiful-title">사진</h1>
+            <br />
+
+            <div className="img-container">
+              <div className="img-preview">
+                <img src={imgBase64 || ""} alt={""} />
+              </div>
+
+              <div className="img-btns">
+                <button className="round-button" onClick={handleUpload}>
+                  수정
+                </button>
+                <button className="round-button">기본 이미지로</button>
+                <input type="file" name="imgFile" onChange={handleChangeFile} />
+              </div>
             </div>
           </div>
         </div>
-        <div className="etc">
-          <h2>그 외의 정보</h2>
+
+        <br />
+
+        <div className="ii-etc">
+          <h1 className="beautiful-title">그 외의 정보</h1>
           <br />
-          <div id="infoList">
-            경력사항
-            <input
-              className="btn"
-              type="button"
-              value="+"
-              onClick={(e) => {
-                handleAddClick(careerList, setCareerList, e);
-              }}
-            />
-            {careerList.map((x, i) => (
-              <div id="careerList">
-                <input
-                  className="btn"
-                  type="button"
-                  value="-"
-                  onClick={(e) => {
-                    handleRemoveClick(careerList, setCareerList, i);
-                  }}
-                />
-                <input
-                  type="text"
-                  name="company"
-                  placeholder="회사명"
-                  value={x?.company}
-                  size="15"
-                  onChange={(e) =>
-                    handleInputChange(careerList, setCareerList, i, e)
-                  }
-                />
-                <input
-                  type="text"
-                  name="depart"
-                  placeholder="부서명"
-                  value={x?.depart}
-                  size="10"
-                  onChange={(e) =>
-                    handleInputChange(careerList, setCareerList, i, e)
-                  }
-                />
-                <input
-                  type="date"
-                  name="start"
-                  value={x?.start}
-                  onChange={(e) =>
-                    handleInputChange(careerList, setCareerList, i, e)
-                  }
-                />
-                ~
-                <input
-                  type="date"
-                  name="end"
-                  value={x?.end}
-                  onChange={(e) =>
-                    handleInputChange(careerList, setCareerList, i, e)
-                  }
-                />
-                <input
-                  type="text"
-                  name="position"
-                  value={x?.position}
-                  size="10"
-                  placeholder="직위"
-                  onChange={(e) =>
-                    handleInputChange(careerList, setCareerList, i, e)
-                  }
-                />
-                <input
-                  type="text"
-                  name="job"
-                  value={x?.job}
-                  size="10"
-                  placeholder="직무"
-                  onChange={(e) =>
-                    handleInputChange(careerList, setCareerList, i, e)
-                  }
-                />
-              </div>
-            ))}
+          <div>
+            <div className="title">
+              <h3>경력사항</h3>
+              <button
+                onClick={(e) => {
+                  handleAddClick(careerList, setCareerList, e);
+                }}
+              >
+                +
+              </button>
+            </div>
+
+            <ul>
+              {careerList.map((x, i) => (
+                <li key={`career-list-${i}`}>
+                  <input
+                    className="btn"
+                    type="button"
+                    value="-"
+                    onClick={(e) => {
+                      handleRemoveClick(careerList, setCareerList, i);
+                    }}
+                  />
+                  <input
+                    type="text"
+                    name="company"
+                    placeholder="회사명"
+                    value={x?.company}
+                    size="15"
+                    onChange={(e) =>
+                      handleInputChange(careerList, setCareerList, i, e)
+                    }
+                  />
+                  <input
+                    type="text"
+                    name="depart"
+                    placeholder="부서명"
+                    value={x?.depart}
+                    size="10"
+                    onChange={(e) =>
+                      handleInputChange(careerList, setCareerList, i, e)
+                    }
+                  />
+                  <input
+                    type="date"
+                    name="start"
+                    value={x?.start}
+                    onChange={(e) =>
+                      handleInputChange(careerList, setCareerList, i, e)
+                    }
+                  />
+                  ~
+                  <input
+                    type="date"
+                    name="end"
+                    value={x?.end}
+                    onChange={(e) =>
+                      handleInputChange(careerList, setCareerList, i, e)
+                    }
+                  />
+                  <input
+                    type="text"
+                    name="position"
+                    value={x?.position}
+                    size="10"
+                    placeholder="직위"
+                    onChange={(e) =>
+                      handleInputChange(careerList, setCareerList, i, e)
+                    }
+                  />
+                  <input
+                    type="text"
+                    name="job"
+                    value={x?.job}
+                    size="10"
+                    placeholder="직무"
+                    onChange={(e) =>
+                      handleInputChange(careerList, setCareerList, i, e)
+                    }
+                  />
+                </li>
+              ))}
+            </ul>
           </div>
           <br />
-          학력사항
-          <input
-            className="btn"
-            type="button"
-            value="+"
-            onClick={(e) => {
-              handleAddClick(schoolList, setSchoolList, e);
-            }}
-          />
-          {schoolList.map((x, i) => {
-            return (
-              <div id="schoolList">
-                <input
-                  className="btn"
-                  type="button"
-                  value="-"
-                  onClick={(e) => {
-                    handleRemoveClick(schoolList, setSchoolList, i);
-                  }}
-                />
-                <select
-                  name="schoolType"
-                  value={x?.schoolType}
-                  onChange={(e) =>
-                    handleInputChange(schoolList, setSchoolList, i, e)
-                  }
-                >
-                  <option value="high">고등학교</option>
-                  <option value="univ">대학교</option>
-                  <option value="grad">대학원</option>
-                  <option value="etc">기타</option>
-                </select>
-                <input
-                  type="date"
-                  name="start"
-                  value={x?.start}
-                  onChange={(e) =>
-                    handleInputChange(schoolList, setSchoolList, i, e)
-                  }
-                />
-                ~
-                <input
-                  type="date"
-                  name="end"
-                  value={x?.end}
-                  onChange={(e) => handleInputChange(schoolList, i, e)}
-                />
-                <select
-                  name="schoolStat"
-                  value={x?.schoolStat}
-                  onChange={(e) =>
-                    handleInputChange(schoolList, setSchoolList, i, e)
-                  }
-                >
-                  <option value="attend">재학</option>
-                  <option value="graduate">졸업</option>
-                </select>
-              </div>
-            );
-          })}
+          <div>
+            <div className="title">
+              <h3>학력사항</h3>
+              <button
+                onClick={(e) => handleAddClick(schoolList, setSchoolList, e)}
+              >
+                +
+              </button>
+            </div>
+
+            <ul>
+              {schoolList.map((x, i) => (
+                <li key={`school-list-${i}`}>
+                  <input
+                    className="btn"
+                    type="button"
+                    value="-"
+                    onClick={(e) => {
+                      handleRemoveClick(schoolList, setSchoolList, i);
+                    }}
+                  />
+                  <select
+                    name="schoolType"
+                    value={x?.schoolType}
+                    onChange={(e) =>
+                      handleInputChange(schoolList, setSchoolList, i, e)
+                    }
+                  >
+                    <option value="high">고등학교</option>
+                    <option value="univ">대학교</option>
+                    <option value="grad">대학원</option>
+                    <option value="etc">기타</option>
+                  </select>
+                  <input
+                    type="date"
+                    name="start"
+                    value={x?.start}
+                    onChange={(e) =>
+                      handleInputChange(schoolList, setSchoolList, i, e)
+                    }
+                  />
+                  ~
+                  <input
+                    type="date"
+                    name="end"
+                    value={x?.end}
+                    onChange={(e) => handleInputChange(schoolList, i, e)}
+                  />
+                  <select
+                    name="schoolStat"
+                    value={x?.schoolStat}
+                    onChange={(e) =>
+                      handleInputChange(schoolList, setSchoolList, i, e)
+                    }
+                  >
+                    <option value="attend">재학</option>
+                    <option value="graduate">졸업</option>
+                  </select>
+                </li>
+              ))}
+            </ul>
+          </div>
           <br />
-          자격/어학사항
-          <input
-            className="btn"
-            type="button"
-            value="+"
-            onClick={(e) => {
-              handleAddClick(certList, setCertList, e);
-            }}
-          />
-          {certList.map((x, i) => {
-            return (
-              <div id="certList">
-                <input
-                  className="btn"
-                  type="button"
-                  value="-"
-                  onClick={(e) => {
-                    handleRemoveClick(certList, setCertList, i);
-                  }}
-                />
-                <input
-                  type="text"
-                  name="cert"
-                  placeholder="자격/어학 종류"
-                  value={x?.cert}
-                  onChange={(e) =>
-                    handleInputChange(certList, setCertList, i, e)
-                  }
-                />
-                <input
-                  type="text"
-                  name="level"
-                  placeholder="등급/레벨/점수"
-                  value={x?.level}
-                  onChange={(e) =>
-                    handleInputChange(certList, setCertList, i, e)
-                  }
-                />
-                <input
-                  type="text"
-                  name="auth"
-                  placeholder="발급기관"
-                  value={x?.auth}
-                  onChange={(e) =>
-                    handleInputChange(certList, setCertList, i, e)
-                  }
-                />
-                <input
-                  type="date"
-                  name="issueDate"
-                  value={x?.issueDate}
-                  onChange={(e) =>
-                    handleInputChange(certList, setCertList, i, e)
-                  }
-                />
-              </div>
-            );
-          })}
+          <div>
+            <div className="title">
+              <h3>자격/어학사항</h3>
+              <button onClick={(e) => handleAddClick(certList, setCertList, e)}>
+                +
+              </button>
+            </div>
+
+            <ul>
+              {certList.map((x, i) => (
+                <li key={`cer-list-${i}`}>
+                  <input
+                    className="btn"
+                    type="button"
+                    value="-"
+                    onClick={(e) => {
+                      handleRemoveClick(certList, setCertList, i);
+                    }}
+                  />
+                  <input
+                    type="text"
+                    name="cert"
+                    placeholder="자격/어학 종류"
+                    value={x?.cert}
+                    onChange={(e) =>
+                      handleInputChange(certList, setCertList, i, e)
+                    }
+                  />
+                  <input
+                    type="text"
+                    name="level"
+                    placeholder="등급/레벨/점수"
+                    value={x?.level}
+                    onChange={(e) =>
+                      handleInputChange(certList, setCertList, i, e)
+                    }
+                  />
+                  <input
+                    type="text"
+                    name="auth"
+                    placeholder="발급기관"
+                    value={x?.auth}
+                    onChange={(e) =>
+                      handleInputChange(certList, setCertList, i, e)
+                    }
+                  />
+                  <input
+                    type="date"
+                    name="issueDate"
+                    value={x?.issueDate}
+                    onChange={(e) =>
+                      handleInputChange(certList, setCertList, i, e)
+                    }
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
           <br />
-          수상경력
+          {/* // TODO : 여기서부터 다시 수정 수상경력 */}
           <input
             className="btn"
             type="button"
@@ -569,7 +603,11 @@ function InfoInput() {
                   onChange={(e) =>
                     handleInputChange(stackList, setStackList, i, e)
                   }
+                  list="stackoption"
                 />
+                <datalist id="stackoption">
+                  <option value="asdf" />
+                </datalist>
                 <select
                   name="level"
                   value={x?.level}
@@ -585,8 +623,95 @@ function InfoInput() {
               </div>
             );
           })}
+          <br />
+          출판 / 논문 / 특허
+          <input
+            className="btn"
+            type="button"
+            value="+"
+            onClick={(e) => {
+              handleAddClick(patentList, setPatentList, e);
+            }}
+          />
+          {patentList.map((x, i) => {
+            return (
+              <div id="patentList">
+                <input
+                  className="btn"
+                  type="button"
+                  value="-"
+                  onClick={(e) =>
+                    handleRemoveClick(patentList, setPatentList, i)
+                  }
+                />
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="이름"
+                  value={x?.name}
+                  onChange={(e) =>
+                    handleInputChange(patentList, setPatentList, i, e)
+                  }
+                />
+                <input
+                  type="text"
+                  name="number"
+                  placeholder="고유번호/출원번호"
+                  value={x?.number}
+                  onChange={(e) =>
+                    handleInputChange(patentList, setPatentList, i, e)
+                  }
+                />
+                <input
+                  type="text"
+                  name="company"
+                  placeholder="출판사/출원국가"
+                  value={x?.company}
+                  onChange={(e) =>
+                    handleInputChange(patentList, setPatentList, i, e)
+                  }
+                />
+                <input
+                  type="text"
+                  name="author"
+                  placeholder="저자/출판인"
+                  value={x?.author}
+                  onChange={(e) =>
+                    handleInputChange(patentList, setPatentList, i, e)
+                  }
+                />
+                <input
+                  type="month"
+                  name="date"
+                  placeholder="발행/출원 연월"
+                  value={x?.date}
+                  onChange={(e) =>
+                    handleInputChange(patentList, setPatentList, i, e)
+                  }
+                />
+                <textarea
+                  id="link"
+                  name="link"
+                  placeholder="링크"
+                  value={x?.link}
+                  onChange={(e) =>
+                    handleInputChange(patentList, setPatentList, i, e)
+                  }
+                />
+                <textarea
+                  id="des"
+                  name="des"
+                  placeholder="설명"
+                  value={x?.des}
+                  onChange={(e) =>
+                    handleInputChange(patentList, setPatentList, i, e)
+                  }
+                />
+              </div>
+            );
+          })}
         </div>
-      </div>
+      </RoundContainer>
     </div>
   );
 }

@@ -1,12 +1,14 @@
 import "./style.css";
+import {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
+
+import axios from "axios";
+import {getCookie} from "../../hooks/useCookies";
+
 import RoundContainer from "../../components/RoundContainer";
 import Pin from "../../assets/pin-red.png";
-import {useEffect, useState} from "react";
-import axios, { Axios } from "axios";
 
 function Mypage() {
-
   axios.defaults.withCredentials = false;
 
   const history = useHistory();
@@ -43,26 +45,26 @@ function Mypage() {
     },
   ]);
 
-  const token = "35CEAEAF2CB5C61C9248869DA4A774F0"
+  const token = "35CEAEAF2CB5C61C9248869DA4A774F0";
 
   const [data, setData] = useState("");
   const getPortfolio = async () => {
     await axios
-    .get("http://3.37.186.122:8080/api/term", {
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-    })
-    .then((res) => {
-      setData(data);
-      console.log("통신 결과: ", res)
-    })
-    .catch((err) => console.log("에러 발생: ", err))
-  }
+      .get("http://3.37.186.122:8080/api/term", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setData(data);
+        console.log("통신 결과: ", res);
+      })
+      .catch((err) => console.log("에러 발생: ", err));
+  };
 
   useEffect(() => {
-    getPortfolio()
-  }, [])
+    getPortfolio();
+  }, []);
 
   function deletePortfolio(id) {
     for (let i = 0; i < portfolio.length; i++) {
@@ -77,6 +79,20 @@ function Mypage() {
   const createPofol = () => {
     history.push("/git-repo");
   };
+
+  useEffect(() => {
+    console.log("GIT REPO");
+    axios
+      .get(`${process.env.REACT_APP_BACKEND}/api/repository`, {
+        withCredentials: true,
+        headers: {
+          JSESSIONID: `${getCookie("JSESSIONID")}`,
+        },
+      })
+      .then((r) => {
+        console.log(r);
+      });
+  }, []);
 
   return (
     <div>

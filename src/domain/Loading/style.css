@@ -5,20 +5,19 @@
   text-align: center;
 
   width: 100%;
-  height: 100%;
+  min-height: calc(100vh - 7.5rem);
 }
 
 .loading-hippo {
   position: absolute;
   left: 0;
-
   width: 300px;
 
-  animation: moveLeftToRight 4s ease-in-out infinite;
-  -webkit-animation: moveLeftToRight 4s ease-in-out infinite;
-  -moz-animation: moveLeftToRight 4s ease-in-out infinite;
-  -ms-animation: moveLeftToRight 4s ease-in-out infinite;
-  -o-animation: moveLeftToRight 4s ease-in-out infinite;
+  animation: moveLeftToRight 7s ease-in-out infinite;
+  -webkit-animation: moveLeftToRight 7s ease-in-out infinite;
+  -moz-animation: moveLeftToRight 7s ease-in-out infinite;
+  -ms-animation: moveLeftToRight 7s ease-in-out infinite;
+  -o-animation: moveLeftToRight 7s ease-in-out infinite;
 }
 
 .loading-hippo img {
@@ -28,9 +27,25 @@
 
 @keyframes moveLeftToRight {
   0% {
-    left: 0;
+    left: -300px;
   }
   100% {
-    left: 100%;
+    left: 120%;
+  }
+
+  0%,
+  20%,
+  40%,
+  60%,
+  80%,
+  100% {
+    transform: rotate(0deg);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: rotate(-5deg);
   }
 }

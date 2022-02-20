@@ -1,14 +1,18 @@
 import "./style.css";
-import {useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import radioBtnIn from "../../assets/radio-btn-in.png";
 import radioBtnOut from "../../assets/radio-btn-out.png";
 
-function RadioBtn({className, style, onClick}) {
-  const [isChecked, setIsChecked] = useState(false);
-  const changeInner = (e) => {
+function RadioBtn({className, style, onChanged, value}) {
+  const [isChecked, setIsChecked] = useState(value ?? false);
+  const changeInner = useCallback(() => {
     setIsChecked(!isChecked);
-    onClick && onClick(e);
-  };
+    onChanged && onChanged(!isChecked);
+  }, [isChecked, onChanged]);
+
+  useEffect(() => {
+    setIsChecked(value ?? false);
+  }, [value]);
 
   return (
     <div

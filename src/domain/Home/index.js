@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {useHistory} from "react-router-dom/cjs/react-router-dom.min";
+import {loginGithub} from "../../hooks/loginGithub";
 import "./style.css";
 
 const btnMainColor = "#002d84";
@@ -25,7 +26,8 @@ function Home() {
       setBtnStyle({...btnStyle, marginTop: `${rem6 - scrolled}px`});
   };
 
-  const login = () => {
+  const login = async () => {
+    await loginGithub();
     history.push("/my-page");
   };
 
