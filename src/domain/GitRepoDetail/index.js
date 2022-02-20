@@ -1,7 +1,7 @@
 import "./style.css";
 import {useState} from "react";
 import {useHistory} from "react-router-dom";
-
+import Select from "react-select";
 import BeforeAfterBtn from "../../components/BeforeAfterBtn";
 import Star from "../../assets/star.png";
 import Pen from "../../assets/pen.png";
@@ -22,8 +22,8 @@ function GitRepoDetail() {
         time: "19:00",
       },
       language: [
-        ["JavaScript", "56.8%"],
-        ["Java", "43.2%"],
+        ["JavaScript", "56.8% "],
+        ["Java", "43.2% "],
       ],
       path: "hyu-likelion/NESI",
       starNum: "50",
@@ -56,24 +56,92 @@ function GitRepoDetail() {
     },
   ]);
 
-  const {start, end, role, skill, domain, explain} = {};
+  const skillOptions = [
+    { value: "JavaScript", label:"JavaScript" },
+    { value: "Java", label: "Java" },
+    { value: "Python", label: "Python" },
+    { value: "C++", label: "C++" },
+    { value: "C", label: "C" },
+    { value: "C#", label: "C#" },
+    { value: "HTML", label: "HTML" },
+    { value: "CSS", label: "CSS" },
+    { value: "Ruby", label: "Ruby" },
+    { value: "PHP", label: "PHP" },
+    { value: "Scala", label: "Scala" },
+    { value: "Spring", label: "Spring" },
+    { value: "Django", label: "Django" },
+    { value: "Kotlin", label: "Kotlin" },
+    { value: "Node.js", label: "Node.js" },
+  ];
+
+  const [inputs, setInputs] = useState({
+    start: "",
+    end: "",
+    role: "",
+    skill: "",
+    domain: "",
+    explain: ""
+  });
+
+  const { start, end, role, skill, domain, explain } = inputs;
 
   const onChange = (e) => {
-    // const {value, name} = e.target;
-    // setInputs({
-    //   ...inputs,
-    //   [name]: value,
-    // });
-    // console.log(e.target.value);
+    const { value, name } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value
+    });
+    console.log(value);
+  }; 
+
+  const styles = {
+    multiValue: styles => {
+    return {
+      ...styles,
+      backgroundColor: "#0F2C7F",
+      color: "#C6C6C6",
+      };
+    },
+    multiValueLabel: styles => ({
+      ...styles,
+      color: "#FFFFFF",
+    }),
+    multiValueRemove: styles => ({
+      ...styles,
+      color: ("").color,
+      ":hover": {
+        backgroundColor: "#9E413C",
+        color: "#FFFFFF",
+      },
+    }),
   };
 
-  function openCloseToc() {
-    if (document.getElementById("toc-content").style.display === "block") {
-      document.getElementById("toc-content").style.display = "none";
-    } else {
-      document.getElementById("toc-toggle").style.src = "../../image/open.png";
-      document.getElementById("toc-content").style.display = "block";
+  const toggle = useState("");
+
+  function openCloseToc(id) {
+    const toc = document.getElementById("toc-content");
+    for(let i = 0; i <= repos.length; i++) {
+      if (repos[i].id === id) {
+        if (toc.style.display === "none") {
+          toc.style.display = "block";
+        } else {
+          toc.style.display = "none";
+        }
+      repos.values(i);
+      break;
+      }
     }
+    setRepos([...repos]);
+  }
+
+  function deletePortfolio(id) {
+    for (let i = 0; i < repos.length; i++) {
+      if (repos[i].id === id) {
+        repos.splice(i, 1);
+        break;
+      }
+    }
+    setRepos([...repos]);
   }
 
   const prevPage = () => {
@@ -85,7 +153,7 @@ function GitRepoDetail() {
   const tmpSave = () => {};
 
   return (
-    <div className="gitrepodetail">
+    <div className="grd">
       <BeforeAfterBtn
         saveShow={true}
         onPrev={prevPage}
@@ -93,155 +161,163 @@ function GitRepoDetail() {
         onSave={tmpSave}
       />
 
-      <div className="gitrepodetail-wrapper">
-        <div className="gitrepodetail-top-container">
-          <div className="gitrepodetail-top-container-title">레포지토리</div>
-          <div className="gitrepodetail-top-container-groupname">그룹명</div>
-
-          <button className="round-button">병합</button>
-          <button className="round-button">삭제</button>
-        </div>
-
-        <div className="gitrepodetail-inner-box">
-          <div className="gitrepodetail-inner-box-info-container">
-            <div className="gitrepodetail-inner-box-top-container">
-              <h3 className="gitrepodetail-inner-box-repo-title">
-                {/* {data.repoTitle} */}
-              </h3>
-              <img
-                className="gitrepodetail-inner-box-image"
-                src={Star}
-                alt={""}
-              />
-              <div className="gitrepodetail-inner-box-star-num">
-                {/* {data.starNum} */}
+      <div className="grd-wrapper">
+      <div className="grd-top-container">
+        <div className="grd-top-container-title">레포지토리</div>
+        <button 
+          className="round-button">삭제</button>
+      </div>
+      {repos.map((box, index) => (
+        <li className="grd-inner-box" key={index}>
+            <div className="grd-inner-box-info-container">
+              <div className="grd-inner-box-top-container">
+                <h3 className="grd-inner-box-repo-title">
+                  { box.title }
+                </h3>
+                <img
+                  className="grd-inner-box-image"
+                  src={Star}
+                  alt={""}
+                />
+                <div className="grd-inner-box-star-num">
+                  { box.starNum }
+                </div>
+                <button
+                  className="round-button"
+                  onClick={() => deletePortfolio(box.id)}
+                >
+                  삭제
+                </button>
               </div>
-              <div className="round-button">삭제</div>
-            </div>
-            <div className="gitrepodetail-inner-box-bottom-container">
-              <div className="gitrepodetail-inner-box-bottom-title">생성일</div>
-              <div className="gitrepodetail-inner-box-bottom-detail">
-                {/* {data.creation} */}
+              <div className="grd-inner-box-bottom-container">
+                <div className="grd-inner-box-bottom-title">생성일</div>
+                <div className="grd-inner-box-bottom-detail">
+                  { box.creation }
+                </div>
+                <div className="grd-inner-box-bottom-title">
+                  최근 업데이트
+                </div>
+                <div className="grd-inner-box-bottom-detail">
+                  { box.revision.date } { box.revision.time }
+                </div>
+                <div className="grd-inner-box-bottom-title">
+                  사용언어
+                </div>
+                <div className="grd-inner-box-bottom-detail">
+                  { box.language }
+                </div>
               </div>
-              <div className="gitrepodetail-inner-box-bottom-title">
-                최근 업데이트
               </div>
-              <div className="gitrepodetail-inner-box-bottom-detail">
-                {/* {data.revision} */}
+              <div id="toc-content" key={index}>
+                <div className="grd-inner-box-title">
+                  <div className="grd-inner-box-text">
+                    바닐라자바스크립트 구현 프로젝트 리액트로 바꿔보기
+                  </div>
+                  <img
+                    className="grd-inner-box-image"
+                    src={Pen}
+                    alt={""}
+                    // onClick={}
+                  />
+                </div>
+                <div className="grd-inner-box-readme">
+                  <div className="grd-inner-box-text">
+                    README.md
+                  </div>
+                  <img
+                    className="grd-inner-box-image"
+                    src={Eye}
+                    alt={""}
+                    // onClick={}
+                  />
+                  <img
+                    className="grd-inner-box-image"
+                    src={Pen}
+                    alt={""}
+                    // onClick={}
+                  />
+                </div>
+                <div className="grd-inner-box-detail">
+                  상세 설명
+                </div>
+                <div className="grd-inner-box-title-container">
+                  <div className="container-title">기간</div>
+                  <input
+                    onChange={onChange}
+                    value={start}
+                    name="start"
+                    className="grd-inner-box-date"
+                    placeholder="시작일"
+                  />
+                  <div className="wave-mark">~</div>
+                  <input
+                    onChange={onChange}
+                    value={end}
+                    name="end"
+                    className="grd-inner-box-date"
+                    placeholder="마감일"
+                  />
+                </div>
+                <div className="grd-inner-box-title-container">
+                  <div className="container-title">역할</div>
+                  <input
+                    onChange={onChange}
+                    value={role}
+                    name="role"
+                    className="grd-inner-box-plus-info-title-info-box"
+                    placeholder="프론트엔드개발 / 디자인"
+                  />
+                </div>
+                <div className="grd-inner-box-title-container-skill">
+                  <div className="container-title">기술스택</div>
+                    <Select
+                      isMulti
+                      styles={styles}
+                      name="skill"
+                      options={skillOptions}
+                      className="grd-inner-box-skill"
+                      classNamePrefix="select"
+                      defaultValue={skillOptions[0]}
+                      // onChange={onChange}
+                    />
+                </div>
+                <div className="grd-inner-box-title-container">
+                  <div className="container-title">도메인</div>
+                  <input
+                    onChange={onChange}
+                    value={domain}
+                    name="domain"
+                    className="grd-inner-box-plus-info-title-info-box"
+                    placeholder="000.000.000"
+                  />
+                </div>
+                <div className="grd-inner-box-title-container-info">
+                  <div className="container-title">설명</div>
+                  <textarea
+                    onChange={onChange}
+                    value={explain}
+                    name="explain"
+                    className="grd-inner-box-info-text"
+                    placeholder="✧٩(ˊωˋ*)و✧"
+                  />
+                </div>
+                <div className="save-button-container">
+                  <button className="round-button">저장</button>
+                </div>
               </div>
-              <div className="gitrepodetail-inner-box-bottom-title">
-                사용언어
-              </div>
-              <div className="gitrepodetail-inner-box-bottom-detail">
-                {/* {data.language} {data.languagePercent} */}
-              </div>
-            </div>
-          </div>
-
-          <div id="toc-content">
-            <div className="gitrepodetail-inner-box-title-container">
-              <div className="gitrepodetail-inner-box-title-container-text">
-                바닐라자바스크립트 구현 프로젝트 리액트로 바꿔보기
-              </div>
-              <img
-                className="gitrepodetail-inner-box-image"
-                src={Pen}
-                alt={""}
-              />
-            </div>
-            <div className="gitrepodetail-inner-box-readme-container">
-              <div className="gitrepodetail-inner-box-title-container-text">
-                README.md
-              </div>
-              <img
-                className="gitrepodetail-inner-box-image"
-                src={Eye}
-                alt={""}
-              />
-              <img
-                className="gitrepodetail-inner-box-image"
-                src={Pen}
-                alt={""}
-              />
-            </div>
-            <div className="gitrepodetail-inner-box-plus-info-title">
-              상세 설명
-            </div>
-            <div className="gitrepodetail-inner-box-title-container-info">
-              <div className="container-title">기간</div>
-              <input
-                onChange={(e) => {
-                  // repos[index]?.start = e.target.value;
-                  // setRepos([...repos]);
-                }}
-                value={start}
-                name="start"
-                className="gitrepodetail-inner-box-plus-info-title-date"
-                placeholder="시작일"
-              />
-              <div className="wave-mark">~</div>
-              <input
-                onChange={onChange}
-                value={end}
-                name="end"
-                className="gitrepodetail-inner-box-plus-info-title-date"
-                placeholder="마감일"
-              />
-            </div>
-            <div className="gitrepodetail-inner-box-title-container-info">
-              <div className="container-title">역할</div>
-              <input
-                onChange={onChange}
-                value={role}
-                name="role"
-                className="gitrepodetail-inner-box-plus-info-title-info-box"
-                placeholder="프론트엔드개발 / 디자인"
-              />
-            </div>
-            <div className="gitrepodetail-inner-box-title-container-info-skill">
-              <div className="container-title">기술스택</div>
-              <input
-                onChange={onChange}
-                value={skill}
-                name="skill"
-                className="gitrepodetail-inner-box-plus-info-title-info-box-skill"
-                placeholder="기술스택칸은 안 넓어도 괜찮지 않을까아ㅏㅏ"
-              />
-            </div>
-            <div className="gitrepodetail-inner-box-title-container-info">
-              <div className="container-title">도메인</div>
-              <input
-                onChange={onChange}
-                value={domain}
-                name="domain"
-                className="gitrepodetail-inner-box-plus-info-title-info-box"
-                placeholder="000.000.000"
-              />
-            </div>
-            <div className="gitrepodetail-inner-box-title-container-end-info">
-              <div className="container-title">설명</div>
-              <input
-                onChange={onChange}
-                value={explain}
-                name="explain"
-                className="gitrepodetail-inner-box-plus-info-title-plus-info-box"
-                placeholder="✧٩(ˊωˋ*)و✧"
-              />
-            </div>
-            <div className="save-button-container">
-              <button className="round-button">저장</button>
-            </div>
-          </div>
-          <img
-            id="toc-toggle"
-            // className={`gitrepodetail-inner-box-fold-image${toggle && "-down"}`}
-            src={Fold}
-            alt={""}
-            onClick={openCloseToc}
-          />
+                <img
+                  className={`grd-inner-box-fold-image ${toggle && "-down"}`}
+                  // ${toggle && "-down"}
+                  src={Fold}
+                  alt={""}
+                  type="button"
+                  onClick={() => openCloseToc(box.id)}
+                />
+            </li>
+          ))}
         </div>
       </div>
-    </div>
+      
   );
 }
 
