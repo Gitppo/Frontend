@@ -1,10 +1,9 @@
 import axios from "axios";
 
 export const loadTerm = async () => {
-  axios
+  const result = await axios
     .get(`${process.env.REACT_APP_BACKEND}/api/term`)
     .then((r) => {
-      console.log(r);
       if (r.status === 200) {
         return r.data;
       } else {
@@ -12,13 +11,14 @@ export const loadTerm = async () => {
       }
     })
     .then((data) => {
-      console.log(data);
       return data.data;
     })
     .catch((e) => {
       console.error(e);
       throw e;
     });
+
+  return result;
 };
 
 export const saveTermToAgree = async (contract) => {
@@ -32,7 +32,6 @@ export const saveTermToAgree = async (contract) => {
     throw Error("InputErr : Invalid value");
   }
 
-  console.log(data);
   const response = await axios.post(
     `${process.env.REACT_APP_BACKEND}/api/term`,
     data

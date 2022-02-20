@@ -1,10 +1,10 @@
 import "./style.css";
 
-
 import React, {useEffect, useState} from "react";
 import Modal from "../../components/Modal/modal";
 import {useHistory} from "react-router-dom";
 import BeforeAfterBtn from "../../components/BeforeAfterBtn";
+import RoundContainer from "../../components/RoundContainer";
 
 function InfoInput() {
   const history = useHistory();
@@ -37,27 +37,37 @@ function InfoInput() {
   };
 
   const [infoList, setInfoList] = useState([
-    { name: "", mail: "", birth: "", tel: "" },
+    {name: "", mail: "", birth: "", tel: ""},
   ]);
   const [careerList, setCareerList] = useState([
-    { company: "", depart: "", start: "", end: "", position: "", job: "" },
+    {company: "", depart: "", start: "", end: "", position: "", job: ""},
   ]);
   const [schoolList, setSchoolList] = useState([
-    { schoolType: "", start: "", end: "", schoolStat: "" },
+    {schoolType: "", start: "", end: "", schoolStat: ""},
   ]);
   const [certList, setCertList] = useState([
-    { cert: "", level: "", auth: "", issueDate: "" },
+    {cert: "", level: "", auth: "", issueDate: ""},
   ]);
   const [awardList, setAwardList] = useState([
-    { award: "", place: "", auth: "", issueDate: "" },
+    {award: "", place: "", auth: "", issueDate: ""},
   ]);
   const [etcList, setEtcList] = useState([
-    { etc: "", about: "", start: "", end: "" },
+    {etc: "", about: "", start: "", end: ""},
   ]);
-  const [introList, setIntroList] = useState([{ introShort: "", introLong: "" }]);
-  const [snsList, setSnsList] = useState([{ sns: "", link: "" }]);
-  const [stackList, setStackList] = useState([{ stack: "", level: "" }]);
-  const [patentList, setPatentList] = useState([{ name: "", number: "", company: "", author: "", date: "", link: "", des: "" }]);
+  const [introList, setIntroList] = useState([{introShort: "", introLong: ""}]);
+  const [snsList, setSnsList] = useState([{sns: "", link: ""}]);
+  const [stackList, setStackList] = useState([{stack: "", level: ""}]);
+  const [patentList, setPatentList] = useState([
+    {
+      name: "",
+      number: "",
+      company: "",
+      author: "",
+      date: "",
+      link: "",
+      des: "",
+    },
+  ]);
 
   const handleInputChange = (List, setList, i, e) => {
     const {name, value} = e.target;
@@ -79,7 +89,7 @@ function InfoInput() {
   const handleUpload = () => {
     const inputImg = document.getElementById("imgFile");
     inputImg.click();
-  }
+  };
 
   const prevPage = () => {
     history.push("/git-repo-detail");
@@ -87,29 +97,29 @@ function InfoInput() {
   const nextPage = () => {
     history.push("/git-console");
   };
-  const tmpSave = () => { };
+  const tmpSave = () => {};
 
   return (
-    <div className="document">
+    <div className="info-input">
       <Modal open={modalOpen} close={closeModal}>
         <h3 style={{textAlign: "center", color: "var(--dark-blue1)"}}>
           기존에 입력한 정보를 가져오시겠습니까?
         </h3>
       </Modal>
 
-      <div className="container">
-        <BeforeAfterBtn
-          saveShow={true}
-          onPrev={prevPage}
-          onNext={nextPage}
-          onSave={tmpSave}
-        />
-            
+      <BeforeAfterBtn
+        saveShow={true}
+        onPrev={prevPage}
+        onNext={nextPage}
+        onSave={tmpSave}
+      />
+
+      <RoundContainer blueHeader={true}>
         {/* mainInfo: 기본 인적사항, 사진 */}
-        <div className="mainInfo">
+        <div className="main-info">
           {/* generalInfo: 기본 인적사항 */}
-          <div className="generalInfo">
-            <h2>기본 인적사항</h2>
+          <div>
+            <h1 className="beautiful-title">기본 인적사항</h1>
             <br />
             {infoList.map((x, i) => {
               return (
@@ -160,108 +170,116 @@ function InfoInput() {
               );
             })}
           </div>
-          <div className="img">
-            <div className="imgBlock">
-              <img id="thumbnail" src={imgBase64 || ""} alt={""} />
-            </div>
-            <div className="imgBtns">
-              <button id="imgUpload" onClick={handleUpload}>
-                수정
-              </button>
-              <button id="imgDefault">
-                기본 이미지
-              </button>
-              <input
-                type="file"
-                id="imgFile"
-                name="imgFile"
-                onChange={handleChangeFile}
-              />
+
+          {/* 사진 */}
+          <div>
+            <h1 className="beautiful-title">사진</h1>
+            <br />
+
+            <div className="img-container">
+              <div className="img-preview">
+                <img src={imgBase64 || ""} alt={""} />
+              </div>
+
+              <div className="img-btns">
+                <button className="round-button" onClick={handleUpload}>
+                  수정
+                </button>
+                <button className="round-button">기본 이미지로</button>
+                <input type="file" name="imgFile" onChange={handleChangeFile} />
+              </div>
             </div>
           </div>
         </div>
-        <div className="etc">
-          <h2>그 외의 정보</h2>
+
+        <br />
+
+        <div className="ii-etc">
+          <h1 className="beautiful-title">그 외의 정보</h1>
           <br />
           <div id="infoList">
-            경력사항
-            <input
-              className="btn"
-              type="button"
-              value="+"
-              onClick={(e) => {
-                handleAddClick(careerList, setCareerList, e);
-              }}
-            />
-            {careerList.map((x, i) => (
-              <div id="careerList">
-                <input
-                  className="btn"
-                  type="button"
-                  value="-"
-                  onClick={(e) => {
-                    handleRemoveClick(careerList, setCareerList, i);
-                  }}
-                />
-                <input
-                  type="text"
-                  name="company"
-                  placeholder="회사명"
-                  value={x?.company}
-                  size="15"
-                  onChange={(e) =>
-                    handleInputChange(careerList, setCareerList, i, e)
-                  }
-                />
-                <input
-                  type="text"
-                  name="depart"
-                  placeholder="부서명"
-                  value={x?.depart}
-                  size="10"
-                  onChange={(e) =>
-                    handleInputChange(careerList, setCareerList, i, e)
-                  }
-                />
-                <input
-                  type="date"
-                  name="start"
-                  value={x?.start}
-                  onChange={(e) =>
-                    handleInputChange(careerList, setCareerList, i, e)
-                  }
-                />
-                ~
-                <input
-                  type="date"
-                  name="end"
-                  value={x?.end}
-                  onChange={(e) =>
-                    handleInputChange(careerList, setCareerList, i, e)
-                  }
-                />
-                <input
-                  type="text"
-                  name="position"
-                  value={x?.position}
-                  size="10"
-                  placeholder="직위"
-                  onChange={(e) =>
-                    handleInputChange(careerList, setCareerList, i, e)
-                  }
-                />
-                <input
-                  type="text"
-                  name="job"
-                  value={x?.job}
-                  size="10"
-                  placeholder="직무"
-                  onChange={(e) =>
-                    handleInputChange(careerList, setCareerList, i, e)
-                  }
-                />
-              </div>
-            ))}
+            <div className="title">
+              <h3>경력사항</h3>
+              <button
+                onClick={(e) => {
+                  handleAddClick(careerList, setCareerList, e);
+                }}
+              >
+                +
+              </button>
+            </div>
+
+            <ul>
+              {careerList.map((x, i) => (
+                <li id="careerList">
+                  <input
+                    className="btn"
+                    type="button"
+                    value="-"
+                    onClick={(e) => {
+                      handleRemoveClick(careerList, setCareerList, i);
+                    }}
+                  />
+                  <input
+                    type="text"
+                    name="company"
+                    placeholder="회사명"
+                    value={x?.company}
+                    size="15"
+                    onChange={(e) =>
+                      handleInputChange(careerList, setCareerList, i, e)
+                    }
+                  />
+                  <input
+                    type="text"
+                    name="depart"
+                    placeholder="부서명"
+                    value={x?.depart}
+                    size="10"
+                    onChange={(e) =>
+                      handleInputChange(careerList, setCareerList, i, e)
+                    }
+                  />
+                  <input
+                    type="date"
+                    name="start"
+                    value={x?.start}
+                    onChange={(e) =>
+                      handleInputChange(careerList, setCareerList, i, e)
+                    }
+                  />
+                  ~
+                  <input
+                    type="date"
+                    name="end"
+                    value={x?.end}
+                    onChange={(e) =>
+                      handleInputChange(careerList, setCareerList, i, e)
+                    }
+                  />
+                  <input
+                    type="text"
+                    name="position"
+                    value={x?.position}
+                    size="10"
+                    placeholder="직위"
+                    onChange={(e) =>
+                      handleInputChange(careerList, setCareerList, i, e)
+                    }
+                  />
+                  <input
+                    type="text"
+                    name="job"
+                    value={x?.job}
+                    size="10"
+                    placeholder="직무"
+                    onChange={(e) =>
+                      handleInputChange(careerList, setCareerList, i, e)
+                    }
+                  />
+                </li>
+              ))}
+            </ul>
           </div>
           <br />
           학력사항
@@ -496,27 +514,27 @@ function InfoInput() {
           <div id="intro">
             자기소개
             {introList.map((x, i) => {
-            return (
-              <div id="introList">
-                <textarea
-                  id="introShort"
-                  placeholder="한줄소개"
-                  value={x?.introShort}
-                  onChange={(e) => {
-                    handleInputChange(introList, setIntroList, i, e);
-                  }}
-                />
-                <textarea
-                  id="introLong"
-                  placeholder="자기소개"
-                  value={x?.introLong}
-                  onChange={(e) => {
-                    handleInputChange(introList, setIntroList, i, e);
-                  }}
-                />
-              </div>
-            );
-          })}
+              return (
+                <div id="introList">
+                  <textarea
+                    id="introShort"
+                    placeholder="한줄소개"
+                    value={x?.introShort}
+                    onChange={(e) => {
+                      handleInputChange(introList, setIntroList, i, e);
+                    }}
+                  />
+                  <textarea
+                    id="introLong"
+                    placeholder="자기소개"
+                    value={x?.introLong}
+                    onChange={(e) => {
+                      handleInputChange(introList, setIntroList, i, e);
+                    }}
+                  />
+                </div>
+              );
+            })}
           </div>
           <br />
           SNS
@@ -603,7 +621,6 @@ function InfoInput() {
               </div>
             );
           })}
-
           <br />
           출판 / 논문 / 특허
           <input
@@ -621,63 +638,79 @@ function InfoInput() {
                   className="btn"
                   type="button"
                   value="-"
-                  onClick={(e) => handleRemoveClick(patentList, setPatentList, i)}
+                  onClick={(e) =>
+                    handleRemoveClick(patentList, setPatentList, i)
+                  }
                 />
                 <input
                   type="text"
                   name="name"
                   placeholder="이름"
                   value={x?.name}
-                  onChange={(e) => handleInputChange(patentList, setPatentList, i, e)}
+                  onChange={(e) =>
+                    handleInputChange(patentList, setPatentList, i, e)
+                  }
                 />
                 <input
                   type="text"
                   name="number"
                   placeholder="고유번호/출원번호"
                   value={x?.number}
-                  onChange={(e) => handleInputChange(patentList, setPatentList, i, e)}
+                  onChange={(e) =>
+                    handleInputChange(patentList, setPatentList, i, e)
+                  }
                 />
                 <input
                   type="text"
                   name="company"
                   placeholder="출판사/출원국가"
                   value={x?.company}
-                  onChange={(e) => handleInputChange(patentList, setPatentList, i, e)}
+                  onChange={(e) =>
+                    handleInputChange(patentList, setPatentList, i, e)
+                  }
                 />
                 <input
                   type="text"
                   name="author"
                   placeholder="저자/출판인"
                   value={x?.author}
-                  onChange={(e) => handleInputChange(patentList, setPatentList, i, e)}
+                  onChange={(e) =>
+                    handleInputChange(patentList, setPatentList, i, e)
+                  }
                 />
                 <input
                   type="month"
                   name="date"
                   placeholder="발행/출원 연월"
                   value={x?.date}
-                  onChange={(e) => handleInputChange(patentList, setPatentList, i, e)}
+                  onChange={(e) =>
+                    handleInputChange(patentList, setPatentList, i, e)
+                  }
                 />
                 <textarea
                   id="link"
                   name="link"
                   placeholder="링크"
                   value={x?.link}
-                  onChange={(e) => handleInputChange(patentList, setPatentList, i, e)}
+                  onChange={(e) =>
+                    handleInputChange(patentList, setPatentList, i, e)
+                  }
                 />
                 <textarea
                   id="des"
                   name="des"
                   placeholder="설명"
                   value={x?.des}
-                  onChange={(e) => handleInputChange(patentList, setPatentList, i, e)}
+                  onChange={(e) =>
+                    handleInputChange(patentList, setPatentList, i, e)
+                  }
                 />
               </div>
             );
           })}
         </div>
-      </div>
-    </div >
+      </RoundContainer>
+    </div>
   );
 }
 

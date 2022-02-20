@@ -1,25 +1,33 @@
-.infoInput .mainInfo {
-  display: flex;
-}
-
-.container .document {
-  padding-left: 0px;
-  padding-right: 0px;
-}
-
-.container{
-  margin: 0px;
-  border: 1px solid;
-  -ms-overflow-style: none;
-}
-.container::-webkit-scrollbar{
-  display: none;
-}
-
-.mainInfo {
-  display: flex;
+.info-input .main-info {
   padding: 20px 0px;
-  align-items: left;
+
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.info-input .main-info .round-button {
+  width: 8rem;
+}
+.info-input .main-info .img-container {
+  display: flex;
+  gap: 1em;
+}
+.info-input .main-info .img-preview {
+  width: 130px;
+  height: 130px;
+  border-radius: 0.5em;
+  border: 1px solid var(--blue3);
+  box-shadow: 5px 5px 1px rgba(0, 0, 0, 0.16);
+}
+.info-input .main-info .img-preview img {
+  width: 100%;
+  height: auto;
+}
+.info-input .main-info .img-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
 }
 
 .etc {
@@ -31,44 +39,30 @@
   flex-direction: column;
 }
 
-input::placeholder,
-textarea::placeholder {
-  color:#80AAFF;
-  font-size: 0.8rem;
+.info-input input::placeholder,
+.info-input textarea::placeholder
+/* .info-input input[type="date"]::-webkit-datetime-edit-text,
+.info-input input[type="date"]::-webkit-datetime-edit-month-field,
+.info-input input[type="date"]::-webkit-datetime-edit-day-field,
+.info-input input[type="date"]::-webkit-datetime-edit-year-field  */ {
+  color: #80aaff;
 }
 
-.container input[type="text"],
-.container input[type="date"],
-.container input[type="month"],
-.container input[type="email"],
-.container textarea,
-.container select,
+.info-input input[type="text"],
+.info-input input[type="date"],
+.info-input input[type="month"],
+.info-input input[type="email"],
+.info-input textarea,
+.info-input select,
 .btn {
-  margin: 5px;
-  padding: 5px;
-  border: 1px solid var(--dark-blue1);
-  background-color: white;
-  border-radius: 5px;
-  height: 2rem;
-  color:#80AAFF;
-}
+  margin: 0.2em;
+  padding: 0.3em;
+  min-height: 2.3rem;
 
-#imgFile {
-  visibility: hidden;
-}
+  border: 1px solid rgb(117, 117, 117);
+  border-radius: 0.5em;
 
-#imgUpload, #imgDefault {
-  color:white;
-  background-color: #AA3937;
-  border:none;
-  width: 100px;
-  padding: 0.5rem;
-  border-radius: 1rem;
   font-size: 1rem;
-}
-#imgDefault {
-  background-color: #002D84;
-  margin-top: 0.5rem;
 }
 
 #introLong {
@@ -83,7 +77,8 @@ textarea::placeholder {
   resize: none;
 }
 
-#link, #des {
+#link,
+#des {
   width: 44.4rem;
   height: 2rem;
   resize: none;
@@ -99,15 +94,4 @@ textarea::placeholder {
   background-color: #efefef;
   width: 150px;
   height: 150px;
-}
-
-.img {
-  display: flex;
-  margin-left: 30px;
-}
-
-.imgBtns {
-  display: flex;
-  flex-direction: column;
-  margin-left: 1rem;
 }
