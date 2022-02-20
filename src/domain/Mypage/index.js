@@ -2,9 +2,13 @@ import "./style.css";
 import {useHistory} from "react-router-dom";
 import RoundContainer from "../../components/RoundContainer";
 import Pin from "../../assets/pin-red.png";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import axios, { Axios } from "axios";
 
 function Mypage() {
+
+  axios.defaults.withCredentials = false;
+
   const history = useHistory();
   const [portfolio, setPortfolio] = useState([
     {
@@ -38,6 +42,27 @@ function Mypage() {
       },
     },
   ]);
+
+  const token = "35CEAEAF2CB5C61C9248869DA4A774F0"
+
+  const [data, setData] = useState("");
+  const getPortfolio = async () => {
+    await axios
+    .get("http://3.37.186.122:8080/api/term", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+    })
+    .then((res) => {
+      setData(data);
+      console.log("통신 결과: ", res)
+    })
+    .catch((err) => console.log("에러 발생: ", err))
+  }
+
+  useEffect(() => {
+    getPortfolio()
+  }, [])
 
   function deletePortfolio(id) {
     for (let i = 0; i < portfolio.length; i++) {
@@ -97,7 +122,7 @@ function Mypage() {
               </div>
               <div className={"mypage-wrapper-box-button"}>
                 <button
-                  className={"mypage-wrappe r-box-button-left round-button"}
+                  className={"mypage-wrapper-box-button-left round-button"}
                 >
                   수정
                 </button>
@@ -112,7 +137,7 @@ function Mypage() {
           ))}
 
           {portfolio?.length === 0 && (
-            <h3 style={{color: "var(--dark-red)"}}>
+            <h3 style={{textAlign: "center", color: "var(--dark-red)"}}>
               기존 포트폴리오가 없습니다.
             </h3>
           )}
