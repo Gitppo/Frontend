@@ -76,20 +76,14 @@ function GitRepoDetail() {
     }
   }
 
-  const prevPage = () => {
-    history.push("/git-repo");
-  };
-  const nextPage = () => {
-    history.push("/git-info");
-  };
   const tmpSave = () => {};
 
   return (
     <div className="gitrepodetail">
       <BeforeAfterBtn
         saveShow={true}
-        onPrev={prevPage}
-        onNext={nextPage}
+        onPrev={() => history.push("/git-repo")}
+        onNext={() => history.push("/git-info")}
         onSave={tmpSave}
       />
 
@@ -171,7 +165,7 @@ function GitRepoDetail() {
               <div className="container-title">기간</div>
               <input
                 onChange={(e) => {
-                  // repos[index]?.start = e.target.value;
+                  // repos[index].start = e.target.value;
                   // setRepos([...repos]);
                 }}
                 value={start}
@@ -234,6 +228,7 @@ function GitRepoDetail() {
           </div>
           <img
             id="toc-toggle"
+            className={`gitrepodetail-inner-box-fold-image`}
             // className={`gitrepodetail-inner-box-fold-image${toggle && "-down"}`}
             src={Fold}
             alt={""}

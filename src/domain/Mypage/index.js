@@ -2,7 +2,9 @@ import "./style.css";
 import {useHistory} from "react-router-dom";
 import RoundContainer from "../../components/RoundContainer";
 import Pin from "../../assets/pin-red.png";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import axios from "axios";
+import {getCookie} from "../../hooks/useCookies";
 
 function Mypage() {
   const history = useHistory();
@@ -52,6 +54,20 @@ function Mypage() {
   const createPofol = () => {
     history.push("/git-repo");
   };
+
+  useEffect(() => {
+    console.log("GIT REPO");
+    axios
+      .get(`${process.env.REACT_APP_BACKEND}/api/repository`, {
+        withCredentials: true,
+        headers: {
+          JSESSIONID: `${getCookie("JSESSIONID")}`,
+        },
+      })
+      .then((r) => {
+        console.log(r);
+      });
+  }, []);
 
   return (
     <div>

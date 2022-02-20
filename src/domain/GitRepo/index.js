@@ -11,19 +11,13 @@ const data = {
 function GitRepo() {
   const history = useHistory();
 
-  const loadRepos = () => {
-    history.push("/git-repo-detail");
-  };
-  const prevPage = () => {
-    history.push("/my-page");
-  };
-  const nextPage = () => {
-    history.push("/git-repo-detail");
-  };
-
   return (
     <div className="gitrepo">
-      <BeforeAfterBtn saveShow={false} onPrev={prevPage} onNext={nextPage} />
+      <BeforeAfterBtn
+        saveShow={false}
+        onPrev={history.push("/my-page")}
+        onNext={history.push("/git-repo-detail")}
+      />
 
       <div className="gitrepo-outer-box">
         <div className="gitrepo-box round-container-upper-bold">
@@ -50,7 +44,10 @@ function GitRepo() {
               </div>
             </>
 
-            <button className="round-button" onClick={loadRepos}>
+            <button
+              className="round-button"
+              onClick={() => history.push("/git-repo-detail")}
+            >
               불러오기
             </button>
           </div>

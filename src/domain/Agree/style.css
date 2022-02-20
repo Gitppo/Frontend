@@ -35,7 +35,7 @@
 }
 /* 각 항목 별 동의 내용 */
 .agree-contract-content {
-  height: 10em;
+  max-height: 12em;
   padding: 0.8em;
 
   border-radius: 0.5rem;
@@ -49,15 +49,23 @@
   margin-bottom: 0.4em;
 }
 
+/* 오류 메시지 */
+.agree-err-msg {
+  margin-top: 1rem;
+  color: var(--dark-red);
+  text-align: center;
+  font-size: 0.8em;
+}
+
 /* 맨 아래의 동의 버튼 */
 .agree-button-container {
   display: flex;
   justify-content: center;
 
-  margin-top: 2em;
+  margin-top: 1rem;
 }
 
-@media screen and (max-width: 708px){
+@media screen and (max-width: 708px) {
   .agree > #round-shadow-wrapper {
     padding: 0;
   }
