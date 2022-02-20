@@ -197,7 +197,7 @@ function InfoInput() {
         <div className="ii-etc">
           <h1 className="beautiful-title">그 외의 정보</h1>
           <br />
-          <div id="infoList">
+          <div>
             <div className="title">
               <h3>경력사항</h3>
               <button
@@ -211,7 +211,7 @@ function InfoInput() {
 
             <ul>
               {careerList.map((x, i) => (
-                <li id="careerList">
+                <li key={`career-list-${i}`}>
                   <input
                     className="btn"
                     type="button"
@@ -282,127 +282,129 @@ function InfoInput() {
             </ul>
           </div>
           <br />
-          학력사항
-          <input
-            className="btn"
-            type="button"
-            value="+"
-            onClick={(e) => {
-              handleAddClick(schoolList, setSchoolList, e);
-            }}
-          />
-          {schoolList.map((x, i) => {
-            return (
-              <div id="schoolList">
-                <input
-                  className="btn"
-                  type="button"
-                  value="-"
-                  onClick={(e) => {
-                    handleRemoveClick(schoolList, setSchoolList, i);
-                  }}
-                />
-                <select
-                  name="schoolType"
-                  value={x?.schoolType}
-                  onChange={(e) =>
-                    handleInputChange(schoolList, setSchoolList, i, e)
-                  }
-                >
-                  <option value="high">고등학교</option>
-                  <option value="univ">대학교</option>
-                  <option value="grad">대학원</option>
-                  <option value="etc">기타</option>
-                </select>
-                <input
-                  type="date"
-                  name="start"
-                  value={x?.start}
-                  onChange={(e) =>
-                    handleInputChange(schoolList, setSchoolList, i, e)
-                  }
-                />
-                ~
-                <input
-                  type="date"
-                  name="end"
-                  value={x?.end}
-                  onChange={(e) => handleInputChange(schoolList, i, e)}
-                />
-                <select
-                  name="schoolStat"
-                  value={x?.schoolStat}
-                  onChange={(e) =>
-                    handleInputChange(schoolList, setSchoolList, i, e)
-                  }
-                >
-                  <option value="attend">재학</option>
-                  <option value="graduate">졸업</option>
-                </select>
-              </div>
-            );
-          })}
+          <div>
+            <div className="title">
+              <h3>학력사항</h3>
+              <button
+                onClick={(e) => handleAddClick(schoolList, setSchoolList, e)}
+              >
+                +
+              </button>
+            </div>
+
+            <ul>
+              {schoolList.map((x, i) => (
+                <li key={`school-list-${i}`}>
+                  <input
+                    className="btn"
+                    type="button"
+                    value="-"
+                    onClick={(e) => {
+                      handleRemoveClick(schoolList, setSchoolList, i);
+                    }}
+                  />
+                  <select
+                    name="schoolType"
+                    value={x?.schoolType}
+                    onChange={(e) =>
+                      handleInputChange(schoolList, setSchoolList, i, e)
+                    }
+                  >
+                    <option value="high">고등학교</option>
+                    <option value="univ">대학교</option>
+                    <option value="grad">대학원</option>
+                    <option value="etc">기타</option>
+                  </select>
+                  <input
+                    type="date"
+                    name="start"
+                    value={x?.start}
+                    onChange={(e) =>
+                      handleInputChange(schoolList, setSchoolList, i, e)
+                    }
+                  />
+                  ~
+                  <input
+                    type="date"
+                    name="end"
+                    value={x?.end}
+                    onChange={(e) => handleInputChange(schoolList, i, e)}
+                  />
+                  <select
+                    name="schoolStat"
+                    value={x?.schoolStat}
+                    onChange={(e) =>
+                      handleInputChange(schoolList, setSchoolList, i, e)
+                    }
+                  >
+                    <option value="attend">재학</option>
+                    <option value="graduate">졸업</option>
+                  </select>
+                </li>
+              ))}
+            </ul>
+          </div>
           <br />
-          자격/어학사항
-          <input
-            className="btn"
-            type="button"
-            value="+"
-            onClick={(e) => {
-              handleAddClick(certList, setCertList, e);
-            }}
-          />
-          {certList.map((x, i) => {
-            return (
-              <div id="certList">
-                <input
-                  className="btn"
-                  type="button"
-                  value="-"
-                  onClick={(e) => {
-                    handleRemoveClick(certList, setCertList, i);
-                  }}
-                />
-                <input
-                  type="text"
-                  name="cert"
-                  placeholder="자격/어학 종류"
-                  value={x?.cert}
-                  onChange={(e) =>
-                    handleInputChange(certList, setCertList, i, e)
-                  }
-                />
-                <input
-                  type="text"
-                  name="level"
-                  placeholder="등급/레벨/점수"
-                  value={x?.level}
-                  onChange={(e) =>
-                    handleInputChange(certList, setCertList, i, e)
-                  }
-                />
-                <input
-                  type="text"
-                  name="auth"
-                  placeholder="발급기관"
-                  value={x?.auth}
-                  onChange={(e) =>
-                    handleInputChange(certList, setCertList, i, e)
-                  }
-                />
-                <input
-                  type="date"
-                  name="issueDate"
-                  value={x?.issueDate}
-                  onChange={(e) =>
-                    handleInputChange(certList, setCertList, i, e)
-                  }
-                />
-              </div>
-            );
-          })}
+          <div>
+            <div className="title">
+              <h3>자격/어학사항</h3>
+              <button onClick={(e) => handleAddClick(certList, setCertList, e)}>
+                +
+              </button>
+            </div>
+
+            <ul>
+              {certList.map((x, i) => (
+                <li key={`cer-list-${i}`}>
+                  <input
+                    className="btn"
+                    type="button"
+                    value="-"
+                    onClick={(e) => {
+                      handleRemoveClick(certList, setCertList, i);
+                    }}
+                  />
+                  <input
+                    type="text"
+                    name="cert"
+                    placeholder="자격/어학 종류"
+                    value={x?.cert}
+                    onChange={(e) =>
+                      handleInputChange(certList, setCertList, i, e)
+                    }
+                  />
+                  <input
+                    type="text"
+                    name="level"
+                    placeholder="등급/레벨/점수"
+                    value={x?.level}
+                    onChange={(e) =>
+                      handleInputChange(certList, setCertList, i, e)
+                    }
+                  />
+                  <input
+                    type="text"
+                    name="auth"
+                    placeholder="발급기관"
+                    value={x?.auth}
+                    onChange={(e) =>
+                      handleInputChange(certList, setCertList, i, e)
+                    }
+                  />
+                  <input
+                    type="date"
+                    name="issueDate"
+                    value={x?.issueDate}
+                    onChange={(e) =>
+                      handleInputChange(certList, setCertList, i, e)
+                    }
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
           <br />
-          수상경력
+          {/* // TODO : 여기서부터 다시 수정 수상경력 */}
           <input
             className="btn"
             type="button"
