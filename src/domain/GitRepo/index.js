@@ -2,7 +2,7 @@ import "./style.css";
 import RadioBtn from "../../components/RadioBtn/index";
 import BeforeAfterBtn from "../../components/BeforeAfterBtn";
 import {useHistory} from "react-router-dom/cjs/react-router-dom.min";
-import { useState } from "react";
+import {useState} from "react";
 
 function GitRepo() {
   const [repolist, setRepolist] = useState([
@@ -57,14 +57,14 @@ function GitRepo() {
             </div>
             <br />
 
-            {repolist.map((box,index) => (
+            {repolist.map((box, index) => (
               <li key={index}>
                 <b className="gitrepo-inner-box-project-name">
-                  { box.repoName }
-                <RadioBtn className="RadioBtn"/>
+                  {box.repoName}
+                  <RadioBtn className="RadioBtn" />
                 </b>
                 <div className="gitrepo-inner-box-project-content">
-                  ㄴ{ box.summary }
+                  ㄴ{box.summary}
                 </div>
               </li>
             ))}

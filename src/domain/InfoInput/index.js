@@ -1,8 +1,8 @@
 import "./style.css";
-
 import React, {useEffect, useState} from "react";
-import Modal from "../../components/Modal/modal";
 import {useHistory} from "react-router-dom";
+
+import Modal from "../../components/Modal/modal";
 import BeforeAfterBtn from "../../components/BeforeAfterBtn";
 import RoundContainer from "../../components/RoundContainer";
 
@@ -91,12 +91,6 @@ function InfoInput() {
     inputImg.click();
   };
 
-  const prevPage = () => {
-    history.push("/git-repo-detail");
-  };
-  const nextPage = () => {
-    history.push("/git-console");
-  };
   const tmpSave = () => {};
 
   return (
@@ -109,8 +103,8 @@ function InfoInput() {
 
       <BeforeAfterBtn
         saveShow={true}
-        onPrev={prevPage}
-        onNext={nextPage}
+        onPrev={() => history.push("/git-repo-detail")}
+        onNext={() => history.push("/git-console")}
         onSave={tmpSave}
       />
 
@@ -404,117 +398,137 @@ function InfoInput() {
             </ul>
           </div>
           <br />
-          {/* // TODO : 여기서부터 다시 수정 수상경력 */}
-          <input
-            className="btn"
-            type="button"
-            value="+"
-            onClick={(e) => {
-              handleAddClick(awardList, setAwardList, e);
-            }}
-          />
-          {awardList.map((x, i) => {
-            return (
-              <div id="awardList">
-                <input
-                  className="btn"
-                  type="button"
-                  value="-"
-                  onClick={(e) => {
-                    handleRemoveClick(awardList, setAwardList, i);
-                  }}
-                />
-                <input
-                  type="text"
-                  name="award"
-                  placeholder="대회명"
-                  value={x?.award}
-                  onChange={(e) =>
-                    handleInputChange(awardList, setAwardList, i, e)
-                  }
-                />
-                <input
-                  type="text"
-                  name="place"
-                  placeholder="수상 내용"
-                  value={x?.place}
-                  onChange={(e) =>
-                    handleInputChange(awardList, setAwardList, i, e)
-                  }
-                />
-                <input
-                  type="text"
-                  name="auth"
-                  placeholder="기관"
-                  value={x?.auth}
-                  onChange={(e) =>
-                    handleInputChange(awardList, setAwardList, i, e)
-                  }
-                />
-                <input
-                  type="date"
-                  name="issueDate"
-                  value={x?.issueDate}
-                  onChange={(e) =>
-                    handleInputChange(awardList, setAwardList, i, e)
-                  }
-                />
-              </div>
-            );
-          })}
+
+          <div>
+            <div className="title">
+              <h3>수상</h3>
+              <button
+                onClick={(e) => {
+                  handleAddClick(awardList, setAwardList, e);
+                }}
+              >
+                +
+              </button>
+            </div>
+
+            <ul>
+              {awardList.map((x, i) => (
+                <li key={`award-list-${i}`}>
+                  <div id="awardList">
+                    <input
+                      className="btn"
+                      type="button"
+                      value="-"
+                      onClick={(e) => {
+                        handleRemoveClick(awardList, setAwardList, i);
+                      }}
+                    />
+                    <input
+                      type="text"
+                      name="award"
+                      placeholder="대회명"
+                      value={x?.award}
+                      onChange={(e) =>
+                        handleInputChange(awardList, setAwardList, i, e)
+                      }
+                    />
+                    <input
+                      type="text"
+                      name="place"
+                      placeholder="수상 내용"
+                      value={x?.place}
+                      onChange={(e) =>
+                        handleInputChange(awardList, setAwardList, i, e)
+                      }
+                    />
+                    <input
+                      type="text"
+                      name="auth"
+                      placeholder="기관"
+                      value={x?.auth}
+                      onChange={(e) =>
+                        handleInputChange(awardList, setAwardList, i, e)
+                      }
+                    />
+                    <input
+                      type="date"
+                      name="issueDate"
+                      value={x?.issueDate}
+                      onChange={(e) =>
+                        handleInputChange(awardList, setAwardList, i, e)
+                      }
+                    />
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           <br />
-          기타
-          <input
-            className="btn"
-            type="button"
-            value="+"
-            onClick={(e) => {
-              handleAddClick(etcList, setEtcList, e);
-            }}
-          />
-          {etcList.map((x, i) => {
-            return (
-              <div id="etcList">
-                <input
-                  className="btn"
-                  type="button"
-                  value="-"
-                  onClick={(e) => {
-                    handleRemoveClick(etcList, setEtcList, i);
-                  }}
-                />
-                <input
-                  type="text"
-                  name="etc"
-                  placeholder="활동명"
-                  value={x?.etc}
-                  onChange={(e) => handleInputChange(etcList, setEtcList, i, e)}
-                />
-                <input
-                  type="text"
-                  name="about"
-                  placeholder="설명"
-                  value={x?.about}
-                  onChange={(e) => handleInputChange(etcList, setEtcList, i, e)}
-                />
-                <input
-                  type="date"
-                  name="start"
-                  value={x?.start}
-                  onChange={(e) => handleInputChange(etcList, setEtcList, i, e)}
-                />
-                <input
-                  type="date"
-                  name="end"
-                  value={x?.end}
-                  onChange={(e) => handleInputChange(etcList, setEtcList, i, e)}
-                />
-              </div>
-            );
-          })}
+          <div>
+            <div className="title">
+              <h3>기타</h3>
+              <button onClick={(e) => handleAddClick(etcList, setEtcList, e)}>
+                +
+              </button>
+            </div>
+
+            <ul>
+              {etcList.map((x, i) => (
+                <li key={`etc-list-${i}`}>
+                  <div>
+                    <input
+                      className="btn"
+                      type="button"
+                      value="-"
+                      onClick={(e) => {
+                        handleRemoveClick(etcList, setEtcList, i);
+                      }}
+                    />
+                    <input
+                      type="text"
+                      name="etc"
+                      placeholder="활동명"
+                      value={x?.etc}
+                      onChange={(e) =>
+                        handleInputChange(etcList, setEtcList, i, e)
+                      }
+                    />
+                    <input
+                      type="text"
+                      name="about"
+                      placeholder="설명"
+                      value={x?.about}
+                      onChange={(e) =>
+                        handleInputChange(etcList, setEtcList, i, e)
+                      }
+                    />
+                    <input
+                      type="date"
+                      name="start"
+                      value={x?.start}
+                      onChange={(e) =>
+                        handleInputChange(etcList, setEtcList, i, e)
+                      }
+                    />
+                    <input
+                      type="date"
+                      name="end"
+                      value={x?.end}
+                      onChange={(e) =>
+                        handleInputChange(etcList, setEtcList, i, e)
+                      }
+                    />
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
           <br />
-          <div id="intro">
-            자기소개
+          <div>
+            <div className="title">
+              <h3>자기소개</h3>
+            </div>
             {introList.map((x, i) => {
               return (
                 <div id="introList">
@@ -539,177 +553,200 @@ function InfoInput() {
             })}
           </div>
           <br />
-          SNS
-          <input
-            className="btn"
-            type="button"
-            value="+"
-            onClick={(e) => {
-              handleAddClick(snsList, setSnsList, e);
-            }}
-          />
-          {snsList.map((x, i) => {
-            return (
-              <div id="snsList">
-                <input
-                  className="btn"
-                  type="button"
-                  value="-"
-                  onClick={(e) => handleRemoveClick(snsList, setSnsList, i)}
-                />
-                <input
-                  type="text"
-                  name="sns"
-                  placeholder="종류"
-                  value={x?.sns}
-                  onChange={(e) => handleInputChange(snsList, setSnsList, i, e)}
-                />
-                <input
-                  type="text"
-                  name="link"
-                  placeholder="계정주소"
-                  value={x?.link}
-                  onChange={(e) => handleInputChange(snsList, setSnsList, i, e)}
-                />
-              </div>
-            );
-          })}
+          <div>
+            <div className="title">
+              <h3>SNS</h3>
+              <button
+                onClick={(e) => {
+                  handleAddClick(snsList, setSnsList, e);
+                }}
+              >
+                +
+              </button>
+            </div>
+            <ul>
+              {snsList.map((x, i) => (
+                <li key={`sns-list-${i}`}>
+                  <div id="snsList">
+                    <input
+                      className="btn"
+                      type="button"
+                      value="-"
+                      onClick={(e) => handleRemoveClick(snsList, setSnsList, i)}
+                    />
+                    <input
+                      type="text"
+                      name="sns"
+                      placeholder="종류"
+                      value={x?.sns}
+                      onChange={(e) =>
+                        handleInputChange(snsList, setSnsList, i, e)
+                      }
+                    />
+                    <input
+                      type="text"
+                      name="link"
+                      placeholder="계정주소"
+                      value={x?.link}
+                      onChange={(e) =>
+                        handleInputChange(snsList, setSnsList, i, e)
+                      }
+                    />
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
           <br />
-          기술스택
-          <input
-            className="btn"
-            type="button"
-            value="+"
-            onClick={(e) => {
-              handleAddClick(stackList, setStackList, e);
-            }}
-          />
-          {stackList.map((x, i) => {
-            return (
-              <div id="stackList">
-                <input
-                  className="btn"
-                  type="button"
-                  value="-"
-                  onClick={(e) => {
-                    handleRemoveClick(stackList, setStackList, i);
-                  }}
-                />
-                <input
-                  type="text"
-                  name="stack"
-                  placeholder="기술 종류"
-                  value={x?.stack}
-                  onChange={(e) =>
-                    handleInputChange(stackList, setStackList, i, e)
-                  }
-                  list="stackoption"
-                />
-                <datalist id="stackoption">
-                  <option value="asdf" />
-                </datalist>
-                <select
-                  name="level"
-                  value={x?.level}
-                  onChange={(e) =>
-                    handleInputChange(stackList, setStackList, i, e)
-                  }
-                >
-                  <option value="">레벨</option>
-                  <option value="1">상</option>
-                  <option value="2">중</option>
-                  <option value="3">하</option>
-                </select>
-              </div>
-            );
-          })}
+
+          <div>
+            <div className="title">
+              <h3>기술스택</h3>
+              <button
+                onClick={(e) => {
+                  handleAddClick(stackList, setStackList, e);
+                }}
+              >
+                +
+              </button>
+            </div>
+
+            <ul>
+              {stackList.map((x, i) => (
+                <li key={`stack-list-${i}`}>
+                  <div id="stackList">
+                    <input
+                      className="btn"
+                      type="button"
+                      value="-"
+                      onClick={(e) => {
+                        handleRemoveClick(stackList, setStackList, i);
+                      }}
+                    />
+                    <input
+                      type="text"
+                      name="stack"
+                      placeholder="기술 종류"
+                      value={x?.stack}
+                      onChange={(e) =>
+                        handleInputChange(stackList, setStackList, i, e)
+                      }
+                      list="stackoption"
+                    />
+                    <datalist id="stackoption">
+                      <option value="asdf" />
+                    </datalist>
+                    <select
+                      name="level"
+                      value={x?.level}
+                      onChange={(e) =>
+                        handleInputChange(stackList, setStackList, i, e)
+                      }
+                    >
+                      <option value="">레벨</option>
+                      <option value="1">상</option>
+                      <option value="2">중</option>
+                      <option value="3">하</option>
+                    </select>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
           <br />
-          출판 / 논문 / 특허
-          <input
-            className="btn"
-            type="button"
-            value="+"
-            onClick={(e) => {
-              handleAddClick(patentList, setPatentList, e);
-            }}
-          />
-          {patentList.map((x, i) => {
-            return (
-              <div id="patentList">
-                <input
-                  className="btn"
-                  type="button"
-                  value="-"
-                  onClick={(e) =>
-                    handleRemoveClick(patentList, setPatentList, i)
-                  }
-                />
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="이름"
-                  value={x?.name}
-                  onChange={(e) =>
-                    handleInputChange(patentList, setPatentList, i, e)
-                  }
-                />
-                <input
-                  type="text"
-                  name="number"
-                  placeholder="고유번호/출원번호"
-                  value={x?.number}
-                  onChange={(e) =>
-                    handleInputChange(patentList, setPatentList, i, e)
-                  }
-                />
-                <input
-                  type="text"
-                  name="company"
-                  placeholder="출판사/출원국가"
-                  value={x?.company}
-                  onChange={(e) =>
-                    handleInputChange(patentList, setPatentList, i, e)
-                  }
-                />
-                <input
-                  type="text"
-                  name="author"
-                  placeholder="저자/출판인"
-                  value={x?.author}
-                  onChange={(e) =>
-                    handleInputChange(patentList, setPatentList, i, e)
-                  }
-                />
-                <input
-                  type="month"
-                  name="date"
-                  placeholder="발행/출원 연월"
-                  value={x?.date}
-                  onChange={(e) =>
-                    handleInputChange(patentList, setPatentList, i, e)
-                  }
-                />
-                <textarea
-                  id="link"
-                  name="link"
-                  placeholder="링크"
-                  value={x?.link}
-                  onChange={(e) =>
-                    handleInputChange(patentList, setPatentList, i, e)
-                  }
-                />
-                <textarea
-                  id="des"
-                  name="des"
-                  placeholder="설명"
-                  value={x?.des}
-                  onChange={(e) =>
-                    handleInputChange(patentList, setPatentList, i, e)
-                  }
-                />
-              </div>
-            );
-          })}
+
+          <div>
+            <div className="title">
+              <h3>출판 / 논문 / 특허</h3>
+              <button
+                onClick={(e) => {
+                  handleAddClick(patentList, setPatentList, e);
+                }}
+              >
+                +
+              </button>
+            </div>
+
+            <ul>
+              {patentList.map((x, i) => (
+                <li key={`patent-list-${i}`}>
+                  <div id="patentList">
+                    <input
+                      className="btn"
+                      type="button"
+                      value="-"
+                      onClick={(e) =>
+                        handleRemoveClick(patentList, setPatentList, i)
+                      }
+                    />
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="이름"
+                      value={x?.name}
+                      onChange={(e) =>
+                        handleInputChange(patentList, setPatentList, i, e)
+                      }
+                    />
+                    <input
+                      type="text"
+                      name="number"
+                      placeholder="고유번호/출원번호"
+                      value={x?.number}
+                      onChange={(e) =>
+                        handleInputChange(patentList, setPatentList, i, e)
+                      }
+                    />
+                    <input
+                      type="text"
+                      name="company"
+                      placeholder="출판사/출원국가"
+                      value={x?.company}
+                      onChange={(e) =>
+                        handleInputChange(patentList, setPatentList, i, e)
+                      }
+                    />
+                    <input
+                      type="text"
+                      name="author"
+                      placeholder="저자/출판인"
+                      value={x?.author}
+                      onChange={(e) =>
+                        handleInputChange(patentList, setPatentList, i, e)
+                      }
+                    />
+                    <input
+                      type="month"
+                      name="date"
+                      placeholder="발행/출원 연월"
+                      value={x?.date}
+                      onChange={(e) =>
+                        handleInputChange(patentList, setPatentList, i, e)
+                      }
+                    />
+                    <textarea
+                      id="link"
+                      name="link"
+                      placeholder="링크"
+                      value={x?.link}
+                      onChange={(e) =>
+                        handleInputChange(patentList, setPatentList, i, e)
+                      }
+                    />
+                    <textarea
+                      id="des"
+                      name="des"
+                      placeholder="설명"
+                      value={x?.des}
+                      onChange={(e) =>
+                        handleInputChange(patentList, setPatentList, i, e)
+                      }
+                    />
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </RoundContainer>
     </div>

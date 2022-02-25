@@ -1,5 +1,5 @@
 .info-input .main-info {
-  padding: 20px 0px;
+  padding-bottom: 2rem;
 
   display: flex;
   align-items: flex-start;
@@ -28,6 +28,17 @@
   display: flex;
   flex-direction: column;
   gap: 0.5em;
+}
+
+.info-input .ii-etc .title {
+  display: flex;
+  gap: 0.5em;
+}
+.info-input .ii-etc .title button {
+  border: none;
+  background: none;
+  color: var(--blue3);
+  font-weight: bold;
 }
 
 .etc {
@@ -94,4 +105,11 @@
   background-color: #efefef;
   width: 150px;
   height: 150px;
+}
+
+@media screen and (max-width: 700px) {
+  .info-input .main-info {
+    flex-direction: column;
+    gap: 2em;
+  }
 }

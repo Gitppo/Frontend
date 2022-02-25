@@ -1,5 +1,5 @@
 import "./style.css";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import Select from "react-select";
 import BeforeAfterBtn from "../../components/BeforeAfterBtn";
@@ -116,24 +116,6 @@ function GitRepoDetail() {
     }),
   };
 
-  const toggle = useState("");
-
-  function openCloseToc(id) {
-    const toc = document.getElementById("toc-content");
-    for (let i = 0; i <= repos.length; i++) {
-      if (repos[i].id === id) {
-        if (toc.style.display === "none") {
-          toc.style.display = "block";
-        } else {
-          toc.style.display = "none";
-        }
-        repos.values(i);
-        break;
-      }
-    }
-    setRepos([...repos]);
-  }
-
   function deletePortfolio(id) {
     for (let i = 0; i < repos.length; i++) {
       if (repos[i].id === id) {
@@ -145,6 +127,8 @@ function GitRepoDetail() {
   }
 
   const tmpSave = () => {};
+
+  useEffect(() => {}, []);
 
   return (
     <div className="grd">
@@ -158,18 +142,20 @@ function GitRepoDetail() {
       <div className="grd-wrapper">
         <div className="grd-top-container">
           <div className="grd-top-container-title">레포지토리</div>
-          <button className="round-button">삭제</button>
+          {/* // TODO : 초기화 */}
+          <button className="round-button">초기화</button>
         </div>
+
         {repos.map((box, index) => (
           <li className="grd-inner-box" key={index}>
             <div className="grd-inner-box-info-container">
               <div className="grd-inner-box-top-container">
-                <h3 className="grd-inner-box-repo-title">{box.title}</h3>
+                <h3 className="grd-inner-box-repo-title">{box?.title}</h3>
                 <img className="grd-inner-box-image" src={Star} alt={""} />
-                <div className="grd-inner-box-star-num">{box.starNum}</div>
+                <div className="grd-inner-box-star-num">{box?.starNum}</div>
                 <button
                   className="round-button"
-                  onClick={() => deletePortfolio(box.id)}
+                  onClick={() => deletePortfolio(box?.id)}
                 >
                   삭제
                 </button>
@@ -177,21 +163,23 @@ function GitRepoDetail() {
               <div className="grd-inner-box-bottom-container">
                 <div className="grd-inner-box-bottom-title">생성일</div>
                 <div className="grd-inner-box-bottom-detail">
-                  {box.creation}
+                  {box?.creation}
                 </div>
                 <div className="grd-inner-box-bottom-title">최근 업데이트</div>
                 <div className="grd-inner-box-bottom-detail">
-                  {box.revision.date} {box.revision.time}
+                  {box?.revision?.date} {box?.revision?.time}
                 </div>
                 <div className="grd-inner-box-bottom-title">사용언어</div>
                 <div className="grd-inner-box-bottom-detail">
-                  {box.language}
+                  {box?.language}
                 </div>
               </div>
             </div>
-            <div id="toc-content" key={index}>
+
+            <div style={box?.fold ? {display: "none"} : {}}>
               <div className="grd-inner-box-title">
                 <div className="grd-inner-box-text">
+                  {/* // TODO : useState!!! */}
                   바닐라자바스크립트 구현 프로젝트 리액트로 바꿔보기
                 </div>
                 <img
@@ -202,7 +190,10 @@ function GitRepoDetail() {
                 />
               </div>
               <div className="grd-inner-box-readme">
-                <div className="grd-inner-box-text">README.md</div>
+                <div className="grd-inner-box-text">
+                  {/* // TODO : useState!!! */}
+                  README.md
+                </div>
                 <img
                   className="grd-inner-box-image"
                   src={Eye}
@@ -255,8 +246,53 @@ function GitRepoDetail() {
                   className="grd-inner-box-skill"
                   classNamePrefix="select"
                   defaultValue={skillOptions[0]}
+                  style={{border: "none"}}
                   // onChange={onChange}
                 />
+
+                {/* <div>
+                  <div
+                    className="grd-inner-box-plus-info-title-info-box"
+                    style={{width: "100%"}}
+                  >
+                    <span
+                      style={{
+                        backgroundColor: "black",
+                        color: "white",
+                        padding: "0.2em 0.5em",
+                        marginRight: "0.2em",
+                      }}
+                    >
+                      JavaScript
+                    </span>
+                    <span
+                      style={{
+                        backgroundColor: "black",
+                        color: "white",
+                        padding: "0.2em 0.5em",
+                        marginRight: "0.2em",
+                      }}
+                    >
+                      Java
+                    </span>
+                    <span>
+                      <input
+                        type="text"
+                        list="skill-stack-list"
+                        style={{
+                          border: "none",
+                          outline: "none",
+                          background: "none",
+                        }}
+                      />
+                    </span>
+                  </div>
+                  <datalist id={"skill-stack-list"}>
+                    {skillOptions?.map((e, i) => (
+                      <option value={e?.label} />
+                    ))}
+                  </datalist>
+                </div> */}
               </div>
               <div className="grd-inner-box-title-container">
                 <div className="container-title">도메인</div>
@@ -283,12 +319,14 @@ function GitRepoDetail() {
               </div>
             </div>
             <img
-              className={`grd-inner-box-fold-image ${toggle && "-down"}`}
-              // ${toggle && "-down"}
+              className={`grd-inner-box-fold-image${box?.fold ? "-down" : ""}`}
               src={Fold}
               alt={""}
-              type="button"
-              onClick={() => openCloseToc(box.id)}
+              onClick={() => {
+                // fold: true - 접힘 / false - 열림
+                repos[index].fold = !(repos[index]?.fold ?? false);
+                setRepos([...repos]);
+              }}
             />
           </li>
         ))}
