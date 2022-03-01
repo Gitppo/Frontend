@@ -119,6 +119,7 @@
   height: 100%;
 
   display: flex;
+  gap: 1em;
 }
 .grd-inner-box-bottom-title {
   color: #272727;
@@ -126,7 +127,6 @@
 }
 .grd-inner-box-bottom-detail {
   color: #707070;
-  margin: 0 2em 0 1em;
 }
 
 /* 하얀색 박스 두번째 칸  */

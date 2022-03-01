@@ -1,0 +1,23 @@
+.ti-modal {
+  width: 100%;
+  max-width: min(500px, calc(100% - 2rem));
+
+  background-color: white;
+  text-align: center;
+}
+
+.ti-modal .title-input {
+  margin-top: 0.5em;
+
+  color: var(--dark-blue1);
+  font-size: 2em;
+
+  border: none;
+  border-bottom: 1px solid #707070;
+  outline: none;
+}
+
+.ti-modal .alert-msg {
+  font-size: 0.8rem;
+  color: var(--dark-red);
+}

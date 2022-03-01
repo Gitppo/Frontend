@@ -1,0 +1,23 @@
+/* 팝업 박스 */
+.yn-modal {
+  width: 100%;
+  max-width: min(500px, calc(100% - 2rem));
+
+  background-color: white;
+}
+
+.yn-modal-title {
+  color: #002d84;
+  text-align: center;
+}
+
+/* 버튼 */
+.yn-modal-btn-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 2em;
+  gap: 1em;
+}

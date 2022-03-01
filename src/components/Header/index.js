@@ -1,6 +1,7 @@
 import {Link, useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 import "./style.css";
+import {useUserContext} from "../../hooks/useUserContext";
 
 const blueHeader = [
   "/",
@@ -13,7 +14,8 @@ const blueHeader = [
 function Header() {
   const location = useLocation(),
     [path, setPath] = useState(),
-    [isHome, setIsHome] = useState(true);
+    [isHome, setIsHome] = useState(true),
+    {user} = useUserContext();
 
   useEffect(() => {
     setPath(location.pathname);
@@ -37,7 +39,7 @@ function Header() {
             <span style={{opacity: isHome ? 0.3 : 1}}>마이페이지</span>
           </Link>
         </div>
-        <div>로그인 정보</div>
+        <div>{user?.githubUserName ? `${user?.githubUserName}님` : ""}</div>
       </div>
     </header>
   );

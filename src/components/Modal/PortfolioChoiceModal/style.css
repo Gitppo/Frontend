@@ -1,0 +1,36 @@
+.pfc-modal {
+  background-color: white;
+  text-align: center;
+}
+.pfc-modal .pf-list {
+  margin-top: 1em;
+}
+.pfc-modal .pf-list-item {
+  position: relative;
+  border: 1px solid #818181 !important;
+  box-shadow: 0.4rem 0.4rem rgba(0, 0, 0, 0.16) !important;
+}
+.pfc-modal .pf-list-item:hover {
+  background-color: var(--light-blue2);
+}
+
+/* 포트폴리오 설명 */
+.pfc-modal .pf-list-item .subtitle {
+  color: var(--dark-blue1);
+  margin: 0.5em 0;
+  font-size: 0.9em;
+}
+/* 포트폴리오 날짜 */
+.pfc-modal .pf-list-item .date {
+  color: #707070;
+  font-size: 0.9em;
+}
+
+/* 빨간 핀 */
+.pf-list-pin {
+  position: absolute;
+  top: -0.5em;
+  left: -0.5em;
+  width: 1.2em;
+  transform: rotate(-45deg);
+}

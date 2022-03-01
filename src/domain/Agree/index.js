@@ -1,12 +1,12 @@
 import "./style.css";
 import {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
-import {loadTerm, saveTermToAgree} from "../../hooks/loadTerm";
 
 import RoundContainer from "../../components/RoundContainer";
 import RadioBtn from "../../components/RadioBtn";
 
 import flagIcon from "../../assets/flag.png";
+import axios from "axios";
 
 function Agreement() {
   const history = useHistory();
@@ -48,6 +48,47 @@ function Agreement() {
 
           // TODO : 동의 오류 시 알림
         });
+    }
+  };
+
+  const loadTerm = async () => {
+    return await axios
+      .get(`${process.env.REACT_APP_BACKEND}/api/term`)
+      .then((r) => {
+        if (r.status === 200) {
+          return r.data;
+        } else {
+          throw Error(`NetErr : Failed to load the terms. : ${r.statusText}`);
+        }
+      })
+      .then((data) => {
+        return data.data;
+      })
+      .catch((e) => {
+        console.error(e);
+        throw e;
+      });
+  };
+  const saveTermToAgree = async (contract) => {
+    let data = [];
+
+    try {
+      for (let e of contract) {
+        data.push({
+          termID: e.id,
+          termAgreementIsAgree: e?.agree ? true : false,
+        });
+      }
+    } catch {
+      throw Error("InputErr : Invalid value");
+    }
+
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND}/api/term`,
+      data
+    );
+    if (response.status !== 200) {
+      throw Error(`NetErr : Cannot save agreement. : ${response.statusText}`);
     }
   };
 
@@ -94,10 +135,10 @@ function Agreement() {
         <hr />
 
         {/* 동의 1 */}
-        <div className={"agree-contract-title"}>
+        {/* <div className={"agree-contract-title"}>
           <h4>만 14세 이상입니다.</h4>
           <RadioBtn />
-        </div>
+        </div> */}
 
         {/* 동의 2 */}
         {contract?.map((e, i) => (

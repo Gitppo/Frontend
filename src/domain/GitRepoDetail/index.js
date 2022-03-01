@@ -34,26 +34,6 @@ function GitRepoDetail() {
       domain: "",
       explain: "",
     },
-    {
-      id: 2,
-      title: "2021 조깃포 삼성 포트폴리오",
-      state: 0,
-      creation: "2021.04.04",
-      revision: {
-        date: "2021.05.05",
-        time: "19:00",
-      },
-    },
-    {
-      id: 3,
-      title: "2021 조깃포 현대 포트폴리오",
-      state: 1,
-      creation: "2021.04.04",
-      revision: {
-        date: "2021.05.05",
-        time: "19:00",
-      },
-    },
   ]);
 
   const skillOptions = [
@@ -134,7 +114,7 @@ function GitRepoDetail() {
     <div className="grd">
       <BeforeAfterBtn
         saveShow={true}
-        onPrev={() => history.push("/git-repo")}
+        onPrev={() => history.push("/my-page")}
         onNext={() => history.push("/git-info")}
         onSave={tmpSave}
       />

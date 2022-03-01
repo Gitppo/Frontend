@@ -1,22 +1,20 @@
 .mypage-upper-box {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  gap: 1em;
 
   width: 100%;
   margin-bottom: 4rem;
 }
 /* 새로운 포트폴리오 생성 */
 .mypage-upper-box-left {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
   width: 50%;
   max-width: 350px;
 
-  margin-right: 1em;
-  padding: 1em;
+  padding: 1.5em;
+
+  text-align: center;
 
   border-radius: 0.5rem;
   box-shadow: 5px 5px 0px rgba(15, 44, 127, 0.5);
@@ -39,9 +37,11 @@
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  gap: 0.5em;
 
   width: 50%;
   max-width: 310px;
+  height: 90%;
 }
 .mypage-manage {
   display: flex;
@@ -49,7 +49,7 @@
   align-items: center;
 
   width: 100%;
-  padding: 0.5em 0.8em;
+  padding: 1em;
 
   color: white;
   border-radius: 0.5rem;
@@ -113,10 +113,5 @@
   .mypage-upper-box-right {
     width: 100%;
     max-width: none;
-    margin: 0 0 0.8em 0;
-  }
-
-  .mypage-manage {
-    margin: 0.5em 0;
   }
 }

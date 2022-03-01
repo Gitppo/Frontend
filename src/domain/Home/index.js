@@ -1,15 +1,11 @@
-import {useState} from "react";
-import {useHistory} from "react-router-dom/cjs/react-router-dom.min";
-import {loginGithub} from "../../hooks/loginGithub";
 import "./style.css";
+import {useState} from "react";
 
 const btnMainColor = "#002d84";
 const remToPx = (rem) =>
   rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 
 function Home() {
-  const history = useHistory();
-
   const [rem4, rem6, rem8] = [remToPx(4), remToPx(6), remToPx(8)];
   const [btnStyle, setBtnStyle] = useState({
     marginTop: `${rem6}px`,
@@ -26,20 +22,15 @@ function Home() {
       setBtnStyle({...btnStyle, marginTop: `${rem6 - scrolled}px`});
   };
 
-  const login = async () => {
-    await loginGithub();
-    history.push("/my-page");
-  };
-
   return (
     <div className={"home"} onScroll={onHomeScroll}>
-      <button
-        className={"home-login-button round-button"}
+      <a
+        href={`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${window.location.origin}/callback`}
         style={btnStyle}
-        onClick={login}
+        className={"home-login-button round-button"}
       >
         깃 헙 로그인
-      </button>
+      </a>
 
       <div className={"home-intro-wrapper"}>
         <div className={"home-intro-card"} id={"left"}>

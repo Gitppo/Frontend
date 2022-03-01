@@ -8,6 +8,7 @@
   min-height: calc(100vh - 7.5rem);
 
   position: relative;
+  overflow: hidden;
 }
 
 .error-hippo {

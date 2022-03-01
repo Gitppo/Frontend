@@ -2,9 +2,13 @@ import "./style.css";
 import RadioBtn from "../../components/RadioBtn/index";
 import BeforeAfterBtn from "../../components/BeforeAfterBtn";
 import {useHistory} from "react-router-dom/cjs/react-router-dom.min";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
 
 function GitRepo() {
+  const history = useHistory();
+  const location = useLocation();
+
   const [repolist, setRepolist] = useState([
     {
       id: 1,
@@ -12,27 +16,16 @@ function GitRepo() {
       summary: "바닐라 자바스크립트 구현 프로젝트 리액트로 바꿔보기",
       people: "Kim",
     },
-    {
-      id: 2,
-      repoName: "minjoo-cho/movie_app_2021",
-      summary: "영화 리스트 만들기",
-      people: "Cho",
-    },
-    {
-      id: 3,
-      repoName: "jingyeong-seo/jingyeong-seo.github.io",
-      summary: "영화 예매 사이트",
-      people: "Seo",
-    },
-    {
-      id: 4,
-      repoName: "jongsik-seo/jongsik-seo.github.io",
-      summary: "띠용",
-      people: "Seo",
-    },
   ]);
 
-  const history = useHistory();
+  useEffect(() => {
+    // if (!location.state.hasOwnProperty("gitrepos")) {
+    //   history.replace("/error/load-fail");
+    // }
+    // setRepolist(location.state.gitrepos);
+
+    console.log(location.state);
+  }, [location.state]);
 
   return (
     <div className="gitrepo">

@@ -2,23 +2,17 @@ import "./style.css";
 import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 
-import Modal from "../../components/Modal/modal";
+// import Modal from "../../components/Modal/modal";
 import BeforeAfterBtn from "../../components/BeforeAfterBtn";
 import RoundContainer from "../../components/RoundContainer";
+import Modal from "../../components/Modal";
+import YNModal from "../../components/Modal/YNModal/index";
+import PortfolioChoiceModal from "../../components/Modal/PortfolioChoiceModal/index";
 
 function InfoInput() {
   const history = useHistory();
-  const [modalOpen, setModalOpen] = useState(false);
-  const openModal = () => {
-    setModalOpen(true);
-  };
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
-  useEffect(() => {
-    openModal();
-  }, []);
+  const [showModal, setShowModal] = useState(true);
+  const [showModal2, setShowModal2] = useState(false);
 
   const [imgBase64, setImgBase64] = useState("");
   const [imgFile, setImgFile] = useState(null);
@@ -95,12 +89,6 @@ function InfoInput() {
 
   return (
     <div className="info-input">
-      <Modal open={modalOpen} close={closeModal}>
-        <h3 style={{textAlign: "center", color: "var(--dark-blue1)"}}>
-          기존에 입력한 정보를 가져오시겠습니까?
-        </h3>
-      </Modal>
-
       <BeforeAfterBtn
         saveShow={true}
         onPrev={() => history.push("/git-repo-detail")}
@@ -749,6 +737,27 @@ function InfoInput() {
           </div>
         </div>
       </RoundContainer>
+
+      {/* 포트폴리오 선택 여부 묻기 */}
+      {showModal && (
+        <Modal backBlack={true}>
+          <YNModal
+            title={"기존에 입력한 정보를 가져오시겠습니까?"}
+            onYes={() => {
+              setShowModal(false);
+              setShowModal2(true);
+            }}
+            onNo={() => setShowModal(false)}
+          />
+        </Modal>
+      )}
+
+      {/* 포트폴리오 선택 모달 */}
+      {showModal2 && (
+        <Modal backBlack={true}>
+          <PortfolioChoiceModal onNo={() => setShowModal2(false)} />
+        </Modal>
+      )}
     </div>
   );
 }
