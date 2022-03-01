@@ -18,21 +18,27 @@ function GitRepo() {
     },
   ]);
 
-  useEffect(() => {
-    // if (!location.state.hasOwnProperty("gitrepos")) {
-    //   history.replace("/error/load-fail");
-    // }
-    // setRepolist(location.state.gitrepos);
+  const loadRepos = () => {
+    history.push("/git-repo-detail", {
+      title: location.state?.title,
+      gitrepos: repolist.filter((e) => e.checked),
+    });
+  };
 
-    console.log(location.state);
-  }, [location.state]);
+  useEffect(() => {
+    if (!location.state || !location.state.hasOwnProperty("gitrepos")) {
+      history.replace("/error/load-fail");
+      return;
+    }
+    setRepolist(location.state.gitrepos);
+  }, [history, location.state]);
 
   return (
     <div className="gitrepo">
       <BeforeAfterBtn
         saveShow={false}
-        onPrev={history.push("/my-page")}
-        onNext={history.push("/git-repo-detail")}
+        onPrev={() => history.push("/my-page")}
+        onNext={() => history.push("/git-repo-detail")}
       />
 
       <div className="gitrepo-outer-box">
@@ -53,19 +59,24 @@ function GitRepo() {
             {repolist.map((box, index) => (
               <li key={index}>
                 <b className="gitrepo-inner-box-project-name">
-                  {box.repoName}
-                  <RadioBtn className="RadioBtn" />
+                  {box?.name}
+                  <RadioBtn
+                    className="RadioBtn"
+                    onChanged={() => {
+                      repolist[index].checked = !box?.checked;
+                      setRepolist([...repolist]);
+                    }}
+                  />
                 </b>
-                <div className="gitrepo-inner-box-project-content">
-                  ㄴ{box.summary}
-                </div>
+                {box?.description && (
+                  <div className="gitrepo-inner-box-project-content">
+                    ㄴ{box?.description}
+                  </div>
+                )}
               </li>
             ))}
 
-            <button
-              className="round-button"
-              onClick={() => history.push("/git-repo-detail")}
-            >
+            <button className="round-button" onClick={loadRepos}>
               불러오기
             </button>
           </div>

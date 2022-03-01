@@ -1,9 +1,14 @@
-#ask-button {
+#ask-btn-wrapper {
   position: fixed;
   right: 1.2rem;
   bottom: 4.5rem;
   z-index: 20;
 
+  margin: 0;
+  padding: 0;
+}
+
+#ask-button {
   display: flex;
   flex-direction: row;
   align-items: center;

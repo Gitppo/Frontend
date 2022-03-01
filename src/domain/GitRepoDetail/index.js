@@ -7,8 +7,10 @@ import Star from "../../assets/star.png";
 import Pen from "../../assets/pen.png";
 import Eye from "../../assets/eye.png";
 import Fold from "../../assets/arrow-no-head.png";
+import {useLocation} from "react-router";
 
 function GitRepoDetail() {
+  const location = useLocation();
   const history = useHistory();
 
   const [repos, setRepos] = useState([
@@ -108,7 +110,14 @@ function GitRepoDetail() {
 
   const tmpSave = () => {};
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (!location.state || !location.state.hasOwnProperty("gitrepos")) {
+      history.replace("/error/load-fail");
+      return;
+    }
+
+    setRepos(location.state.gitrepos);
+  }, [history, location.state]);
 
   return (
     <div className="grd">
@@ -130,9 +139,11 @@ function GitRepoDetail() {
           <li className="grd-inner-box" key={index}>
             <div className="grd-inner-box-info-container">
               <div className="grd-inner-box-top-container">
-                <h3 className="grd-inner-box-repo-title">{box?.title}</h3>
+                <h3 className="grd-inner-box-repo-title">{box?.name}</h3>
                 <img className="grd-inner-box-image" src={Star} alt={""} />
-                <div className="grd-inner-box-star-num">{box?.starNum}</div>
+                <div className="grd-inner-box-star-num">
+                  {box?.stargazers_count}
+                </div>
                 <button
                   className="round-button"
                   onClick={() => deletePortfolio(box?.id)}
@@ -143,11 +154,11 @@ function GitRepoDetail() {
               <div className="grd-inner-box-bottom-container">
                 <div className="grd-inner-box-bottom-title">생성일</div>
                 <div className="grd-inner-box-bottom-detail">
-                  {box?.creation}
+                  {box?.created_at}
                 </div>
                 <div className="grd-inner-box-bottom-title">최근 업데이트</div>
                 <div className="grd-inner-box-bottom-detail">
-                  {box?.revision?.date} {box?.revision?.time}
+                  {box?.updated_at}
                 </div>
                 <div className="grd-inner-box-bottom-title">사용언어</div>
                 <div className="grd-inner-box-bottom-detail">
@@ -160,7 +171,7 @@ function GitRepoDetail() {
               <div className="grd-inner-box-title">
                 <div className="grd-inner-box-text">
                   {/* // TODO : useState!!! */}
-                  바닐라자바스크립트 구현 프로젝트 리액트로 바꿔보기
+                  {box?.description ?? "Description이 없습니다."}
                 </div>
                 <img
                   className="grd-inner-box-image"

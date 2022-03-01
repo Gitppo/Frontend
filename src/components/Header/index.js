@@ -1,6 +1,6 @@
-import {Link, useLocation} from "react-router-dom";
-import {useEffect, useState} from "react";
 import "./style.css";
+import {useEffect, useState} from "react";
+import {Link, useLocation} from "react-router-dom";
 import {useUserContext} from "../../hooks/useUserContext";
 
 const blueHeader = [
@@ -35,9 +35,17 @@ function Header() {
           <Link to={"/"}>
             <span style={{opacity: isHome ? 1 : 0.3}}>홈</span>
           </Link>
-          <Link to={"/my-page"}>
-            <span style={{opacity: isHome ? 0.3 : 1}}>마이페이지</span>
-          </Link>
+          {user?.githubUserName ? (
+            <Link to={"/my-page"}>
+              <span style={{opacity: isHome ? 0.3 : 1}}>마이페이지</span>
+            </Link>
+          ) : (
+            <a
+              href={`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${window.location.origin}/callback`}
+            >
+              <span style={{opacity: isHome ? 0.3 : 1}}>마이페이지</span>
+            </a>
+          )}
         </div>
         <div>{user?.githubUserName ? `${user?.githubUserName}님` : ""}</div>
       </div>
