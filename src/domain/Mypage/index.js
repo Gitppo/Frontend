@@ -44,7 +44,7 @@ function Mypage() {
   useEffect(() => {
     getPortfolio(user.id)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setPortfolio(data);
       })
       .catch((e) => {

@@ -18,7 +18,7 @@ export const doLogin = async (path) => {
   return user;
 };
 
-export const loginBack = (back) => {
+export const loginBack = (back = "") => {
   if (back.charAt(0) === "/") {
     back = back.substring(1);
   }

@@ -1,9 +1,13 @@
 import "./style.css";
 import {useEffect, useRef, useState} from "react";
 import PinRed from "../../../assets/pin-red.png";
-import {init, send} from "@emailjs/browser";
+import {init} from "@emailjs/browser";
+import {sendEmailJS} from "../../../hooks/email";
+import {useUserContext} from "../../../hooks/useUserContext";
 
 export default function EmailModal({setShow}) {
+  const {user} = useUserContext();
+
   const [msg, setMsg] = useState("");
   const [reply, setReply] = useState({email: "", msg: ""});
   const [progress, setProgress] = useState(0);
@@ -24,29 +28,14 @@ export default function EmailModal({setShow}) {
     // 전송 중 메시지로 변경
     setProgress(1);
 
-    // 이메일 전송
-    send(
-      process.env.REACT_APP_EMAIL_SERVICE_ID,
-      process.env.REACT_APP_EMAIL_TEMPLATE_ID,
-      {
-        user_email: reply.email,
-        message: reply.msg,
-      },
-      process.env.REACT_APP_EMAIL_USER_ID
-    ).then(
-      (result) => {
-        if (result.text === "OK") setProgress(2);
-        else {
-          console.error("NetErr : Failed to Send Message");
-          console.error(result.text);
-          setProgress(3);
-        }
-      },
-      (error) => {
-        console.error(error.text);
+    sendEmailJS(user, reply.email, reply.msg)
+      .then(() => {
+        setProgress(2);
+      })
+      .catch((e) => {
+        console.error(e);
         setProgress(3);
-      }
-    );
+      });
   };
 
   useEffect(() => {

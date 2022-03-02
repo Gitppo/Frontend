@@ -3,13 +3,15 @@ import {useEffect} from "react";
 import {useLocation} from "react-router";
 import {useHistory} from "react-router-dom";
 
-import {isValidUser, useUserContext} from "../../hooks/useUserContext";
-import hippoIcon from "../../assets/hippo-blue.png";
 import {doLogin} from "../../hooks/login";
+import {isValidUser, useUserContext} from "../../hooks/useUserContext";
+
+import hippoIcon from "../../assets/hippo-blue.png";
 
 export default function Callback({match}) {
-  const location = useLocation();
   const history = useHistory();
+  const location = useLocation();
+
   const {setUser} = useUserContext();
 
   useEffect(() => {

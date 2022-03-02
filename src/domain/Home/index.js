@@ -1,16 +1,24 @@
 import "./style.css";
-import {useState} from "react";
+import {useCallback, useState} from "react";
+import {loginBack} from "../../hooks/login";
+import {isValidUser, useUserContext} from "../../hooks/useUserContext";
 
 const btnMainColor = "#002d84";
 const remToPx = (rem) =>
   rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 
 function Home() {
+  const {user} = useUserContext();
+
   const [rem4, rem6, rem8] = [remToPx(4), remToPx(6), remToPx(8)];
   const [btnStyle, setBtnStyle] = useState({
     marginTop: `${rem6}px`,
     background: btnMainColor,
   });
+
+  const isValid = useCallback(() => {
+    return isValidUser(user);
+  }, [user]);
 
   const onHomeScroll = (e) => {
     const scrolled = e.target.scrollTop;
@@ -24,13 +32,13 @@ function Home() {
 
   return (
     <div className={"home"} onScroll={onHomeScroll}>
-      <a
-        href={`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${window.location.origin}/callback`}
-        style={btnStyle}
+      <div
+        onClick={() => loginBack()}
+        style={isValid() ? {visibility: "hidden"} : btnStyle}
         className={"home-login-button round-button"}
       >
         깃 헙 로그인
-      </a>
+      </div>
 
       <div className={"home-intro-wrapper"}>
         <div className={"home-intro-card"} id={"left"}>
