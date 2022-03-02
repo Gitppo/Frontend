@@ -1,8 +1,6 @@
 import "./style.css";
-import {useCallback, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
-
-import axios from "axios";
 import {useUserContext} from "../../hooks/useUserContext";
 
 import RoundContainer from "../../components/RoundContainer";
@@ -11,6 +9,7 @@ import Modal from "../../components/Modal/index";
 
 import Pin from "../../assets/pin-red.png";
 import AlertModal from "../../components/Modal/AlertModal/index";
+import {getPortfolio} from "../../hooks/portfolio";
 
 function Mypage() {
   const history = useHistory();
@@ -32,20 +31,6 @@ function Mypage() {
   const [showModal, setShowModal] = useState(false);
   const [showInputModal, setShowInputModal] = useState(false);
 
-  const getPortfolio = useCallback(async () => {
-    axios
-      .get(`${process.env.REACT_APP_BACKEND}/api/portfolio`, {
-        params: {
-          id: user.id,
-        },
-      })
-      .then((r) => {
-        if (r.status !== 200 || r.data?.status !== "OK")
-          throw Error("NetErr : Failed to load portfolio.");
-        return r.data.data;
-      });
-  }, [user.id]);
-
   const deletePortfolio = (id) => {
     for (let i = 0; i < portfolio.length; i++) {
       if (portfolio[i].id === id) {
@@ -57,7 +42,7 @@ function Mypage() {
   };
 
   useEffect(() => {
-    getPortfolio()
+    getPortfolio(user.id)
       .then((data) => {
         console.log(data);
         setPortfolio(data);
@@ -66,7 +51,7 @@ function Mypage() {
         console.error(e);
         setShowModal(true);
       });
-  }, [getPortfolio]);
+  }, [user.id]);
 
   const createPortfolio = () => {
     setPortfolioTitle("");

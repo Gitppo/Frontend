@@ -1,5 +1,5 @@
 import "./style.css";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import PinRed from "../../../assets/pin-red.png";
 import {init, send} from "@emailjs/browser";
 
@@ -8,7 +8,10 @@ export default function EmailModal({setShow}) {
   const [reply, setReply] = useState({email: "", msg: ""});
   const [progress, setProgress] = useState(0);
 
-  const formSubmit = () => {
+  const ref1 = useRef();
+  const ref2 = useRef();
+
+  const sendEmail = () => {
     if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(reply?.email)) {
       setMsg("이메일 형식이 올바르지 않습니다.");
       return;
@@ -18,8 +21,10 @@ export default function EmailModal({setShow}) {
       return;
     }
 
+    // 전송 중 메시지로 변경
     setProgress(1);
 
+    // 이메일 전송
     send(
       process.env.REACT_APP_EMAIL_SERVICE_ID,
       process.env.REACT_APP_EMAIL_TEMPLATE_ID,
@@ -46,6 +51,7 @@ export default function EmailModal({setShow}) {
 
   useEffect(() => {
     init(process.env.REACT_APP_EMAIL_USER_ID);
+    ref1.current.focus();
   }, []);
 
   return (
@@ -86,9 +92,13 @@ export default function EmailModal({setShow}) {
             <span>
               <input
                 type={"email"}
+                ref={ref1}
                 value={reply?.email}
                 onChange={(e) => setReply({...reply, email: e.target.value})}
-                onKeyPress={(e) => e.key === "Enter" && formSubmit()}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") ref2.current.focus();
+                  else if (e.key === "Escape") setShow(false);
+                }}
               />
             </span>
           </div>
@@ -97,8 +107,15 @@ export default function EmailModal({setShow}) {
             <span>문의 내용</span>
             <span>
               <textarea
+                ref={ref2}
                 value={reply?.msg}
-                onChange={(e) => setReply({...reply, msg: e.target.value})}
+                onChange={(e) => {
+                  if (e.target.value !== "\n")
+                    setReply({...reply, msg: e.target.value});
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Escape") setShow(false);
+                }}
               />
             </span>
           </div>
@@ -113,7 +130,7 @@ export default function EmailModal({setShow}) {
         >
           {progress === 0 ? (
             <>
-              <button className="round-button" onClick={formSubmit}>
+              <button className="round-button" onClick={sendEmail}>
                 제출
               </button>
               <button className="round-button" onClick={() => setShow(false)}>

@@ -1,13 +1,16 @@
 import "./style.css";
 import {useEffect, useState} from "react";
+import {useLocation} from "react-router";
 import {useHistory} from "react-router-dom";
+
 import Select from "react-select";
+
 import BeforeAfterBtn from "../../components/BeforeAfterBtn";
+
 import Star from "../../assets/star.png";
 import Pen from "../../assets/pen.png";
 import Eye from "../../assets/eye.png";
 import Fold from "../../assets/arrow-no-head.png";
-import {useLocation} from "react-router";
 
 function GitRepoDetail() {
   const location = useLocation();
@@ -109,22 +112,32 @@ function GitRepoDetail() {
   }
 
   const tmpSave = () => {};
+  const onPrev = () => {
+    history.push("/git-repo", {
+      ...location.state,
+    });
+  };
+  const onNext = () => {
+    tmpSave();
+    history.push("/git-info", {
+      ...location.state,
+    });
+  };
 
   useEffect(() => {
-    if (!location.state || !location.state.hasOwnProperty("gitrepos")) {
+    if (!location?.state?.hasOwnProperty("gitrepos")) {
       history.replace("/error/load-fail");
       return;
     }
-
-    setRepos(location.state.gitrepos);
+    setRepos(location.state.gitrepos.filter((e) => e.checked));
   }, [history, location.state]);
 
   return (
     <div className="grd">
       <BeforeAfterBtn
         saveShow={true}
-        onPrev={() => history.push("/my-page")}
-        onNext={() => history.push("/git-info")}
+        onPrev={onPrev}
+        onNext={onNext}
         onSave={tmpSave}
       />
 
@@ -132,12 +145,30 @@ function GitRepoDetail() {
         <div className="grd-top-container">
           <div className="grd-top-container-title">레포지토리</div>
           {/* // TODO : 초기화 */}
-          <button className="round-button">초기화</button>
+          <button
+            className="round-button"
+            onClick={() => {
+              setRepos(
+                location.state.gitrepos
+                  .filter((e) => e.checked)
+                  .map((e) => ({...e, fold: false}))
+              );
+            }}
+          >
+            초기화
+          </button>
         </div>
 
         {repos.map((box, index) => (
           <li className="grd-inner-box" key={index}>
-            <div className="grd-inner-box-info-container">
+            <div
+              className="grd-inner-box-info-container"
+              onClick={() => {
+                // fold: true - 접힘 / false - 열림
+                repos[index].fold = !(box?.fold ?? false);
+                setRepos([...repos]);
+              }}
+            >
               <div className="grd-inner-box-top-container">
                 <h3 className="grd-inner-box-repo-title">{box?.name}</h3>
                 <img className="grd-inner-box-image" src={Star} alt={""} />
@@ -315,7 +346,7 @@ function GitRepoDetail() {
               alt={""}
               onClick={() => {
                 // fold: true - 접힘 / false - 열림
-                repos[index].fold = !(repos[index]?.fold ?? false);
+                repos[index].fold = !(box?.fold ?? false);
                 setRepos([...repos]);
               }}
             />

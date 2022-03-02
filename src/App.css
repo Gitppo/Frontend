@@ -66,10 +66,3 @@
   color: white !important;
   background-color: var(--dark-red) !important;
 }
-
-.round-container-upper-bold {
-  border-style: solid;
-  border-color: var(--blue3);
-  border-width: 3.5px 1px 1px 1px;
-  border-radius: 0.5em;
-}

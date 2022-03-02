@@ -1,9 +1,14 @@
 import "./style.css";
 import RoundContainer from "../../RoundContainer";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 
 export default function TitleInputModal({text, setText, onStart, onCancle}) {
   const [alert, setAlert] = useState("");
+  const ref = useRef();
+
+  useEffect(() => {
+    ref.current.focus();
+  }, []);
 
   return (
     <RoundContainer blueHeader={true} className={"ti-modal"}>
@@ -13,6 +18,7 @@ export default function TitleInputModal({text, setText, onStart, onCancle}) {
         <input
           type="text"
           className="title-input"
+          ref={ref}
           value={text}
           onChange={(e) => {
             if (text?.length < 20) setText(e.target.value);
@@ -20,9 +26,16 @@ export default function TitleInputModal({text, setText, onStart, onCancle}) {
               setAlert("포트폴리오 제목은 20자를 초과할 수 없습니다.");
             }
           }}
-          onKeyPress={(e) => {
-            if (text?.length === 0) setAlert("포트폴리오 제목을 입력해주세요.");
-            else if (e.key === "Enter") onStart();
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              onCancle();
+            } else if (e.key === "Enter") {
+              if (text?.length === 0) {
+                setAlert("포트폴리오 제목을 입력해주세요.");
+              } else {
+                onStart();
+              }
+            }
           }}
         />
       </div>

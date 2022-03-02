@@ -8,9 +8,12 @@ import RoundContainer from "../../components/RoundContainer";
 import Modal from "../../components/Modal";
 import YNModal from "../../components/Modal/YNModal/index";
 import PortfolioChoiceModal from "../../components/Modal/PortfolioChoiceModal/index";
+import {useLocation} from "react-router";
 
 function InfoInput() {
+  const location = useLocation();
   const history = useHistory();
+
   const [showModal, setShowModal] = useState(true);
   const [showModal2, setShowModal2] = useState(false);
 
@@ -86,13 +89,24 @@ function InfoInput() {
   };
 
   const tmpSave = () => {};
+  const onPrev = () => {
+    history.push("/git-repo-detail", {
+      ...location.state,
+    });
+  };
+  const onNext = () => {
+    tmpSave();
+    history.push("/git-console", {
+      ...location.state,
+    });
+  };
 
   return (
     <div className="info-input">
       <BeforeAfterBtn
         saveShow={true}
-        onPrev={() => history.push("/git-repo-detail")}
-        onNext={() => history.push("/git-console")}
+        onPrev={onPrev}
+        onNext={onNext}
         onSave={tmpSave}
       />
 
