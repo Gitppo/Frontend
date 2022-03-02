@@ -3,31 +3,30 @@ import {useEffect} from "react";
 import {useLocation} from "react-router";
 import {useHistory} from "react-router-dom";
 
-import {useUserContext} from "../../hooks/useUserContext";
+import {isValidUser, useUserContext} from "../../hooks/useUserContext";
 import hippoIcon from "../../assets/hippo-blue.png";
 import {doLogin} from "../../hooks/login";
 
-export default function Callback() {
+export default function Callback({match}) {
   const location = useLocation();
   const history = useHistory();
   const {setUser} = useUserContext();
 
   useEffect(() => {
+    const toURL = "/" + (match.params?.toURL ?? "my-page");
     doLogin(location.search)
       .then((r) => {
-        if (!(r?.githubUserName?.length > 0))
+        if (!(isValidUser(r) > 0))
           throw Error("DataErr : Invalid user information.");
 
         setUser(r);
-
-        // TODO : 로그인 완료 시 리다이렉트 주소 변경 -> agree
-        history.push("/my-page");
+        history.push(toURL);
       })
       .catch((e) => {
         console.error(e);
         history.push("/error");
       });
-  }, [history, location.search, setUser]);
+  }, [history, location.search, match.params?.toURL, setUser]);
 
   return (
     <div className={"loading"}>

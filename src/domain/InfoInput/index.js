@@ -6,7 +6,7 @@ import {useHistory} from "react-router-dom";
 import BeforeAfterBtn from "../../components/BeforeAfterBtn";
 import RoundContainer from "../../components/RoundContainer";
 import Modal from "../../components/Modal";
-import YNModal from "../../components/Modal/YNModal/index";
+import BtnModal from "../../components/Modal/BtnModal/index";
 import PortfolioChoiceModal from "../../components/Modal/PortfolioChoiceModal/index";
 import {useLocation} from "react-router";
 
@@ -755,13 +755,13 @@ function InfoInput() {
       {/* 포트폴리오 선택 여부 묻기 */}
       {showModal && (
         <Modal backBlack={true}>
-          <YNModal
+          <BtnModal
             title={"기존에 입력한 정보를 가져오시겠습니까?"}
-            onYes={() => {
+            onBtn1={() => {
               setShowModal(false);
               setShowModal2(true);
             }}
-            onNo={() => setShowModal(false)}
+            onBtn2={() => setShowModal(false)}
           />
         </Modal>
       )}

@@ -1,11 +1,13 @@
 import axios from "axios";
+import {isValidId} from "./useUserContext";
 
 export const getPortfolio = async (id) => {
-  if (!id) {
+  if (!isValidId(id)) {
     throw Error("InputErr : Invalid user id.");
   }
 
-  axios
+  const instance = axios.create({timeout: 5 * 60 * 1000});
+  return instance
     .get(`${process.env.REACT_APP_BACKEND}/api/portfolio`, {
       params: {id: id},
     })

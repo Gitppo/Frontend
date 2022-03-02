@@ -2,6 +2,7 @@ import "./style.css";
 import {useEffect, useState} from "react";
 import {Link, useLocation} from "react-router-dom";
 import {useUserContext} from "../../hooks/useUserContext";
+import {useHistory} from "react-router-dom/cjs/react-router-dom.min";
 
 const blueHeader = [
   "/",
@@ -12,10 +13,18 @@ const blueHeader = [
 ];
 
 function Header() {
-  const location = useLocation(),
-    [path, setPath] = useState(),
-    [isHome, setIsHome] = useState(true),
-    {user} = useUserContext();
+  const location = useLocation();
+  const history = useHistory();
+
+  const {user, setUser} = useUserContext();
+
+  const [path, setPath] = useState();
+  const [isHome, setIsHome] = useState(true);
+
+  const logout = () => {
+    setUser({id: -1, githubUserName: null});
+    history.push("/");
+  };
 
   useEffect(() => {
     setPath(location.pathname);
@@ -31,23 +40,37 @@ function Header() {
       }
     >
       <div>
-        <div className={"button-container"}>
+        <div>
           <Link to={"/"}>
             <span style={{opacity: isHome ? 1 : 0.3}}>홈</span>
           </Link>
           {user?.githubUserName ? (
-            <Link to={"/my-page"}>
-              <span style={{opacity: isHome ? 0.3 : 1}}>마이페이지</span>
-            </Link>
+            <>
+              <Link to={"/my-page"}>
+                <span style={{opacity: isHome ? 0.3 : 1}}>마이페이지</span>
+              </Link>
+              <span style={{opacity: 0.3, cursor: "pointer"}} onClick={logout}>
+                로그아웃
+              </span>
+            </>
           ) : (
-            <a
-              href={`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${window.location.origin}/callback`}
-            >
-              <span style={{opacity: isHome ? 0.3 : 1}}>마이페이지</span>
-            </a>
+            <>
+              <a
+                href={`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${window.location.origin}/callback`}
+              >
+                <span style={{opacity: isHome ? 0.3 : 1}}>마이페이지</span>
+              </a>
+            </>
           )}
         </div>
-        <div>{user?.githubUserName ? `${user?.githubUserName}님` : ""}</div>
+
+        {user?.githubUserName ? (
+          <div>
+            <span>{user?.githubUserName}님</span>{" "}
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </header>
   );

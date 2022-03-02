@@ -13,12 +13,14 @@ function BeforeAfterBtn({
   return (
     <div className="bf-at-btn" style={{...style}}>
       {/* 오른쪽 */}
-      {prevShow && (
-        <div className="bf-at-wrapper" onClick={onPrev}>
-          <img src={arrowImg} className="bf-at-img" alt={""} />
-          <div className="bf-at-title">이전</div>
-        </div>
-      )}
+      <div
+        className="bf-at-wrapper"
+        onClick={onPrev}
+        style={!prevShow ? {visibility: "hidden"} : {}}
+      >
+        <img src={arrowImg} className="bf-at-img" alt={""} />
+        <div className="bf-at-title">이전</div>
+      </div>
 
       {/* 오른쪽 */}
       <div>

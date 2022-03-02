@@ -44,11 +44,7 @@ function GitRepo() {
 
   return (
     <div className="gr">
-      <BeforeAfterBtn
-        saveShow={false}
-        onPrev={() => history.push("/my-page")}
-        onNext={onNext}
-      />
+      <BeforeAfterBtn saveShow={false} prevShow={false} onNext={onNext} />
 
       <div className="gr-outer">
         <RoundContainer className={"gr-inner"} blueHeader={true}>
