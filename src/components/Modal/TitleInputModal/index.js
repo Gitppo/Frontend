@@ -21,9 +21,11 @@ export default function TitleInputModal({text, setText, onStart, onCancle}) {
           ref={ref}
           value={text}
           onChange={(e) => {
-            if (text?.length < 20) setText(e.target.value);
-            else {
+            if (e.target.value.length > 20) {
               setAlert("포트폴리오 제목은 20자를 초과할 수 없습니다.");
+            } else {
+              setAlert("");
+              setText(e.target.value);
             }
           }}
           onKeyDown={(e) => {
