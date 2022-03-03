@@ -8,14 +8,16 @@ import Select from "react-select";
 import BeforeAfterBtn from "../../components/BeforeAfterBtn";
 
 import Star from "../../assets/star.png";
-import Pen from "../../assets/pen.png";
 import Eye from "../../assets/eye.png";
 import Fold from "../../assets/arrow-no-head.png";
+
+import {getOptions} from "../../hooks/options";
 
 function GitRepoDetail() {
   const location = useLocation();
   const history = useHistory();
 
+  // mock-data
   const [repos, setRepos] = useState([
     {
       id: 1,
@@ -59,27 +61,75 @@ function GitRepoDetail() {
     {value: "Node.js", label: "Node.js"},
   ];
 
+  // inputs useState
   const [inputs, setInputs] = useState({
+    title: "",
     start: "",
     end: "",
     role: "",
-    skill: "",
     domain: "",
     explain: "",
   });
 
-  const {start, end, role, skill, domain, explain} = inputs;
+  const {title, start, end, role, domain, explain} = inputs;
 
-  const onChange = (e) => {
+  const inputsonChange = (e) => {
     const {value, name} = e.target;
     setInputs({
       ...inputs,
-      [name]: value,
+      [name]: value
     });
-    console.log(value);
+    console.log("input");
   };
+  
+  // readme useState
+  const [isClick, setIsClick] = useState(false);
 
+  const readmeonChange = () => {
+    setIsClick(isClick => !isClick);
+    console.log("click");
+  }
+
+  // select useState
+  const [selects, setSelects] = useState([]);
+
+  const selectonChange = (e) => {
+    const value = e.value;
+    setSelects(value);
+    console.log("select");
+  }
+
+  // react-select style
   const styles = {
+    control: (styles) => {
+      return {
+      ...styles,
+        border: 0,
+        boxShadow: "none",
+        backgroundColor: "#EEF1F7",
+      };
+    },
+    option: (styles, { isDisabled, isFocused, isSelected }) => {
+      const color = "#EEF1F7";
+      return {
+        ...styles,
+        backgroundColor: isDisabled
+          ? undefined
+          : isSelected
+          ? color
+          : isFocused
+          ? color
+          : undefined,
+          ":active": {
+            ...styles[":active"],
+            backgroundColor: !isDisabled
+            ? isSelected
+              ? color
+              : color
+              : undefined
+          }
+      };
+    },
     multiValue: (styles) => {
       return {
         ...styles,
@@ -131,6 +181,10 @@ function GitRepoDetail() {
     }
     setRepos(location.state.gitrepos.filter((e) => e.checked));
   }, [history, location.state]);
+
+  useEffect(() =>{
+    getOptions()
+  }, []);
 
   return (
     <div className="grd">
@@ -201,48 +255,41 @@ function GitRepoDetail() {
             <div style={box?.fold ? {display: "none"} : {}}>
               <div className="grd-inner-box-title">
                 <div className="grd-inner-box-text">
-                  {/* // TODO : useState!!! */}
                   {box?.description ?? "Description이 없습니다."}
                 </div>
-                <img
-                  className="grd-inner-box-image"
-                  src={Pen}
-                  alt={""}
-                  // onClick={}
-                />
+
+                {/*<input
+                  onChange={inputsonChange}
+                  value={index.title}
+                  name="title"
+                  className="grd-inner-box-plus-info-title-info-box"
+                  placeholder="바닐라자바스크립트 구현 프로젝트 리액트로 바꿔보기"
+                />*/}
+
               </div>
               <div className="grd-inner-box-readme">
-                <div className="grd-inner-box-text">
-                  {/* // TODO : useState!!! */}
                   README.md
-                </div>
                 <img
                   className="grd-inner-box-image"
                   src={Eye}
                   alt={""}
-                  // onClick={}
-                />
-                <img
-                  className="grd-inner-box-image"
-                  src={Pen}
-                  alt={""}
-                  // onClick={}
+                  onClick={() => readmeonChange()}
                 />
               </div>
               <div className="grd-inner-box-detail">상세 설명</div>
               <div className="grd-inner-box-title-container">
                 <div className="container-title">기간</div>
                 <input
-                  onChange={onChange}
-                  value={start}
+                  onChange={inputsonChange}
+                  value={index.start}
                   name="start"
                   className="grd-inner-box-date"
                   placeholder="시작일"
                 />
                 <div className="wave-mark">~</div>
                 <input
-                  onChange={onChange}
-                  value={end}
+                  onChange={inputsonChange}
+                  value={index.end}
                   name="end"
                   className="grd-inner-box-date"
                   placeholder="마감일"
@@ -251,8 +298,8 @@ function GitRepoDetail() {
               <div className="grd-inner-box-title-container">
                 <div className="container-title">역할</div>
                 <input
-                  onChange={onChange}
-                  value={role}
+                  onChange={inputsonChange}
+                  value={index.role}
                   name="role"
                   className="grd-inner-box-plus-info-title-info-box"
                   placeholder="프론트엔드개발 / 디자인"
@@ -260,16 +307,18 @@ function GitRepoDetail() {
               </div>
               <div className="grd-inner-box-title-container-skill">
                 <div className="container-title">기술스택</div>
+                
                 <Select
                   isMulti
                   styles={styles}
                   name="skill"
-                  options={skillOptions}
                   className="grd-inner-box-skill"
                   classNamePrefix="select"
-                  defaultValue={skillOptions[0]}
                   style={{border: "none"}}
-                  // onChange={onChange}
+                  onChange={selectonChange}
+                  
+                  defaultValue={skillOptions[0]}              
+                  options={getOptions}
                 />
 
                 {/* <div>
@@ -315,12 +364,13 @@ function GitRepoDetail() {
                     ))}
                   </datalist>
                 </div> */}
+
               </div>
               <div className="grd-inner-box-title-container">
                 <div className="container-title">도메인</div>
                 <input
-                  onChange={onChange}
-                  value={domain}
+                  onChange={inputsonChange}
+                  value={index.domain}
                   name="domain"
                   className="grd-inner-box-plus-info-title-info-box"
                   placeholder="000.000.000"
@@ -329,11 +379,11 @@ function GitRepoDetail() {
               <div className="grd-inner-box-title-container-info">
                 <div className="container-title">설명</div>
                 <textarea
-                  onChange={onChange}
-                  value={explain}
+                  onChange={inputsonChange}
+                  value={index.explain}
                   name="explain"
                   className="grd-inner-box-info-text"
-                  placeholder="✧٩(ˊωˋ*)و✧"
+                  placeholder="설명"
                 />
               </div>
               <div className="save-button-container">
@@ -356,5 +406,4 @@ function GitRepoDetail() {
     </div>
   );
 }
-
 export default GitRepoDetail;

@@ -250,6 +250,8 @@
   word-break: break-all;
   text-overflow: clip;
   overflow: visible;
+
+  font-family: -apple-system;
 }
 
 /* 저장 버튼 */
