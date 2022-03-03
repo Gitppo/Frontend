@@ -250,8 +250,6 @@
   word-break: break-all;
   text-overflow: clip;
   overflow: visible;
-
-  font-family: -apple-system;
 }
 
 /* 저장 버튼 */
@@ -285,4 +283,7 @@
 .grd .container-title {
   width: 6rem;
   text-align: left;
+}
+
+@media screen and (max-width: 700px) {
 }

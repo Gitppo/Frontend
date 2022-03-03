@@ -1,6 +1,6 @@
 import "./style.css";
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {useHistory} from "react-router-dom";
 
 // import Modal from "../../components/Modal/modal";
 import BeforeAfterBtn from "../../components/BeforeAfterBtn";
@@ -36,26 +36,26 @@ function InfoInput() {
   };
 
   const [infoList, setInfoList] = useState([
-    { name: "", mail: "", birth: "", tel: "" },
+    {name: "", mail: "", birth: "", tel: ""},
   ]);
   const [careerList, setCareerList] = useState([
-    { company: "", depart: "", start: "", end: "", position: "", job: "" },
+    {company: "", depart: "", start: "", end: "", position: "", job: ""},
   ]);
   const [schoolList, setSchoolList] = useState([
-    { schoolType: "", start: "", end: "", schoolStat: "" },
+    {schoolType: "", start: "", end: "", schoolStat: ""},
   ]);
   const [certList, setCertList] = useState([
-    { cert: "", level: "", auth: "", issueDate: "" },
+    {cert: "", level: "", auth: "", issueDate: ""},
   ]);
   const [awardList, setAwardList] = useState([
-    { award: "", place: "", auth: "", issueDate: "" },
+    {award: "", place: "", auth: "", issueDate: ""},
   ]);
   const [etcList, setEtcList] = useState([
-    { etc: "", about: "", start: "", end: "" },
+    {etc: "", about: "", start: "", end: ""},
   ]);
-  const [introList, setIntroList] = useState([{ introShort: "", introLong: "" }]);
-  const [snsList, setSnsList] = useState([{ sns: "", link: "" }]);
-  const [stackList, setStackList] = useState([{ stack: "", level: "" }]);
+  const [introList, setIntroList] = useState([{introShort: "", introLong: ""}]);
+  const [snsList, setSnsList] = useState([{sns: "", link: ""}]);
+  const [stackList, setStackList] = useState([{stack: "", level: ""}]);
   const [patentList, setPatentList] = useState([
     {
       name: "",
@@ -69,15 +69,19 @@ function InfoInput() {
   ]);
 
   const handleInputChange = (List, setList, i, e) => {
-    const { name, value } = e.target;
+    const {name, value} = e.target;
     const list = [...List];
     list[i][name] = value;
     setList(list);
   };
 
   const handleRemoveClick = (List, setList, i) => {
+    console.log(setList);
+    console.log(i);
+    console.log(List);
     const list = [...List];
     list.splice(i, 1);
+    console.log(list);
     setList(list);
   };
 
@@ -91,12 +95,13 @@ function InfoInput() {
   };
 
   const tmpSave = () => {
-    console.log(infoList, careerList, schoolList, certList, awardList, etcList, introList, snsList, stackList, patentList)
-    axios.post(`${process.env.REACT_APP_BACKEND}/api/portfolio/complete`)
+    // axios.post(`${process.env.REACT_APP_BACKEND}/api/portfolio/complete`)
   };
 
-  console.log(axios.get(`${process.env.REACT_APP_BACKEND}/api/skillList`))
-  const skills = [axios.get(`${process.env.REACT_APP_BACKEND}/api/skillList`)].map((skill) => skill)
+  const skills = [
+    axios.get(`${process.env.REACT_APP_BACKEND}/api/skillList`),
+  ].map((skill) => skill);
+
   const onPrev = () => {
     history.push("/git-repo-detail", {
       ...location.state,
@@ -125,54 +130,57 @@ function InfoInput() {
           <div>
             <h1 className="beautiful-title">기본 인적사항</h1>
             <br />
-            {infoList.map((x, i) => {
-              return (
-                <form>
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="이름 *"
-                    value={x?.name}
-                    onChange={(e) =>
-                      handleInputChange(infoList, setInfoList, i, e)
-                    }
-                    required
-                  />
-                  <input
-                    type="email"
-                    name="mail"
-                    placeholder="메일 *"
-                    value={x?.mail}
-                    onChange={(e) =>
-                      handleInputChange(infoList, setInfoList, i, e)
-                    }
-                    required
-                  />
-                  <br />
-                  <input
-                    type="text"
-                    name="birth"
-                    placeholder="생년월일 (ex.19951004) *"
-                    value={x?.birth}
-                    onChange={(e) =>
-                      handleInputChange(infoList, setInfoList, i, e)
-                    }
-                    required
-                  />
-                  <input
-                    type="text"
-                    name="tel"
-                    placeholder="전화번호 *"
-                    maxLength="11"
-                    value={x?.tel}
-                    onChange={(e) =>
-                      handleInputChange(infoList, setInfoList, i, e)
-                    }
-                    required
-                  />
-                </form>
-              );
-            })}
+            {infoList.map((x, i) => (
+              <form>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="이름"
+                  value={x?.name}
+                  onChange={(e) =>
+                    handleInputChange(infoList, setInfoList, i, e)
+                  }
+                  required
+                />
+                <input
+                  type="email"
+                  name="mail"
+                  placeholder="이메일"
+                  value={x?.mail}
+                  onChange={(e) =>
+                    handleInputChange(infoList, setInfoList, i, e)
+                  }
+                  required
+                />
+                <br />
+                <input
+                  type="text"
+                  // type="date"
+                  date-placeholder="생년월일 (ex.19951004)"
+                  name="birth"
+                  placeholder="생년월일 (ex.19951004)"
+                  onfocus="(this.type='date')"
+                  // onfocus={() => (this.type = "date")}
+                  onblur="(this.type='text')"
+                  value={x?.birth}
+                  onChange={(e) =>
+                    handleInputChange(infoList, setInfoList, i, e)
+                  }
+                  required
+                />
+                <input
+                  type="text"
+                  name="tel"
+                  placeholder="전화번호"
+                  maxLength="11"
+                  value={x?.tel}
+                  onChange={(e) =>
+                    handleInputChange(infoList, setInfoList, i, e)
+                  }
+                  required
+                />
+              </form>
+            ))}
           </div>
 
           {/* 사진 */}
@@ -768,11 +776,14 @@ function InfoInput() {
             onBtn1={() => {
               setShowModal(false);
               setShowModal2(true);
-              axios.get(`${process.env.REACT_APP_BACKEND}/api/portfolio`).then((Response) => {
-                console.log(Response.data)
-              }).catch((Error) => {
-                console.log(Error)
-              })
+              axios
+                .get(`${process.env.REACT_APP_BACKEND}/api/portfolio`)
+                .then((Response) => {
+                  console.log(Response.data);
+                })
+                .catch((Error) => {
+                  console.log(Error);
+                });
             }}
             onBtn2={() => setShowModal(false)}
           />

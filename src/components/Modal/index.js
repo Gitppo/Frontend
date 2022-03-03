@@ -6,8 +6,8 @@ export default function Modal({
   style,
   className,
   children,
-  props,
   backBlack = false,
+  props,
 }) {
   const el = document.getElementById("modal");
   const preventContextMenu = (e) => e.preventDefault();
@@ -23,6 +23,7 @@ export default function Modal({
       top: -${window.scrollY}px;
       overflow-y: scroll;
       width: 100%;`;
+
     return () => {
       const scrollY = document.body.style.top;
       document.body.style.cssText = "";

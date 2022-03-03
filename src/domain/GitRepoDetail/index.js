@@ -77,18 +77,18 @@ function GitRepoDetail() {
     const {value, name} = e.target;
     setInputs({
       ...inputs,
-      [name]: value
+      [name]: value,
     });
     console.log("input");
   };
-  
+
   // readme useState
   const [isClick, setIsClick] = useState(false);
 
   const readmeonChange = () => {
-    setIsClick(isClick => !isClick);
+    setIsClick((isClick) => !isClick);
     console.log("click");
-  }
+  };
 
   // select useState
   const [selects, setSelects] = useState([]);
@@ -97,19 +97,19 @@ function GitRepoDetail() {
     const value = e.value;
     setSelects(value);
     console.log("select");
-  }
+  };
 
   // react-select style
   const styles = {
     control: (styles) => {
       return {
-      ...styles,
+        ...styles,
         border: 0,
         boxShadow: "none",
         backgroundColor: "#EEF1F7",
       };
     },
-    option: (styles, { isDisabled, isFocused, isSelected }) => {
+    option: (styles, {isDisabled, isFocused, isSelected}) => {
       const color = "#EEF1F7";
       return {
         ...styles,
@@ -120,14 +120,14 @@ function GitRepoDetail() {
           : isFocused
           ? color
           : undefined,
-          ":active": {
-            ...styles[":active"],
-            backgroundColor: !isDisabled
+        ":active": {
+          ...styles[":active"],
+          backgroundColor: !isDisabled
             ? isSelected
               ? color
               : color
-              : undefined
-          }
+            : undefined,
+        },
       };
     },
     multiValue: (styles) => {
@@ -161,7 +161,9 @@ function GitRepoDetail() {
     setRepos([...repos]);
   }
 
-  const tmpSave = () => {};
+  const tmpSave = () => {
+    console.log("TTT");
+  };
   const onPrev = () => {
     history.push("/git-repo", {
       ...location.state,
@@ -180,11 +182,23 @@ function GitRepoDetail() {
       return;
     }
     setRepos(location.state.gitrepos.filter((e) => e.checked));
-  }, [history, location.state]);
 
-  useEffect(() =>{
     getOptions()
-  }, []);
+      .then((r) => {
+        // [{id: 1, name: "python"}, {id: 2, name: "java"}]
+        // TODO : 문구 넣기
+        if (!r) throw Error("문구 넣으세요.");
+        r?.map((e) => {
+          return {
+            name: e.name,
+            value: e.name,
+          };
+        });
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }, [history, location.state]);
 
   return (
     <div className="grd">
@@ -198,7 +212,6 @@ function GitRepoDetail() {
       <div className="grd-wrapper">
         <div className="grd-top-container">
           <div className="grd-top-container-title">레포지토리</div>
-          {/* // TODO : 초기화 */}
           <button
             className="round-button"
             onClick={() => {
@@ -265,10 +278,9 @@ function GitRepoDetail() {
                   className="grd-inner-box-plus-info-title-info-box"
                   placeholder="바닐라자바스크립트 구현 프로젝트 리액트로 바꿔보기"
                 />*/}
-
               </div>
               <div className="grd-inner-box-readme">
-                  README.md
+                README.md
                 <img
                   className="grd-inner-box-image"
                   src={Eye}
@@ -307,7 +319,7 @@ function GitRepoDetail() {
               </div>
               <div className="grd-inner-box-title-container-skill">
                 <div className="container-title">기술스택</div>
-                
+
                 <Select
                   isMulti
                   styles={styles}
@@ -316,8 +328,7 @@ function GitRepoDetail() {
                   classNamePrefix="select"
                   style={{border: "none"}}
                   onChange={selectonChange}
-                  
-                  defaultValue={skillOptions[0]}              
+                  defaultValue={skillOptions[0]}
                   options={getOptions}
                 />
 
@@ -364,7 +375,6 @@ function GitRepoDetail() {
                     ))}
                   </datalist>
                 </div> */}
-
               </div>
               <div className="grd-inner-box-title-container">
                 <div className="container-title">도메인</div>
