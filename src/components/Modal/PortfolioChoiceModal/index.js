@@ -1,7 +1,9 @@
 import "./style.css";
-import {useState} from "react";
+import { useState } from "react";
 import RoundContainer from "../../RoundContainer";
 import PinRed from "../../../assets/pin-red.png";
+
+// const { user } = useUserContext();
 
 export default function PortfolioChoiceModal({
   onYes,
@@ -29,9 +31,8 @@ export default function PortfolioChoiceModal({
         {portfolio?.map((e, i) => (
           <RoundContainer
             key={`portfolio-${i}`}
-            className={`${
-              e?.id === checked && "pf-list-item-checked"
-            } pf-list-item`}
+            className={`${e?.id === checked && "pf-list-item-checked"
+              } pf-list-item`}
             onClick={() => setChecked(e?.id)}
           >
             <h4>{e?.title}</h4>

@@ -1,6 +1,6 @@
 import "./style.css";
-import React, {useEffect, useState} from "react";
-import {useHistory} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 // import Modal from "../../components/Modal/modal";
 import BeforeAfterBtn from "../../components/BeforeAfterBtn";
@@ -8,6 +8,8 @@ import RoundContainer from "../../components/RoundContainer";
 import Modal from "../../components/Modal";
 import YNModal from "../../components/Modal/YNModal/index";
 import PortfolioChoiceModal from "../../components/Modal/PortfolioChoiceModal/index";
+
+import axios from "axios";
 
 function InfoInput() {
   const history = useHistory();
@@ -31,26 +33,26 @@ function InfoInput() {
   };
 
   const [infoList, setInfoList] = useState([
-    {name: "", mail: "", birth: "", tel: ""},
+    { name: "", mail: "", birth: "", tel: "" },
   ]);
   const [careerList, setCareerList] = useState([
-    {company: "", depart: "", start: "", end: "", position: "", job: ""},
+    { company: "", depart: "", start: "", end: "", position: "", job: "" },
   ]);
   const [schoolList, setSchoolList] = useState([
-    {schoolType: "", start: "", end: "", schoolStat: ""},
+    { schoolType: "", start: "", end: "", schoolStat: "" },
   ]);
   const [certList, setCertList] = useState([
-    {cert: "", level: "", auth: "", issueDate: ""},
+    { cert: "", level: "", auth: "", issueDate: "" },
   ]);
   const [awardList, setAwardList] = useState([
-    {award: "", place: "", auth: "", issueDate: ""},
+    { award: "", place: "", auth: "", issueDate: "" },
   ]);
   const [etcList, setEtcList] = useState([
-    {etc: "", about: "", start: "", end: ""},
+    { etc: "", about: "", start: "", end: "" },
   ]);
-  const [introList, setIntroList] = useState([{introShort: "", introLong: ""}]);
-  const [snsList, setSnsList] = useState([{sns: "", link: ""}]);
-  const [stackList, setStackList] = useState([{stack: "", level: ""}]);
+  const [introList, setIntroList] = useState([{ introShort: "", introLong: "" }]);
+  const [snsList, setSnsList] = useState([{ sns: "", link: "" }]);
+  const [stackList, setStackList] = useState([{ stack: "", level: "" }]);
   const [patentList, setPatentList] = useState([
     {
       name: "",
@@ -64,7 +66,7 @@ function InfoInput() {
   ]);
 
   const handleInputChange = (List, setList, i, e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     const list = [...List];
     list[i][name] = value;
     setList(list);
@@ -85,7 +87,13 @@ function InfoInput() {
     inputImg.click();
   };
 
-  const tmpSave = () => {};
+  const tmpSave = () => {
+    console.log(infoList, careerList, schoolList, certList, awardList, etcList, introList, snsList, stackList, patentList)
+    axios.post(`${process.env.REACT_APP_BACKEND}/api/portfolio/complete`)
+  };
+
+  console.log(axios.get(`${process.env.REACT_APP_BACKEND}/api/skillList`))
+  const skills = [axios.get(`${process.env.REACT_APP_BACKEND}/api/skillList`)].map((skill) => skill)
 
   return (
     <div className="info-input">
@@ -622,7 +630,7 @@ function InfoInput() {
                       list="stackoption"
                     />
                     <datalist id="stackoption">
-                      <option value="asdf" />
+                      <option value={skills} />
                     </datalist>
                     <select
                       name="level"
@@ -746,6 +754,11 @@ function InfoInput() {
             onYes={() => {
               setShowModal(false);
               setShowModal2(true);
+              axios.get(`${process.env.REACT_APP_BACKEND}/api/portfolio`).then((Response) => {
+                console.log(Response.data)
+              }).catch((Error) => {
+                console.log(Error)
+              })
             }}
             onNo={() => setShowModal(false)}
           />
