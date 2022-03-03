@@ -7,6 +7,7 @@
 }
 
 .ti-modal .title-input {
+  width: 100%;
   margin-top: 0.5em;
 
   color: var(--dark-blue1);
@@ -15,6 +16,9 @@
   border: none;
   border-bottom: 1px solid #707070;
   outline: none;
+
+  text-align: center;
+  font-family: font-bold;
 }
 
 .ti-modal .alert-msg {

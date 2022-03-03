@@ -33,7 +33,7 @@ function App() {
           <Switch>
             {/* TOOD : URL 정리 */}
             <Route exact path={"/"} component={Home} />
-            <Route exact path={"/callback"} component={Callback} />
+            <Route path={"/callback/:toURL?"} component={Callback} />
 
             <Route exact path={"/agree"} component={Agreement} />
             <Route exact path={"/my-page"} component={Mypage} />

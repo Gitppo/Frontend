@@ -6,11 +6,19 @@ import RoundContainer from "../../components/RoundContainer";
 import RadioBtn from "../../components/RadioBtn";
 
 import flagIcon from "../../assets/flag.png";
-import axios from "axios";
+import {loadTerm, saveTermToAgree} from "../../hooks/term";
+import {isValidUser, useUserContext} from "../../hooks/useUserContext";
+import Modal from "../../components/Modal";
+import BtnModal from "../../components/Modal/BtnModal";
+import {loginBack} from "../../hooks/login";
+import {useLocation} from "react-router";
 
 function Agreement() {
   const history = useHistory();
+  const location = useLocation();
+  const {user} = useUserContext();
 
+  const [showAlert, setShowAlert] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [contract, setContract] = useState([
     {
@@ -27,6 +35,11 @@ function Agreement() {
   ]);
 
   const onAgree = () => {
+    if (!isValidUser(user)) {
+      setShowAlert(true);
+      return;
+    }
+
     let agree = true;
     for (let e of contract) {
       if (e?.required && !e?.agree) {
@@ -39,56 +52,18 @@ function Agreement() {
       setErrMsg("필수 항목에 동의하지 않으셨습니다.");
     } else {
       // 동의 시 등록
-      saveTermToAgree(contract)
+      saveTermToAgree(user.id, contract)
         .then((r) => {
-          history.push("/my-page");
+          if (r) history.push("/my-page");
+          else
+            throw Error(
+              "DataErr : Failed to save agreements. (Response is not true)"
+            );
         })
         .catch((e) => {
           console.error(e);
-
-          // TODO : 동의 오류 시 알림
+          setErrMsg("동의 내역 저장에 실패하였습니다. 다시 시도해주세요.");
         });
-    }
-  };
-
-  const loadTerm = async () => {
-    return await axios
-      .get(`${process.env.REACT_APP_BACKEND}/api/term`)
-      .then((r) => {
-        if (r.status === 200) {
-          return r.data;
-        } else {
-          throw Error(`NetErr : Failed to load the terms. : ${r.statusText}`);
-        }
-      })
-      .then((data) => {
-        return data.data;
-      })
-      .catch((e) => {
-        console.error(e);
-        throw e;
-      });
-  };
-  const saveTermToAgree = async (contract) => {
-    let data = [];
-
-    try {
-      for (let e of contract) {
-        data.push({
-          termID: e.id,
-          termAgreementIsAgree: e?.agree ? true : false,
-        });
-      }
-    } catch {
-      throw Error("InputErr : Invalid value");
-    }
-
-    const response = await axios.post(
-      `${process.env.REACT_APP_BACKEND}/api/term`,
-      data
-    );
-    if (response.status !== 200) {
-      throw Error(`NetErr : Cannot save agreement. : ${response.statusText}`);
     }
   };
 
@@ -102,10 +77,8 @@ function Agreement() {
       })
       .catch((e) => {
         console.error(e);
-        history.push("/error/load-fail");
+        // history.push("/error/load-fail");
       });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -183,6 +156,20 @@ function Agreement() {
           </button>
         </div>
       </RoundContainer>
+
+      {showAlert && (
+        <Modal backBlack={true}>
+          <BtnModal
+            title={"로그인이 필요합니다"}
+            btn1={"확인"}
+            oneBtn={true}
+            onBtn1={() => {
+              setShowAlert(false);
+              loginBack(location.pathname);
+            }}
+          />
+        </Modal>
+      )}
     </div>
   );
 }

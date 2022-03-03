@@ -1,15 +1,15 @@
 .home {
   max-width: 1700px !important;
   /*width: 100vh;*/
-  overflow-y: auto;
+  /* overflow-y: auto; */
+  overflow: hidden;
 }
 
 /* 깃 헙 로그인 버튼 */
 .home-login-button {
-  position: absolute;
+  position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  margin-top: 6rem;
   z-index: 10;
 }
 
@@ -22,12 +22,13 @@
   width: 100%;
   padding: 0 5em;
   margin-top: 12em;
+  margin-bottom: -6rem;
   color: white;
 }
 .home-intro-wrapper > #left,
 .home-intro-wrapper > #right {
-  height: 100vh;
-  padding: 2em 3em 2em 3em;
+  min-height: calc(100vh - 17.5rem);
+  padding: 2em 3em 6em 3em;
   border-radius: 0.3em;
   transition-duration: 300ms;
 }
@@ -65,4 +66,15 @@
   top: 6rem;
   left: 50%;
   transform: translateX(-50%);
+}
+
+@media screen and (max-width: 800px) {
+  .home-intro-wrapper {
+    flex-direction: column;
+    padding: 0 1rem;
+  }
+  .home-intro-wrapper > #left,
+  .home-intro-wrapper > #right {
+    width: 100%;
+  }
 }

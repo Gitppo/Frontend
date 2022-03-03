@@ -1,7 +1,10 @@
 import "./style.css";
-import {useEffect, useState} from "react";
-import {Link, useLocation} from "react-router-dom";
-import {useUserContext} from "../../hooks/useUserContext";
+
+import {useCallback, useEffect, useState} from "react";
+import {Link, useLocation, useHistory} from "react-router-dom";
+
+import {isValidUser, useUserContext} from "../../hooks/useUserContext";
+import {loginBack} from "../../hooks/login";
 
 const blueHeader = [
   "/",
@@ -12,10 +15,19 @@ const blueHeader = [
 ];
 
 function Header() {
-  const location = useLocation(),
-    [path, setPath] = useState(),
-    [isHome, setIsHome] = useState(true),
-    {user} = useUserContext();
+  const history = useHistory();
+  const location = useLocation();
+
+  const {user, setUser} = useUserContext();
+
+  const [path, setPath] = useState();
+  const [isHome, setIsHome] = useState(true);
+
+  const isValid = useCallback(() => isValidUser(user), [user]);
+  const logout = () => {
+    setUser({id: -1, githubUserName: null});
+    history.push("/");
+  };
 
   useEffect(() => {
     setPath(location.pathname);
@@ -31,23 +43,33 @@ function Header() {
       }
     >
       <div>
-        <div className={"button-container"}>
-          <Link to={"/"}>
-            <span style={{opacity: isHome ? 1 : 0.3}}>홈</span>
-          </Link>
-          {user?.githubUserName ? (
-            <Link to={"/my-page"}>
-              <span style={{opacity: isHome ? 0.3 : 1}}>마이페이지</span>
-            </Link>
+        {/* 메뉴 */}
+        <div className="left">
+          <span style={{opacity: isHome ? 1 : 0.3}}>
+            <Link to={"/"}>홈</Link>
+          </span>
+
+          {isValid() ? (
+            <>
+              <span style={{opacity: isHome ? 0.3 : 1}}>
+                <Link to={"/my-page"}>마이페이지</Link>
+              </span>
+              <span style={{opacity: 0.3, cursor: "pointer"}} onClick={logout}>
+                로그아웃
+              </span>
+            </>
           ) : (
-            <a
-              href={`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${window.location.origin}/callback`}
+            <span
+              style={{opacity: isHome ? 0.3 : 1}}
+              onClick={() => loginBack()}
             >
-              <span style={{opacity: isHome ? 0.3 : 1}}>마이페이지</span>
-            </a>
+              마이페이지
+            </span>
           )}
         </div>
-        <div>{user?.githubUserName ? `${user?.githubUserName}님` : ""}</div>
+
+        {/* 사용자 정보 */}
+        {isValid() && <div className="user">{user?.githubUserName}님</div>}
       </div>
     </header>
   );

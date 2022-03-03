@@ -2,43 +2,33 @@ import "./style.css";
 import {useEffect} from "react";
 import {useLocation} from "react-router";
 import {useHistory} from "react-router-dom";
-import axios from "axios";
-import qs from "qs";
-import {useUserContext} from "../../hooks/useUserContext";
+
+import {doLogin} from "../../hooks/login";
+import {isValidUser, useUserContext} from "../../hooks/useUserContext";
+
 import hippoIcon from "../../assets/hippo-blue.png";
 
-export default function Callback() {
-  const location = useLocation();
+export default function Callback({match}) {
   const history = useHistory();
+  const location = useLocation();
 
   const {setUser} = useUserContext();
 
-  const doLogin = async () => {
-    const {code} = qs.parse(location.search, {
-      ignoreQueryPrefix: true,
-    });
-
-    const instance = axios.create({timeout: 5 * 60 * 1000});
-    const {id, githubUserName} = await instance
-      .post(`${process.env.REACT_APP_BACKEND}/auth?code=` + code)
-      .then((r) => r.data);
-
-    if (typeof id !== "number" || typeof githubUserName !== "string")
-      throw Error("NetErr : Github login fail");
-
-    setUser({id: id, githubUserName: githubUserName});
-  };
-
   useEffect(() => {
-    doLogin()
-      // TODO : 로그인 완료 시 리다이렉트 주소 변경 -> agree
-      .then(() => history.push("/my-page"))
+    const toURL = "/" + (match.params?.toURL ?? "my-page");
+    doLogin(location.search)
+      .then((r) => {
+        if (!(isValidUser(r) > 0))
+          throw Error("DataErr : Invalid user information.");
+
+        setUser(r);
+        history.push(toURL);
+      })
       .catch((e) => {
         console.error(e);
         history.push("/error");
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [history, location.search, match.params?.toURL, setUser]);
 
   return (
     <div className={"loading"}>

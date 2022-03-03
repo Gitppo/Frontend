@@ -6,13 +6,16 @@ import { useHistory } from "react-router-dom";
 import BeforeAfterBtn from "../../components/BeforeAfterBtn";
 import RoundContainer from "../../components/RoundContainer";
 import Modal from "../../components/Modal";
-import YNModal from "../../components/Modal/YNModal/index";
+import BtnModal from "../../components/Modal/BtnModal/index";
 import PortfolioChoiceModal from "../../components/Modal/PortfolioChoiceModal/index";
+import {useLocation} from "react-router";
 
 import axios from "axios";
 
 function InfoInput() {
+  const location = useLocation();
   const history = useHistory();
+
   const [showModal, setShowModal] = useState(true);
   const [showModal2, setShowModal2] = useState(false);
 
@@ -94,13 +97,24 @@ function InfoInput() {
 
   console.log(axios.get(`${process.env.REACT_APP_BACKEND}/api/skillList`))
   const skills = [axios.get(`${process.env.REACT_APP_BACKEND}/api/skillList`)].map((skill) => skill)
+  const onPrev = () => {
+    history.push("/git-repo-detail", {
+      ...location.state,
+    });
+  };
+  const onNext = () => {
+    tmpSave();
+    history.push("/git-console", {
+      ...location.state,
+    });
+  };
 
   return (
     <div className="info-input">
       <BeforeAfterBtn
         saveShow={true}
-        onPrev={() => history.push("/git-repo-detail")}
-        onNext={() => history.push("/git-console")}
+        onPrev={onPrev}
+        onNext={onNext}
         onSave={tmpSave}
       />
 
@@ -749,9 +763,9 @@ function InfoInput() {
       {/* 포트폴리오 선택 여부 묻기 */}
       {showModal && (
         <Modal backBlack={true}>
-          <YNModal
+          <BtnModal
             title={"기존에 입력한 정보를 가져오시겠습니까?"}
-            onYes={() => {
+            onBtn1={() => {
               setShowModal(false);
               setShowModal2(true);
               axios.get(`${process.env.REACT_APP_BACKEND}/api/portfolio`).then((Response) => {
@@ -760,7 +774,7 @@ function InfoInput() {
                 console.log(Error)
               })
             }}
-            onNo={() => setShowModal(false)}
+            onBtn2={() => setShowModal(false)}
           />
         </Modal>
       )}

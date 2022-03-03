@@ -12,6 +12,21 @@
   background-color: var(--dark-blue2);
 
   cursor: default;
+
+  transform-origin: 100% 100%;
+  animation: openForm 350ms;
+}
+
+@keyframes openForm {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .ask-modal .email-input {
