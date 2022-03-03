@@ -11,6 +11,7 @@ export default function PortfolioChoiceModal({onYes, onNo}) {
   const {user} = useUserContext();
   const [checked, setChecked] = useState(-1);
   const [progress, setProgress] = useState(0);
+
   const [portfolio, setPortfolio] = useState([
     {
       id: 1,
