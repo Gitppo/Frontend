@@ -37,10 +37,6 @@ export default function InfoInput() {
     }
   };
 
-  const handleResetFile = () => {
-    setImgBase64(null);
-  };
-
   const [infoList, setInfoList] = useState([
     {name: "", mail: "", birth: "", tel: ""},
   ]);
