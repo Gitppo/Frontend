@@ -8,8 +8,9 @@ import Select from "react-select";
 import BeforeAfterBtn from "../../components/BeforeAfterBtn";
 
 import Star from "../../assets/star.png";
-import Eye from "../../assets/eye.png";
+import BlueEye from "../../assets/eye-blue.png";
 import Fold from "../../assets/arrow-no-head.png";
+import GrayEye from "../../assets/eye-gray.png";
 
 import {getOptions} from "../../hooks/options";
 
@@ -20,27 +21,19 @@ function GitRepoDetail() {
   // mock-data
   const [repos, setRepos] = useState([
     {
-      id: 1,
-      title: "2021 조깃포 LG 포트폴리오",
-      state: 0,
-      creation: "2021.04.04",
-      revision: {
-        date: "2021.05.05",
-        time: "19:00",
+      name: "hyu-likelion/NESI",
+      created_at: "2017.12.12",
+      updated_at: "2022.03.05",
+      stargazers_count: 0,
+      languages: {
+        "addtionalProp1": 0,
+        "addtionalProp2": 0,
+        "addtionalProp3": 0,
       },
-      language: [
-        ["JavaScript", "56.8% "],
-        ["Java", "43.2% "],
-      ],
-      path: "hyu-likelion/NESI",
-      starNum: "50",
-      start: "",
-      end: "",
-      role: "",
-      skill: "",
-      domain: "",
-      explain: "",
-    },
+      description: "바닐라 자바스크립트 구현 프로젝트 리액트로 바꿔보기",
+      readme: "string",
+      html_url: "000.000.000",
+    }
   ]);
 
   const skillOptions = [
@@ -63,15 +56,12 @@ function GitRepoDetail() {
 
   // inputs useState
   const [inputs, setInputs] = useState({
-    title: "",
     start: "",
     end: "",
     role: "",
-    domain: "",
+    url: "",
     explain: "",
   });
-
-  const {title, start, end, role, domain, explain} = inputs;
 
   const inputsonChange = (e) => {
     const {value, name} = e.target;
@@ -83,17 +73,19 @@ function GitRepoDetail() {
   };
 
   // readme useState
+  /*
   const [isClick, setIsClick] = useState(false);
 
   const readmeonChange = () => {
     setIsClick((isClick) => !isClick);
     console.log("click");
   };
+  */
 
   // select useState
   const [selects, setSelects] = useState([]);
 
-  const selectonChange = (e) => {
+  const selectsonChange = (e) => {
     const value = e.value;
     setSelects(value);
     console.log("select");
@@ -107,6 +99,8 @@ function GitRepoDetail() {
         border: 0,
         boxShadow: "none",
         backgroundColor: "#EEF1F7",
+        borderRadius: "0.5em",
+        padding: "0.2em",
       };
     },
     option: (styles, {isDisabled, isFocused, isSelected}) => {
@@ -135,6 +129,9 @@ function GitRepoDetail() {
         ...styles,
         backgroundColor: "#0F2C7F",
         color: "#C6C6C6",
+        borderRadius: "0.5em",
+        padding: "0.15em",
+        //margin: "0 0 0 0.1%",
       };
     },
     multiValueLabel: (styles) => ({
@@ -143,10 +140,9 @@ function GitRepoDetail() {
     }),
     multiValueRemove: (styles) => ({
       ...styles,
-      color: "".color,
       ":hover": {
-        backgroundColor: "#9E413C",
         color: "#FFFFFF",
+        cursor: "pointer",
       },
     }),
   };
@@ -185,13 +181,11 @@ function GitRepoDetail() {
 
     getOptions()
       .then((r) => {
-        // [{id: 1, name: "python"}, {id: 2, name: "java"}]
-        // TODO : 문구 넣기
-        if (!r) throw Error("문구 넣으세요.");
+        if (!r) throw Error("Failed to load getOptions.");
         r?.map((e) => {
           return {
-            name: e.name,
             value: e.name,
+            label: e.name,
           };
         });
       })
@@ -225,7 +219,6 @@ function GitRepoDetail() {
             초기화
           </button>
         </div>
-
         {repos.map((box, index) => (
           <li className="grd-inner-box" key={index}>
             <div
@@ -260,7 +253,7 @@ function GitRepoDetail() {
                 </div>
                 <div className="grd-inner-box-bottom-title">사용언어</div>
                 <div className="grd-inner-box-bottom-detail">
-                  {box?.language}
+                  {box?.languages[0]}
                 </div>
               </div>
             </div>
@@ -270,22 +263,17 @@ function GitRepoDetail() {
                 <div className="grd-inner-box-text">
                   {box?.description ?? "Description이 없습니다."}
                 </div>
-
-                {/*<input
-                  onChange={inputsonChange}
-                  value={index.title}
-                  name="title"
-                  className="grd-inner-box-plus-info-title-info-box"
-                  placeholder="바닐라자바스크립트 구현 프로젝트 리액트로 바꿔보기"
-                />*/}
               </div>
               <div className="grd-inner-box-readme">
                 README.md
                 <img
-                  className="grd-inner-box-image"
-                  src={Eye}
+                  className={"grd-inner-box-image"}
+                  src={box?.show ? GrayEye : BlueEye}
                   alt={""}
-                  onClick={() => readmeonChange()}
+                  onClick={() => {
+                    repos[index].show = !(box?.show ?? false);
+                    setRepos([...repos]);
+                  }}
                 />
               </div>
               <div className="grd-inner-box-detail">상세 설명</div>
@@ -293,7 +281,7 @@ function GitRepoDetail() {
                 <div className="container-title">기간</div>
                 <input
                   onChange={inputsonChange}
-                  value={index.start}
+                  value={box?.start}
                   name="start"
                   className="grd-inner-box-date"
                   placeholder="시작일"
@@ -301,7 +289,7 @@ function GitRepoDetail() {
                 <div className="wave-mark">~</div>
                 <input
                   onChange={inputsonChange}
-                  value={index.end}
+                  value={box?.end}
                   name="end"
                   className="grd-inner-box-date"
                   placeholder="마감일"
@@ -311,77 +299,32 @@ function GitRepoDetail() {
                 <div className="container-title">역할</div>
                 <input
                   onChange={inputsonChange}
-                  value={index.role}
+                  value={box?.role}
                   name="role"
                   className="grd-inner-box-plus-info-title-info-box"
-                  placeholder="프론트엔드개발 / 디자인"
+                  placeholder="프론트엔드 개발 / 디자인"
                 />
               </div>
               <div className="grd-inner-box-title-container-skill">
                 <div className="container-title">기술스택</div>
-
                 <Select
                   isMulti
                   styles={styles}
-                  name="skill"
+                  name="selects"
                   className="grd-inner-box-skill"
                   classNamePrefix="select"
                   style={{border: "none"}}
-                  onChange={selectonChange}
                   defaultValue={skillOptions[0]}
-                  options={getOptions}
+                  options={skillOptions}
+                  onChange={selectsonChange}
                 />
-
-                {/* <div>
-                  <div
-                    className="grd-inner-box-plus-info-title-info-box"
-                    style={{width: "100%"}}
-                  >
-                    <span
-                      style={{
-                        backgroundColor: "black",
-                        color: "white",
-                        padding: "0.2em 0.5em",
-                        marginRight: "0.2em",
-                      }}
-                    >
-                      JavaScript
-                    </span>
-                    <span
-                      style={{
-                        backgroundColor: "black",
-                        color: "white",
-                        padding: "0.2em 0.5em",
-                        marginRight: "0.2em",
-                      }}
-                    >
-                      Java
-                    </span>
-                    <span>
-                      <input
-                        type="text"
-                        list="skill-stack-list"
-                        style={{
-                          border: "none",
-                          outline: "none",
-                          background: "none",
-                        }}
-                      />
-                    </span>
-                  </div>
-                  <datalist id={"skill-stack-list"}>
-                    {skillOptions?.map((e, i) => (
-                      <option value={e?.label} />
-                    ))}
-                  </datalist>
-                </div> */}
               </div>
               <div className="grd-inner-box-title-container">
-                <div className="container-title">도메인</div>
+                <div className="container-title">URL</div>
                 <input
                   onChange={inputsonChange}
-                  value={index.domain}
-                  name="domain"
+                  value={box?.url}
+                  name="url"
                   className="grd-inner-box-plus-info-title-info-box"
                   placeholder="000.000.000"
                 />
@@ -390,7 +333,7 @@ function GitRepoDetail() {
                 <div className="container-title">설명</div>
                 <textarea
                   onChange={inputsonChange}
-                  value={index.explain}
+                  value={box?.explain}
                   name="explain"
                   className="grd-inner-box-info-text"
                   placeholder="설명"
