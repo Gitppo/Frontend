@@ -18,11 +18,24 @@ export default function Callback({match}) {
     const toURL = "/" + (match.params?.toURL ?? "my-page");
     doLogin(location.search)
       .then((r) => {
-        if (!(isValidUser(r) > 0))
-          throw Error("DataErr : Invalid user information.");
+        if (!r) throw Error("DataErr : No user info.");
 
-        setUser(r);
-        history.push(toURL);
+        const user = {
+          id: r?.id,
+          githubUserName: r?.githubUserName,
+        };
+
+        if (!isValidUser(user)) {
+          throw Error("DataErr : Invalid user info.");
+        }
+
+        setUser(user);
+
+        if (r.roleKey === "ROLE_FIRST") {
+          history.push("/agree");
+        } else {
+          history.push(toURL);
+        }
       })
       .catch((e) => {
         console.error(e);

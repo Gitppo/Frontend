@@ -1,17 +1,18 @@
 import "./style.css";
 import {useEffect, useState} from "react";
+import {useLocation} from "react-router";
 import {useHistory} from "react-router-dom";
 
-import RoundContainer from "../../components/RoundContainer";
-import RadioBtn from "../../components/RadioBtn";
-
-import flagIcon from "../../assets/flag.png";
-import {loadTerm, saveTermToAgree} from "../../hooks/term";
-import {isValidUser, useUserContext} from "../../hooks/useUserContext";
 import Modal from "../../components/Modal";
 import BtnModal from "../../components/Modal/BtnModal";
+import RadioBtn from "../../components/Btn/RadioBtn";
+import RoundContainer from "../../components/RoundContainer";
+
+import flagIcon from "../../assets/flag.png";
+
+import {loadTerm, saveTermToAgree} from "../../hooks/term";
+import {isValidUser, useUserContext} from "../../hooks/useUserContext";
 import {loginBack} from "../../hooks/login";
-import {useLocation} from "react-router";
 
 function Agreement() {
   const history = useHistory();

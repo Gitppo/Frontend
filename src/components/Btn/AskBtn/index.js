@@ -1,6 +1,6 @@
 import "./style.css";
 import {useState} from "react";
-import EmailModal from "../Modal/EmailModal";
+import EmailModal from "../../Modal/EmailModal";
 
 function AskBtn() {
   const [showAsk, setShowAsk] = useState(false);

@@ -12,14 +12,18 @@ export const sendEmailJS = (user, email, msg) => {
       message: msg,
     },
     process.env.REACT_APP_EMAIL_USER_ID
-  ).then(
-    (result) => {
-      if (result.text !== "OK") {
-        throw Error(`NetErr : Failed to Send Message : ${result.text}`);
+  )
+    .then(
+      (result) => {
+        if (result.text !== "OK") {
+          throw Error(`NetErr : Failed to Send Message : ${result.text}`);
+        }
+      },
+      (error) => {
+        throw Error(error.text);
       }
-    },
-    (error) => {
-      throw Error(error.text);
-    }
-  );
+    )
+    .catch((e) => {
+      throw e;
+    });
 };

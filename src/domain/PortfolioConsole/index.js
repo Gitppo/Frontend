@@ -1,12 +1,16 @@
 import "./style.css";
 import {useState} from "react";
-import PortfolioBlueGray from "../../components/Portfolio/PortfolioBlueGray/index";
-import PortfolioBluePink from "../../components/Portfolio/PortfolioBluePink/index";
-import RadioBtn from "../../components/RadioBtn/index";
-import BeforeAfterBtn from "../../components/BeforeAfterBtn/index";
-import {useHistory} from "react-router-dom/cjs/react-router-dom.min";
+import {useHistory} from "react-router-dom";
+
+import RadioBtn from "../../components/Btn/RadioBtn";
+import BeforeAfterBtn from "../../components/Btn/BeforeAfterBtn";
+
+import Portfolio1 from "../../components/Portfolio/Portfolio1";
+import Portfolio2 from "../../components/Portfolio/Portfolio2";
+import {useLocation} from "react-router-dom";
 
 export default function PortfolioConsole() {
+  const location = useLocation();
   const history = useHistory();
 
   const pInfo = {
@@ -15,13 +19,13 @@ export default function PortfolioConsole() {
 
   const [pStyleIndex, setPStyleIndex] = useState(0);
 
-  const prevPage = () => {
-    history.push("/git-info");
+  const onPrev = () => {
+    history.push("/new/3", {...location.state});
   };
 
   return (
     <div className="portfolio-console">
-      <BeforeAfterBtn saveShow={false} nextShow={false} onPrev={prevPage} />
+      <BeforeAfterBtn saveShow={false} nextShow={false} onPrev={onPrev} />
 
       <div className="title-wrapper">
         <h2 className="title">{pInfo?.title}</h2>
@@ -36,9 +40,9 @@ export default function PortfolioConsole() {
         {/* 미리보기 창 */}
         <div className="preview-section">
           {pStyleIndex === 0 ? (
-            <PortfolioBlueGray pInfo={pInfo} />
+            <Portfolio1 pInfo={pInfo} />
           ) : pStyleIndex === 1 ? (
-            <PortfolioBluePink pInfo={pInfo} />
+            <Portfolio2 pInfo={pInfo} />
           ) : (
             <></>
           )}

@@ -59,6 +59,10 @@
   color: #80aaff;
 }
 
+.info-input input[type="file"] {
+  display:none;
+}
+
 .info-input input[type="text"],
 .info-input input[type="date"],
 .info-input input[type="month"],
@@ -69,10 +73,8 @@
   margin: 0.2em;
   padding: 0.3em;
   min-height: 2.3rem;
-
   border: 1px solid rgb(117, 117, 117);
   border-radius: 0.5em;
-
   font-size: 1rem;
 }
 
@@ -93,7 +95,6 @@
   width: 44.4rem;
   height: 2rem;
   resize: none;
-  margin-left: 13.3rem;
 }
 
 .btn {

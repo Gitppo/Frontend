@@ -19,3 +19,9 @@
 #round-shadow-wrapper-inner h4 {
   color: var(--dark-blue1);
 }
+
+@media screen and (max-width: 700px) {
+  #round-shadow-wrapper-inner {
+    padding: 2rem 1rem;
+  }
+}

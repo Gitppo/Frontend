@@ -1,0 +1,156 @@
+.info-input .main-info {
+  padding-bottom: 2rem;
+
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1em;
+}
+.info-input .main-info .round-button {
+  width: 8rem;
+}
+.info-input .main-info .img-container {
+  display: flex;
+  gap: 1em;
+}
+
+.info-input .main-info .img-preview {
+  width: 130px;
+  height: 130px;
+  overflow: hidden;
+
+  position: relative;
+
+  border-radius: 0.5em;
+  border: 1px solid var(--blue3);
+  box-shadow: 5px 5px 1px rgba(0, 0, 0, 0.16);
+}
+.info-input .main-info .img-preview img {
+  width: 100%;
+  height: auto;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.info-input .main-info .img-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.info-input .info-input-form {
+  /* display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; */
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.info-input .imgBlock,
+#thumbnail {
+  background-color: #efefef;
+  width: 150px;
+  height: 150px;
+}
+
+.info-input .info-intro {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5em 0;
+}
+.info-input .info-intro textarea {
+  resize: none;
+  height: 6rem;
+}
+
+.info-input .patent-intro {
+  width: 100%;
+}
+.info-input .patent-intro textarea {
+  width: 100%;
+  resize: none;
+  height: 6rem;
+}
+
+.info-input .clist-item {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  margin: 0.5em 0;
+}
+.info-input .clist-item .right {
+  /* width: 100%; */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.info-input input,
+.info-input textarea,
+.info-input select {
+  /* width: 100%; */
+  min-height: 2.3rem;
+
+  margin: 0.2em;
+  padding: 0.3em;
+
+  border: 1px solid rgba(15, 44, 127, 0.5);
+  border-radius: 0.5em;
+
+  font-size: 1rem;
+  flex: 1;
+}
+.info-input input:focus {
+  border: none;
+  outline: 2px solid var(--dark-red);
+}
+.info-input input::placeholder,
+.info-input textarea::placeholder {
+  color: #80aaff;
+}
+
+.info-input .ii-etc .title {
+  display: flex;
+  gap: 0.5em;
+}
+.info-input .ii-etc .title button {
+  margin-top: -0.08em;
+}
+.info-input .ii-etc .title button,
+.info-input .del-btn {
+  font-size: 2em;
+  font-family: title;
+  font-weight: 100;
+
+  border: none;
+  color: var(--dark-blue1);
+  background-color: transparent;
+}
+
+@media screen and (max-width: 700px) {
+  .info-input .main-info {
+    flex-direction: column;
+    gap: 2em;
+  }
+  .info-input .clist-item {
+    margin: 0.5em 0 1em 0;
+  }
+  .info-input .clist-item .right {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .info-input .main-info {
+    width: 100%;
+  }
+  .info-input .main-info > div {
+    width: 100%;
+  }
+  .info-input .info-input-form {
+    grid-template-columns: 100%;
+  }
+}

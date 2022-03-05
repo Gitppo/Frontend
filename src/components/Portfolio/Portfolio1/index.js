@@ -1,6 +1,6 @@
 import "./style.css";
 
-export default function PortfolioBlueGray({pInfo}) {
+export default function Portfolio1({pInfo}) {
   pInfo = {
     title: "Name's Protfolio",
     onelineIntro: "한줄 자기소개",
