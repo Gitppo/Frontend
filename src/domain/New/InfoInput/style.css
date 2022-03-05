@@ -142,3 +142,15 @@
     width: 100%;
   }
 }
+
+@media screen and (max-width: 460px) {
+  .info-input .main-info {
+    width: 100%;
+  }
+  .info-input .main-info > div {
+    width: 100%;
+  }
+  .info-input .info-input-form {
+    grid-template-columns: 100%;
+  }
+}

@@ -20,9 +20,8 @@ export default function InfoInput() {
 
   const [showModal, setShowModal] = useState(true);
   const [showModal2, setShowModal2] = useState(false);
-
   const [imgBase64, setImgBase64] = useState("");
-  const [imgFile, setImgFile] = useState(null);
+
   const handleChangeFile = (event) => {
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -33,7 +32,6 @@ export default function InfoInput() {
     };
     if (event.target.files[0]) {
       reader.readAsDataURL(event.target.files[0]);
-      //   setImgFile(event.target.files[0]);
     }
   };
 
@@ -182,7 +180,6 @@ export default function InfoInput() {
                   id="img-file"
                   type="file"
                   accept="image/*"
-                  name="imgFile"
                   onChange={handleChangeFile}
                   style={{display: "none"}}
                 />
