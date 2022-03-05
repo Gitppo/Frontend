@@ -1,6 +1,6 @@
 import "./style.css";
-import React, {useEffect, useState} from "react";
-import {useHistory} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 // import Modal from "../../components/Modal/modal";
 import BeforeAfterBtn from "../../components/BeforeAfterBtn";
@@ -8,7 +8,7 @@ import RoundContainer from "../../components/RoundContainer";
 import Modal from "../../components/Modal";
 import BtnModal from "../../components/Modal/BtnModal/index";
 import PortfolioChoiceModal from "../../components/Modal/PortfolioChoiceModal/index";
-import {useLocation} from "react-router";
+import { useLocation } from "react-router";
 
 import axios from "axios";
 
@@ -35,27 +35,31 @@ function InfoInput() {
     }
   };
 
+  const handleResetFile = () => {
+    setImgBase64(null)
+  }
+
   const [infoList, setInfoList] = useState([
-    {name: "", mail: "", birth: "", tel: ""},
+    { name: "", mail: "", birth: "", tel: "" },
   ]);
   const [careerList, setCareerList] = useState([
-    {company: "", depart: "", start: "", end: "", position: "", job: ""},
+    { company: "", depart: "", start: "", end: "", position: "", job: "" },
   ]);
   const [schoolList, setSchoolList] = useState([
-    {schoolType: "", start: "", end: "", schoolStat: ""},
+    { schoolType: "", start: "", end: "", schoolStat: "" },
   ]);
   const [certList, setCertList] = useState([
-    {cert: "", level: "", auth: "", issueDate: ""},
+    { cert: "", level: "", auth: "", issueDate: "" },
   ]);
   const [awardList, setAwardList] = useState([
-    {award: "", place: "", auth: "", issueDate: ""},
+    { award: "", place: "", auth: "", issueDate: "" },
   ]);
   const [etcList, setEtcList] = useState([
-    {etc: "", about: "", start: "", end: ""},
+    { etc: "", about: "", start: "", end: "" },
   ]);
-  const [introList, setIntroList] = useState([{introShort: "", introLong: ""}]);
-  const [snsList, setSnsList] = useState([{sns: "", link: ""}]);
-  const [stackList, setStackList] = useState([{stack: "", level: ""}]);
+  const [introList, setIntroList] = useState([{ introShort: "", introLong: "" }]);
+  const [snsList, setSnsList] = useState([{ sns: "", link: "" }]);
+  const [stackList, setStackList] = useState([{ stack: "", level: "" }]);
   const [patentList, setPatentList] = useState([
     {
       name: "",
@@ -69,38 +73,32 @@ function InfoInput() {
   ]);
 
   const handleInputChange = (List, setList, i, e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     const list = [...List];
     list[i][name] = value;
     setList(list);
+    console.log(list);
   };
 
   const handleRemoveClick = (List, setList, i) => {
-    console.log(setList);
-    console.log(i);
-    console.log(List);
     const list = [...List];
     list.splice(i, 1);
-    console.log(list);
     setList(list);
-  };
-
-  const handleAddClick = (List, setList) => {
-    setList([...List, {}]);
-  };
-
-  const handleUpload = () => {
-    const inputImg = document.getElementById("imgFile");
-    inputImg.click();
+    console.log(list)
   };
 
   const tmpSave = () => {
-    // axios.post(`${process.env.REACT_APP_BACKEND}/api/portfolio/complete`)
   };
 
-  const skills = [
-    axios.get(`${process.env.REACT_APP_BACKEND}/api/skillList`),
-  ].map((skill) => skill);
+  const importSkill = () => {
+    axios.get("http://3.37.186.122:8080/api/skillList").then((r) => {
+      if (r.status !== 200 || r.data?.status !== "OK")
+        throw Error("NetErr : Failed to load skillList.");
+      const data = r.data.data
+      console.log(data)
+      return data
+    })
+  }
 
   const onPrev = () => {
     history.push("/git-repo-detail", {
@@ -194,11 +192,11 @@ function InfoInput() {
               </div>
 
               <div className="img-btns">
-                <button className="round-button" onClick={handleUpload}>
+                <label for="imgFile" className="round-button">
                   수정
-                </button>
-                <button className="round-button">기본 이미지로</button>
-                <input type="file" name="imgFile" onChange={handleChangeFile} />
+                </label>
+                <button className="round-button" onClick={handleResetFile}>기본 이미지로</button>
+                <input type="file" id="imgFile" onChange={handleChangeFile} />
               </div>
             </div>
           </div>
@@ -213,8 +211,8 @@ function InfoInput() {
             <div className="title">
               <h3>경력사항</h3>
               <button
-                onClick={(e) => {
-                  handleAddClick(careerList, setCareerList, e);
+                onClick={() => {
+                  setCareerList([...careerList, { company: "", depart: "", start: "", end: "", position: "", job: "" }]);
                 }}
               >
                 +
@@ -298,7 +296,9 @@ function InfoInput() {
             <div className="title">
               <h3>학력사항</h3>
               <button
-                onClick={(e) => handleAddClick(schoolList, setSchoolList, e)}
+                onClick={() => {
+                  setSchoolList([...schoolList, { schoolType: "", start: "", end: "", schoolStat: "" }])
+                }}
               >
                 +
               </button>
@@ -322,6 +322,7 @@ function InfoInput() {
                       handleInputChange(schoolList, setSchoolList, i, e)
                     }
                   >
+                    <option value="">학교</option>
                     <option value="high">고등학교</option>
                     <option value="univ">대학교</option>
                     <option value="grad">대학원</option>
@@ -360,7 +361,10 @@ function InfoInput() {
           <div>
             <div className="title">
               <h3>자격/어학사항</h3>
-              <button onClick={(e) => handleAddClick(certList, setCertList, e)}>
+              <button onClick={() => {
+                setCertList([...certList, { cert: "", level: "", auth: "", issueDate: "" }])
+              }}
+              >
                 +
               </button>
             </div>
@@ -420,10 +424,9 @@ function InfoInput() {
           <div>
             <div className="title">
               <h3>수상</h3>
-              <button
-                onClick={(e) => {
-                  handleAddClick(awardList, setAwardList, e);
-                }}
+              <button onClick={() => {
+                setAwardList([...awardList, { award: "", place: "", auth: "", issueDate: "" }])
+              }}
               >
                 +
               </button>
@@ -486,7 +489,10 @@ function InfoInput() {
           <div>
             <div className="title">
               <h3>기타</h3>
-              <button onClick={(e) => handleAddClick(etcList, setEtcList, e)}>
+              <button onClick={() => {
+                setEtcList([...etcList, { etc: "", about: "", start: "", end: "" }])
+              }}
+              >
                 +
               </button>
             </div>
@@ -574,10 +580,9 @@ function InfoInput() {
           <div>
             <div className="title">
               <h3>SNS</h3>
-              <button
-                onClick={(e) => {
-                  handleAddClick(snsList, setSnsList, e);
-                }}
+              <button onClick={() => {
+                setSnsList([...snsList, { sns: "", link: "" }])
+              }}
               >
                 +
               </button>
@@ -620,10 +625,11 @@ function InfoInput() {
           <div>
             <div className="title">
               <h3>기술스택</h3>
-              <button
-                onClick={(e) => {
-                  handleAddClick(stackList, setStackList, e);
-                }}
+              <button onClick={() => {
+                setStackList([...stackList, { stack: "", level: "" }])
+                console.log(importSkill())
+                importSkill()
+              }}
               >
                 +
               </button>
@@ -652,7 +658,7 @@ function InfoInput() {
                       list="stackoption"
                     />
                     <datalist id="stackoption">
-                      <option value={skills} />
+                      {/* <option value={importSkill()} /> */}
                     </datalist>
                     <select
                       name="level"
@@ -676,10 +682,9 @@ function InfoInput() {
           <div>
             <div className="title">
               <h3>출판 / 논문 / 특허</h3>
-              <button
-                onClick={(e) => {
-                  handleAddClick(patentList, setPatentList, e);
-                }}
+              <button onClick={() => {
+                setPatentList([...patentList, { name: "", number: "", company: "", author: "", date: "", link: "", des: "" }])
+              }}
               >
                 +
               </button>
@@ -769,34 +774,38 @@ function InfoInput() {
       </RoundContainer>
 
       {/* 포트폴리오 선택 여부 묻기 */}
-      {showModal && (
-        <Modal backBlack={true}>
-          <BtnModal
-            title={"기존에 입력한 정보를 가져오시겠습니까?"}
-            onBtn1={() => {
-              setShowModal(false);
-              setShowModal2(true);
-              axios
-                .get(`${process.env.REACT_APP_BACKEND}/api/portfolio`)
-                .then((Response) => {
-                  console.log(Response.data);
-                })
-                .catch((Error) => {
-                  console.log(Error);
-                });
-            }}
-            onBtn2={() => setShowModal(false)}
-          />
-        </Modal>
-      )}
+      {
+        showModal && (
+          <Modal backBlack={true}>
+            <BtnModal
+              title={"기존에 입력한 정보를 가져오시겠습니까?"}
+              onBtn1={() => {
+                setShowModal(false);
+                setShowModal2(true);
+                axios
+                  .get(`${process.env.REACT_APP_BACKEND}/api/portfolio`)
+                  .then((Response) => {
+                    console.log(Response.data);
+                  })
+                  .catch((Error) => {
+                    console.log(Error);
+                  });
+              }}
+              onBtn2={() => setShowModal(false)}
+            />
+          </Modal>
+        )
+      }
 
       {/* 포트폴리오 선택 모달 */}
-      {showModal2 && (
-        <Modal backBlack={true}>
-          <PortfolioChoiceModal onNo={() => setShowModal2(false)} />
-        </Modal>
-      )}
-    </div>
+      {
+        showModal2 && (
+          <Modal backBlack={true}>
+            <PortfolioChoiceModal onNo={() => setShowModal2(false)} />
+          </Modal>
+        )
+      }
+    </div >
   );
 }
 
