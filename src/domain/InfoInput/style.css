@@ -1,0 +1,116 @@
+.info-input .main-info {
+  padding-bottom: 2rem;
+
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.info-input .main-info .round-button {
+  width: 8rem;
+}
+.info-input .main-info .img-container {
+  display: flex;
+  gap: 1em;
+}
+.info-input .main-info .img-preview {
+  width: 130px;
+  height: 130px;
+  border-radius: 0.5em;
+  border: 1px solid var(--blue3);
+  box-shadow: 5px 5px 1px rgba(0, 0, 0, 0.16);
+}
+.info-input .main-info .img-preview img {
+  width: 100%;
+  height: auto;
+}
+.info-input .main-info .img-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.info-input .ii-etc .title {
+  display: flex;
+  gap: 0.5em;
+}
+.info-input .ii-etc .title button {
+  border: none;
+  background: none;
+  color: var(--blue3);
+  font-weight: bold;
+}
+
+.etc {
+  padding: 20px 0px;
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-input input::placeholder,
+.info-input textarea::placeholder
+/* .info-input input[type="date"]::-webkit-datetime-edit-text,
+.info-input input[type="date"]::-webkit-datetime-edit-month-field,
+.info-input input[type="date"]::-webkit-datetime-edit-day-field,
+.info-input input[type="date"]::-webkit-datetime-edit-year-field  */ {
+  color: #80aaff;
+}
+
+.info-input input[type="file"] {
+  display:none;
+}
+
+.info-input input[type="text"],
+.info-input input[type="date"],
+.info-input input[type="month"],
+.info-input input[type="email"],
+.info-input textarea,
+.info-input select,
+.btn {
+  margin: 0.2em;
+  padding: 0.3em;
+  min-height: 2.3rem;
+  border: 1px solid rgb(117, 117, 117);
+  border-radius: 0.5em;
+  font-size: 1rem;
+}
+
+#introLong {
+  width: 42rem;
+  height: 10rem;
+  resize: none;
+}
+
+#introShort {
+  width: 42rem;
+  height: 2rem;
+  resize: none;
+}
+
+#link,
+#des {
+  width: 44.4rem;
+  height: 2rem;
+  resize: none;
+}
+
+.btn {
+  border: none;
+}
+
+.imgBlock,
+#thumbnail {
+  background-color: #efefef;
+  width: 150px;
+  height: 150px;
+}
+
+@media screen and (max-width: 700px) {
+  .info-input .main-info {
+    flex-direction: column;
+    gap: 2em;
+  }
+}

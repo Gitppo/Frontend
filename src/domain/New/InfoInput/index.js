@@ -55,29 +55,26 @@ export default function InfoInput() {
     const list = [...List];
     list[i][name] = value;
     setList(list);
+    console.log(list);
   };
 
   const handleRemoveClick = (List, setList, i) => {
-    console.log(setList);
-    console.log(i);
-    console.log(List);
     const list = [...List];
     list.splice(i, 1);
-    console.log(list);
     setList(list);
   };
 
-  const handleAddClick = (List, setList) => {
-    setList([...List, {}]);
-  };
+  const tmpSave = () => {};
 
-  const tmpSave = () => {
-    // axios.post(`${process.env.REACT_APP_BACKEND}/api/portfolio/complete`)
+  const importSkill = () => {
+    axios.get("http://3.37.186.122:8080/api/skillList").then((r) => {
+      if (r.status !== 200 || r.data?.status !== "OK")
+        throw Error("NetErr : Failed to load skillList.");
+      const data = r.data.data;
+      console.log(data);
+      return data;
+    });
   };
-
-  const skills = [
-    axios.get(`${process.env.REACT_APP_BACKEND}/api/skillList`),
-  ].map((skill) => skill);
 
   const onPrev = () => {
     history.push("/new/2", {
@@ -233,8 +230,18 @@ export default function InfoInput() {
             <div className="title">
               <h3>경력사항</h3>
               <button
-                onClick={(e) => {
-                  handleAddClick(careerList, setCareerList, e);
+                onClick={() => {
+                  setCareerList([
+                    ...careerList,
+                    {
+                      company: "",
+                      depart: "",
+                      start: "",
+                      end: "",
+                      position: "",
+                      job: "",
+                    },
+                  ]);
                 }}
               >
                 +
@@ -326,7 +333,12 @@ export default function InfoInput() {
             <div className="title">
               <h3>학력사항</h3>
               <button
-                onClick={(e) => handleAddClick(schoolList, setSchoolList, e)}
+                onClick={() => {
+                  setSchoolList([
+                    ...schoolList,
+                    {schoolType: "", start: "", end: "", schoolStat: ""},
+                  ]);
+                }}
               >
                 +
               </button>
@@ -403,7 +415,14 @@ export default function InfoInput() {
           <div>
             <div className="title">
               <h3>자격/어학사항</h3>
-              <button onClick={(e) => handleAddClick(certList, setCertList, e)}>
+              <button
+                onClick={() => {
+                  setCertList([
+                    ...certList,
+                    {cert: "", level: "", auth: "", issueDate: ""},
+                  ]);
+                }}
+              >
                 +
               </button>
             </div>
@@ -472,8 +491,11 @@ export default function InfoInput() {
             <div className="title">
               <h3>수상</h3>
               <button
-                onClick={(e) => {
-                  handleAddClick(awardList, setAwardList, e);
+                onClick={() => {
+                  setAwardList([
+                    ...awardList,
+                    {award: "", place: "", auth: "", issueDate: ""},
+                  ]);
                 }}
               >
                 +
@@ -544,7 +566,14 @@ export default function InfoInput() {
           <div>
             <div className="title">
               <h3>기타 활동</h3>
-              <button onClick={(e) => handleAddClick(etcList, setEtcList, e)}>
+              <button
+                onClick={() =>
+                  setEtcList([
+                    ...etcList,
+                    {etc: "", about: "", start: "", end: ""},
+                  ])
+                }
+              >
                 +
               </button>
             </div>
@@ -614,8 +643,8 @@ export default function InfoInput() {
             <div className="title">
               <h3>SNS</h3>
               <button
-                onClick={(e) => {
-                  handleAddClick(snsList, setSnsList, e);
+                onClick={() => {
+                  setSnsList([...snsList, {sns: "", link: ""}]);
                 }}
               >
                 +
@@ -663,8 +692,10 @@ export default function InfoInput() {
             <div className="title">
               <h3>기술스택</h3>
               <button
-                onClick={(e) => {
-                  handleAddClick(stackList, setStackList, e);
+                onClick={() => {
+                  setStackList([...stackList, {stack: "", level: ""}]);
+                  console.log(importSkill());
+                  importSkill();
                 }}
               >
                 +
@@ -698,7 +729,7 @@ export default function InfoInput() {
                     />
 
                     <datalist id="stackoption">
-                      <option value={skills} />
+                      {/* <option value={importSkill()} /> */}
                     </datalist>
                     <select
                       name="level"
@@ -723,8 +754,19 @@ export default function InfoInput() {
             <div className="title">
               <h3>출판 / 논문 / 특허</h3>
               <button
-                onClick={(e) => {
-                  handleAddClick(patentList, setPatentList, e);
+                onClick={() => {
+                  setPatentList([
+                    ...patentList,
+                    {
+                      name: "",
+                      number: "",
+                      company: "",
+                      author: "",
+                      date: "",
+                      link: "",
+                      des: "",
+                    },
+                  ]);
                 }}
               >
                 +
