@@ -1,4 +1,5 @@
 import axios from "axios";
+import {isValidId} from "./useUserContext";
 
 export const loadTerm = async () => {
   const instance = axios.create({timeout: 5 * 60 * 1000});
@@ -21,6 +22,10 @@ export const loadTerm = async () => {
 export const saveTermToAgree = async (userID, contract) => {
   let data = [];
 
+  if (!isValidId(userID)) {
+    throw Error("InputErr : Invalid user id.");
+  }
+
   try {
     for (let e of contract) {
       data.push({
@@ -34,14 +39,16 @@ export const saveTermToAgree = async (userID, contract) => {
   }
 
   const instance = axios.create({timeout: 5 * 60 * 1000});
-  const response = await instance.post(
-    `${process.env.REACT_APP_BACKEND}/api/term`,
-    data
-  );
+  return await instance
+    .post(`${process.env.REACT_APP_BACKEND}/api/term`, data)
+    .then((r) => {
+      if (r.status !== 200) {
+        throw Error(`NetErr : Cannot save agreement. : ${r.statusText}`);
+      }
 
-  if (response.status !== 200) {
-    throw Error(`NetErr : Cannot save agreement. : ${response.statusText}`);
-  }
-
-  return response.data;
+      return r.data;
+    })
+    .catch((e) => {
+      throw e;
+    });
 };

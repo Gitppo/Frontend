@@ -1,14 +1,14 @@
 import "./style.css";
-import RadioBtn from "../../components/RadioBtn/index";
-import BeforeAfterBtn from "../../components/BeforeAfterBtn";
-import {useHistory} from "react-router-dom/cjs/react-router-dom.min";
 import {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
-import RoundContainer from "../../components/RoundContainer/index";
-import Modal from "../../components/Modal/index";
-import AlertModal from "../../components/Modal/AlertModal/index";
+import {useHistory, useLocation} from "react-router-dom";
 
-function GitRepo() {
+import Modal from "../../../components/Modal";
+import AlertModal from "../../../components/Modal/AlertModal";
+import RadioBtn from "../../../components/Btn/RadioBtn";
+import BeforeAfterBtn from "../../../components/Btn/BeforeAfterBtn";
+import RoundContainer from "../../../components/RoundContainer";
+
+export default function GitRepo() {
   const history = useHistory();
   const location = useLocation();
 
@@ -28,7 +28,7 @@ function GitRepo() {
       return;
     }
 
-    history.push("/git-repo-detail", {
+    history.push("/new/2", {
       ...location.state,
       gitrepos: repolist,
     });
@@ -89,11 +89,10 @@ function GitRepo() {
           <AlertModal
             title={"하나 이상의 레포지토리를 선택하세요"}
             setShow={setAlertShow}
+            keyClose={true}
           />
         </Modal>
       )}
     </div>
   );
 }
-
-export default GitRepo;

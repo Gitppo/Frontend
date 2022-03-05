@@ -1,57 +1,46 @@
 import "./style.css";
 import {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
-import {useUserContext} from "../../hooks/useUserContext";
 
 import RoundContainer from "../../components/RoundContainer";
 import TitleInputModal from "../../components/Modal/TitleInputModal";
-import Modal from "../../components/Modal/index";
+import Modal from "../../components/Modal";
+import AlertModal from "../../components/Modal/AlertModal";
 
 import Pin from "../../assets/pin-red.png";
-import AlertModal from "../../components/Modal/AlertModal/index";
-import {getPortfolio} from "../../hooks/portfolio";
+
+import {useUserContext} from "../../hooks/useUserContext";
+import {
+  deletePortfolio,
+  getPortfolio,
+  getPortfolioDetail,
+} from "../../hooks/portfolio";
 
 function Mypage() {
   const history = useHistory();
   const {user} = useUserContext();
 
-  const [portfolio, setPortfolio] = useState([
-    {
-      id: 1,
-      title: "2021 조깃포 LG 포트폴리오",
-      state: 0,
-      creation: "2021.04.04",
-      revision: {
-        date: "2021.05.05",
-        time: "19:00",
-      },
-    },
-  ]);
+  const [portfolio, setPortfolio] = useState([]);
   const [portfolioTitle, setPortfolioTitle] = useState("");
+
   const [showModal, setShowModal] = useState(false);
   const [showInputModal, setShowInputModal] = useState(false);
 
-  const deletePortfolio = (id) => {
+  const onDelete = async (id) => {
+    const targetID = await deletePortfolio(id);
     for (let i = 0; i < portfolio.length; i++) {
-      if (portfolio[i].id === id) {
+      if (portfolio[i].id === targetID) {
         portfolio.splice(i, 1);
         break;
       }
     }
     setPortfolio([...portfolio]);
   };
-
-  useEffect(() => {
-    getPortfolio(user.id)
-      .then((data) => {
-        // console.log(data);
-        setPortfolio(data);
-      })
-      .catch((e) => {
-        console.error(e);
-        setShowModal(true);
-      });
-  }, [user.id]);
+  const onRepair = (id) => {
+    getPortfolioDetail(id).then((r) => {
+      console.log(r);
+    });
+  };
 
   const createPortfolio = () => {
     setPortfolioTitle("");
@@ -59,8 +48,20 @@ function Mypage() {
   };
   const onTitleInput = () => {
     setShowInputModal(false);
-    history.push("/loading", {title: portfolioTitle});
+    history.push("/new/repo-load", {title: portfolioTitle});
   };
+
+  useEffect(() => {
+    getPortfolio(user.id)
+      .then((data) => {
+        console.log(data);
+        setPortfolio(data);
+      })
+      .catch((e) => {
+        console.error(e);
+        setShowModal(true);
+      });
+  }, [user.id]);
 
   return (
     <div>
@@ -94,25 +95,26 @@ function Mypage() {
         </h1>
 
         <ul className={"mypage-wrapper-box"}>
-          {portfolio?.map((box, index) => (
-            <li className={"mypage-wrapper"} key={index}>
+          {portfolio?.map((box) => (
+            <li className={"mypage-wrapper"} key={box?.id}>
               <img className={"pin-image"} src={Pin} alt={""} />
-              <h4 className={"mypage-wrapper-box-title"}>{box?.title}</h4>
+              <h4 className={"mypage-wrapper-box-title"}>{box?.pfName}</h4>
               <div className={"mypage-wrapper-box-date"}>
                 생성 {box?.creation}
               </div>
               <div className={"mypage-wrapper-box-date"}>
-                수정 {box?.revision?.date} {box?.revision?.time}
+                수정 {box?.updated_at}
               </div>
               <div className={"mypage-wrapper-box-button"}>
                 <button
-                  className={"mypage-wrapper-box-button-left round-button"}
+                  className={"round-button"}
+                  onClick={() => onRepair(box?.id)}
                 >
                   수정
                 </button>
                 <button
                   className={"round-button"}
-                  onClick={() => deletePortfolio(box?.id)}
+                  onClick={() => onDelete(box?.id)}
                 >
                   삭제
                 </button>
@@ -120,7 +122,7 @@ function Mypage() {
             </li>
           ))}
 
-          {!portfolio && (
+          {!portfolio?.length > 0 && (
             <h3
               style={{
                 textAlign: "center",

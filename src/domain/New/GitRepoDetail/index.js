@@ -5,13 +5,13 @@ import {useHistory} from "react-router-dom";
 
 import Select from "react-select";
 
-import BeforeAfterBtn from "../../components/BeforeAfterBtn";
+import BeforeAfterBtn from "../../../components/Btn/BeforeAfterBtn";
 
-import Star from "../../assets/star.png";
-import Eye from "../../assets/eye.png";
-import Fold from "../../assets/arrow-no-head.png";
+import Star from "../../../assets/star.png";
+import Eye from "../../../assets/eye.png";
+import Fold from "../../../assets/arrow-no-head.png";
 
-import {getOptions} from "../../hooks/options";
+import {getOptions} from "../../../hooks/options";
 
 function GitRepoDetail() {
   const location = useLocation();
@@ -165,13 +165,13 @@ function GitRepoDetail() {
     console.log("TTT");
   };
   const onPrev = () => {
-    history.push("/git-repo", {
+    history.push("/new/1", {
       ...location.state,
     });
   };
   const onNext = () => {
     tmpSave();
-    history.push("/git-info", {
+    history.push("/new/3", {
       ...location.state,
     });
   };
@@ -395,9 +395,6 @@ function GitRepoDetail() {
                   className="grd-inner-box-info-text"
                   placeholder="설명"
                 />
-              </div>
-              <div className="save-button-container">
-                <button className="round-button">저장</button>
               </div>
             </div>
             <img
