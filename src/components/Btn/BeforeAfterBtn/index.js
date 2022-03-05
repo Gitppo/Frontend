@@ -1,5 +1,5 @@
 import "./style.css";
-import arrowImg from "../../assets/arrow.png";
+import arrowImg from "../../../assets/arrow.png";
 
 function BeforeAfterBtn({
   style,

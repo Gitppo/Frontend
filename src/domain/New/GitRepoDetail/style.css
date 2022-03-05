@@ -252,17 +252,6 @@
   overflow: visible;
 }
 
-/* 저장 버튼 */
-.grd .save-button-container {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding-bottom: 0.5rem;
-}
-.grd .save-button-container .round-button {
-  padding: 0.1em 0.7em;
-}
-
 /* 하얀색 박스 접기 이미지 */
 .grd-inner-box-fold-image,
 .grd-inner-box-fold-image-down {

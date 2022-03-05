@@ -7,7 +7,7 @@ export default function Modal({
   className,
   children,
   backBlack = false,
-  props,
+  ...props
 }) {
   const el = document.getElementById("modal");
   const preventContextMenu = (e) => e.preventDefault();

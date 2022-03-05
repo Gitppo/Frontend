@@ -66,3 +66,9 @@
   color: white !important;
   background-color: var(--dark-red) !important;
 }
+
+@media screen and (max-width: 700px) {
+  .container > div {
+    padding: 2rem 1rem;
+  }
+}

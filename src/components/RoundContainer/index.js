@@ -5,8 +5,8 @@ function RoundContainer({
   className,
   style,
   children,
-  props,
   blueHeader = false,
+  ...props
 }) {
   return (
     <div

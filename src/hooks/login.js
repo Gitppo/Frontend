@@ -1,6 +1,5 @@
 import axios from "axios";
 import qs from "qs";
-import {isValidUser} from "./useUserContext";
 
 export const doLogin = async (path) => {
   const {code} = qs.parse(path, {
@@ -8,14 +7,17 @@ export const doLogin = async (path) => {
   });
 
   const instance = axios.create({timeout: 5 * 60 * 1000});
-  const {id, githubUserName} = await instance
+  return await instance
     .post(`${process.env.REACT_APP_BACKEND}/auth?code=` + code)
-    .then((r) => r.data);
-
-  const user = {id: id, githubUserName: githubUserName};
-  if (!isValidUser(user)) throw Error("NetErr : Github login fail");
-
-  return user;
+    .then((r) => {
+      if (r.status !== 200) {
+        throw Error("NetErr : Github login fail");
+      }
+      return r.data;
+    })
+    .catch((e) => {
+      throw e;
+    });
 };
 
 export const loginBack = (back = "") => {

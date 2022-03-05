@@ -77,13 +77,14 @@
   transform: rotate(-45deg);
 }
 .mypage-wrapper-box {
+  width: 100%;
+
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
 }
 .mypage-wrapper-box > li {
   padding: 1rem;
-  margin: 1rem 1rem 1rem 0;
+  margin: 1rem;
 
   border: 1px solid gray;
   border-radius: 0.5rem;
@@ -102,16 +103,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5em;
+  margin-top: 0.5em;
 }
 
-.mypage-wrapper-box-button-left {
-  margin-right: 0.5em;
-}
-
-@media screen and (max-width: 708px) {
+@media screen and (max-width: 700px) {
   .mypage-upper-box-left,
   .mypage-upper-box-right {
     width: 100%;
     max-width: none;
+  }
+  .mypage-wrapper-box > li {
+    width: 100%;
+    margin: 1rem 0.5rem;
   }
 }
