@@ -1,14 +1,13 @@
-import axios from "axios";
 import qs from "qs";
+import progressClient from "./client";
 
 export const doLogin = async (path) => {
   const {code} = qs.parse(path, {
     ignoreQueryPrefix: true,
   });
 
-  const instance = axios.create({timeout: 5 * 60 * 1000});
-  return await instance
-    .post(`${process.env.REACT_APP_BACKEND}/auth?code=` + code)
+  return await progressClient(true)
+    .post(`/auth?code=${code}`)
     .then((r) => {
       if (r.status !== 200) {
         throw Error("NetErr : Github login fail");

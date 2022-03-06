@@ -1,5 +1,5 @@
 import "./style.css";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {useLocation} from "react-router";
 import {useHistory} from "react-router-dom";
 
@@ -13,6 +13,7 @@ import Star from "../../../assets/star.png";
 import BlueEye from "../../../assets/eye-blue.png";
 import GrayEye from "../../../assets/eye-gray.png";
 import Fold from "../../../assets/arrow-no-head.png";
+import {saveRepository} from "../../../hooks/repository";
 
 // react-select style
 const styles = {
@@ -77,7 +78,7 @@ const styles = {
   }),
 };
 
-function GitRepoDetail() {
+function GitRepoDetail({match}) {
   const location = useLocation();
   const history = useHistory();
 
@@ -89,40 +90,87 @@ function GitRepoDetail() {
     setRepos([...repos]);
   };
   const deletePortfolio = (id) => {
-    for (let i = 0; i < repos.length; i++) {
+    let i = 0;
+    for (i = 0; i < repos.length; i++) {
       if (repos[i].id === id) {
-        repos[i].checked = false;
-        repos.splice(i, 1);
         break;
       }
     }
+
+    repos[i].checked = false;
+    repos.splice(i, 1);
+
     setRepos([...repos]);
   };
 
   const tmpSave = () => {
-    console.log("TTT");
-    console.log(repos);
+    // console.log(repos);
+    const tmp = repos.map((e) => ({
+      pfId: match.params.pfID,
+      rpGpId: e.id,
+      rpName: e.name,
+      rpSdate: e?.rpSdate || "",
+      rpEdate: e?.rpEdate || "",
+      rpShortContents: e?.rpShortContents || "",
+      rpLongContents: e?.rpLongContents || "",
+      rpReadme: e?.useReadme ?? true ? e?.readme : "",
+      rpRole: e?.rpRole || "",
+      rpStar: e?.stargazers_count || 0,
+    }));
+
+    console.log(tmp);
+
+    saveRepository(tmp).then((r) => {
+      for (let i in r) repos[i].rpID = r[i];
+      setRepos([...repos]);
+      location.state = {
+        ...location.state,
+        data: {
+          ...location.state?.data,
+          repo: repos,
+        },
+      };
+    });
   };
+
+  const repoDC = useCallback(() => {
+    setRepos(
+      JSON.parse(
+        JSON.stringify(
+          location.state.gitrepos
+            .filter((e) => e.checked)
+            .map((e) => ({...e, fold: false}))
+        )
+      )
+    );
+  }, [location.state.gitrepos]);
+
   const onPrev = () => {
-    history.push("/new/1", {
+    history.push(`/new/1/${match.params.pfID}`, {
       ...location.state,
     });
   };
   const onNext = () => {
     tmpSave();
-    history.push("/new/3", {
+    history.push(`/new/3/${match.params.pfID}`, {
       ...location.state,
     });
   };
 
   useEffect(() => {
-    if (!location?.state?.hasOwnProperty("gitrepos")) {
+    if (
+      !match.params?.hasOwnProperty("pfID") ||
+      !location.state ||
+      !location?.state?.hasOwnProperty("gitrepos")
+    ) {
       history.replace("/error/load-fail");
       return;
     }
 
+    console.log(location.state);
     console.log(location.state.gitrepos.filter((e) => e.checked));
-    setRepos([...location.state.gitrepos.filter((e) => e.checked)]);
+
+    repoDC();
 
     getOptions()
       .then((r) => {
@@ -140,7 +188,7 @@ function GitRepoDetail() {
       .catch((e) => {
         console.error(e);
       });
-  }, [history, location.state]);
+  }, [history, location.state, match.params, repoDC]);
 
   return (
     <div className="grd">
@@ -154,16 +202,7 @@ function GitRepoDetail() {
       <div className="grd-wrapper">
         <div className="grd-top-container">
           <div className="grd-top-container-title">레포지토리</div>
-          <button
-            className="round-button"
-            onClick={() => {
-              setRepos([
-                ...location.state.gitrepos
-                  .filter((e) => e.checked)
-                  .map((e) => ({...e, fold: false})),
-              ]);
-            }}
-          >
+          <button className="round-button" onClick={repoDC}>
             초기화
           </button>
         </div>
@@ -243,7 +282,7 @@ function GitRepoDetail() {
                     name="rpSdate"
                     className="grd-inner-box-date"
                     placeholder="시작일"
-                    value={box?.rpSdate}
+                    value={box?.rpSdate || ""}
                     onChange={(e) => onInputChange(e, index)}
                     onFocus={(e) => (e.target.type = "date")}
                     onBlur={(e) => (e.target.type = "text")}
@@ -254,7 +293,7 @@ function GitRepoDetail() {
                     name="rpEdate"
                     className="grd-inner-box-date"
                     placeholder="마감일"
-                    value={box?.rpEdate}
+                    value={box?.rpEdate || ""}
                     onChange={(e) => onInputChange(e, index)}
                     onFocus={(e) => (e.target.type = "date")}
                     onBlur={(e) => (e.target.type = "text")}
@@ -269,7 +308,7 @@ function GitRepoDetail() {
                     name="rpRole"
                     className="grd-inner-box-right"
                     placeholder="프론트엔드 개발 / 디자인"
-                    value={box?.rpRole}
+                    value={box?.rpRole || ""}
                     onChange={(e) => onInputChange(e, index)}
                   />
                 </div>
@@ -297,11 +336,11 @@ function GitRepoDetail() {
                 <div className="container-title">URL</div>
                 <div className="grd-inner-box-right">
                   <input
-                    onChange={(e) => onInputChange(e, index)}
-                    value={box?.rpShortContents}
                     name="rpShortContents"
                     className="grd-inner-box-right"
                     placeholder="000.000.000"
+                    value={box?.rpShortContents || ""}
+                    onChange={(e) => onInputChange(e, index)}
                   />
                 </div>
               </div>
@@ -309,11 +348,11 @@ function GitRepoDetail() {
               <div className="grd-inner-box-title-container-info">
                 <div className="container-title">설명</div>
                 <textarea
-                  onChange={(e) => onInputChange(e, index)}
-                  value={box?.rpLongContents}
                   name="rpLongContents"
                   className="grd-inner-box-info-text"
                   placeholder="설명"
+                  value={box?.rpLongContents || ""}
+                  onChange={(e) => onInputChange(e, index)}
                 />
               </div>
             </div>

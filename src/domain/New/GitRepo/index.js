@@ -8,7 +8,7 @@ import RadioBtn from "../../../components/Btn/RadioBtn";
 import BeforeAfterBtn from "../../../components/Btn/BeforeAfterBtn";
 import RoundContainer from "../../../components/RoundContainer";
 
-export default function GitRepo() {
+export default function GitRepo({match}) {
   const history = useHistory();
   const location = useLocation();
 
@@ -28,19 +28,37 @@ export default function GitRepo() {
       return;
     }
 
-    history.push("/new/2", {
+    history.push(`/new/2/${match.params.pfID}`, {
       ...location.state,
       gitrepos: repolist,
     });
   };
 
   useEffect(() => {
-    if (!location.state || !location.state.hasOwnProperty("gitrepos")) {
+    if (
+      !match.params?.hasOwnProperty("pfID") ||
+      !location.state ||
+      !location.state.hasOwnProperty("gitrepos")
+    ) {
       history.replace("/error/load-fail");
       return;
     }
-    setRepolist(location.state.gitrepos);
-  }, [history, location.state]);
+
+    const gitrepos = [...location.state.gitrepos];
+
+    if (location.state.hasOwnProperty("data")) {
+      for (let i in location.state?.data?.repo) {
+        for (let j in gitrepos) {
+          if (gitrepos[j]?.id === location.state?.data?.repo[i]?.id) {
+            gitrepos[j].checked = true;
+            break;
+          }
+        }
+      }
+    }
+
+    setRepolist(gitrepos);
+  }, [history, location.state, match.params]);
 
   return (
     <div className="gr">

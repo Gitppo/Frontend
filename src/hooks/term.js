@@ -1,10 +1,8 @@
-import axios from "axios";
 import {isValidId} from "./useUserContext";
+import progressClient from "./client";
 
 export const loadTerm = async () => {
-  const instance = axios.create({timeout: 5 * 60 * 1000});
-
-  return await instance
+  return await progressClient(true)
     .get(`${process.env.REACT_APP_BACKEND}/api/term`)
     .then((r) => {
       if (r.status === 200) {
@@ -38,8 +36,7 @@ export const saveTermToAgree = async (userID, contract) => {
     throw Error("InputErr : Invalid value");
   }
 
-  const instance = axios.create({timeout: 5 * 60 * 1000});
-  return await instance
+  return await progressClient(true)
     .post(`${process.env.REACT_APP_BACKEND}/api/term`, data)
     .then((r) => {
       if (r.status !== 200) {

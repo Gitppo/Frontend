@@ -17,10 +17,15 @@ export default function LoadRepo() {
 
   const createPF = useCallback(async () => {
     try {
-      // create new portfolio
-      const pfID = await createPortfolio(user.id, location.state?.title);
-      if (!pfID) {
-        throw Error("NetErr : Invalid portfolio ID.");
+      let pfID;
+      if (!location.state?.hasOwnProperty("data")) {
+        // create new portfolio
+        pfID = await createPortfolio(user.id, location.state?.title);
+        if (!pfID) {
+          throw Error("NetErr : Invalid portfolio ID.");
+        }
+      } else {
+        pfID = location.state.data.id;
       }
 
       // load repositories

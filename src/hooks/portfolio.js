@@ -1,14 +1,13 @@
-import axios from "axios";
 import {isValidId} from "./useUserContext";
+import progressClient from "./client";
 
 export const getPortfolio = async (id) => {
   if (!isValidId(id)) {
     throw Error("InputErr : Invalid user id.");
   }
 
-  const instance = axios.create({timeout: 5 * 60 * 1000});
-  return instance
-    .get(`${process.env.REACT_APP_BACKEND}/api/portfolio`, {
+  return progressClient(true)
+    .get("/api/portfolio", {
       params: {id: id},
     })
     .then((r) => {
@@ -27,9 +26,8 @@ export const createPortfolio = async (id, pfName) => {
     throw Error("InputErr : Invalid user id.");
   }
 
-  const instance = axios.create({timeout: 5 * 60 * 1000});
-  return instance
-    .post(`${process.env.REACT_APP_BACKEND}/api/portfolio`, {
+  return progressClient(true)
+    .post("/api/portfolio", {
       pfName: pfName || "기본 포트폴리오",
       pfStar: true,
       usrId: id,
@@ -50,9 +48,8 @@ export const deletePortfolio = async (pfID) => {
     throw Error("InputErr : Invalid portfolio ID.");
   }
 
-  const instance = axios.create({timeout: 5 * 60 * 1000});
-  return await instance
-    .delete(`${process.env.REACT_APP_BACKEND}/api/portfolio`, {
+  return await progressClient(true)
+    .delete("/api/portfolio", {
       params: {id: pfID},
     })
     .then((r) => {
@@ -71,12 +68,12 @@ export const getPortfolioDetail = async (pfID) => {
     throw Error("InputErr : Invalid portfolio ID.");
   }
 
-  const instance = axios.create({timeout: 5 * 60 * 1000});
-  return instance
-    .get(`${process.env.REACT_APP_BACKEND}/api/portfolio/all`, {
+  return progressClient(true)
+    .get("/api/portfolio/all", {
       params: {id: pfID},
     })
     .then((r) => {
+      console.log(r);
       if (r.status !== 200 || r.data?.status !== "OK")
         throw Error("NetErr : Failed to load portfolio's detail.");
 

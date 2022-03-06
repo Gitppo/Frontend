@@ -36,9 +36,9 @@ function Mypage() {
     }
     setPortfolio([...portfolio]);
   };
-  const onRepair = (id) => {
+  const onRepair = async (id) => {
     getPortfolioDetail(id).then((r) => {
-      console.log(r);
+      history.push("/new/repo-load", {data: r});
     });
   };
 
@@ -77,13 +77,13 @@ function Mypage() {
           <div className={"mypage-manage"}>
             <span>임시 저장 중인 포트폴리오</span>
             <span className={"beautiful-title"}>
-              {portfolio?.filter((e) => e.state === 1).length || 0}
+              {portfolio?.filter((e) => e?.pfTmpSave ?? true).length || 0}
             </span>
           </div>
           <div className={"mypage-manage"}>
             <span>최종 완성 포트폴리오</span>
             <span className={"beautiful-title"}>
-              {portfolio?.filter((e) => e.state === 0).length || 0}
+              {portfolio?.filter((e) => !(e?.pfTmpSave ?? true)).length || 0}
             </span>
           </div>
         </div>
