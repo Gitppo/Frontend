@@ -2,11 +2,10 @@ import "./style.css";
 import {useEffect, useState} from "react";
 import {useHistory, useLocation} from "react-router-dom";
 
-import Modal from "../../../components/Modal";
-import AlertModal from "../../../components/Modal/AlertModal";
 import RadioBtn from "../../../components/Btn/RadioBtn";
 import BeforeAfterBtn from "../../../components/Btn/BeforeAfterBtn";
 import RoundContainer from "../../../components/RoundContainer";
+import BtnModal from "../../../components/Modal/BtnModal";
 
 export default function GitRepo({match}) {
   const history = useHistory();
@@ -44,15 +43,44 @@ export default function GitRepo({match}) {
       return;
     }
 
-    const gitrepos = [...location.state.gitrepos];
+    const gitrepos = JSON.parse(JSON.stringify(location.state.gitrepos)).map(
+      (e) => ({
+        ...e,
+        id: -1,
+        repoGitId: e?.id,
+      })
+    );
 
     if (location.state.hasOwnProperty("data")) {
-      for (let i in location.state?.data?.repo) {
+      for (let e of location.state?.data?.repo) {
+        let search = false;
         for (let j in gitrepos) {
-          if (gitrepos[j]?.id === location.state?.data?.repo[i]?.id) {
-            gitrepos[j].checked = true;
+          if (e?.rpName === gitrepos[j]?.name) {
+            search = true;
+            gitrepos[j] = {
+              ...gitrepos[j],
+              ...e,
+              checked: true,
+              saved: true,
+            };
             break;
           }
+        }
+
+        // 기존 추가한 포트폴리오가 이번 조회에서 제거된 경우
+        // -> 기존 포트폴리오를 목록에 추가
+        if (!search) {
+          gitrepos.push({
+            name: e?.rpName,
+            readme: e?.rpReadme,
+            html_url: e?.rpShortContents,
+            stargazers_count: e?.rpStart,
+            created_at: e?.createdDate,
+            updated_at: e?.rpEdate,
+            checked: true,
+            saved: true,
+            ...e,
+          });
         }
       }
     }
@@ -103,13 +131,11 @@ export default function GitRepo({match}) {
       </div>
 
       {alertShow && (
-        <Modal backBlack={true}>
-          <AlertModal
-            title={"하나 이상의 레포지토리를 선택하세요"}
-            setShow={setAlertShow}
-            keyClose={true}
-          />
-        </Modal>
+        <BtnModal
+          title={"하나 이상의 레포지토리를 선택하세요"}
+          setShow={setAlertShow}
+          btns={[{name: "닫기", onClick: () => setAlertShow(false)}]}
+        />
       )}
     </div>
   );

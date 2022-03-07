@@ -1,28 +1,45 @@
+import {useEffect} from "react";
+import Modal from "..";
 import RoundContainer from "../../RoundContainer";
 import "./style.css";
 
 export default function BtnModal({
   title,
-  btn1 = "예",
-  btn2 = "아니오",
-  onBtn1,
-  onBtn2,
-  oneBtn = false,
+  msg,
+  setShow,
+  btns = [],
+  backBlack = true,
 }) {
-  return (
-    <RoundContainer blueHeader={true} className={"yn-modal"}>
-      <h3 className={"yn-modal-title"}>{title}</h3>
+  useEffect(() => {
+    if (setShow) {
+      const close = (e) => {
+        if (e.key === "Escape" || e.key === "Enter") {
+          setShow(false);
+        }
+      };
+      window.addEventListener("keydown", close);
+      return () => window.removeEventListener("keydown", close);
+    }
+  }, [setShow]);
 
-      <div className={"yn-modal-btn-wrapper"}>
-        <button className={"round-button"} onClick={onBtn1}>
-          {btn1}
-        </button>
-        {!oneBtn && (
-          <button className={"round-button"} onClick={onBtn2}>
-            {btn2}
-          </button>
-        )}
-      </div>
-    </RoundContainer>
+  return (
+    <Modal backBlack={backBlack}>
+      <RoundContainer blueHeader={true} className={"yn-modal"}>
+        <h3 className={"yn-modal-title"}>{title}</h3>
+        {msg && <div style={{marginTop: "1em"}}>{msg}</div>}
+
+        <div className={"yn-modal-btn-wrapper"}>
+          {btns?.map((e) => (
+            <button
+              className={"round-button"}
+              onClick={e?.onClick}
+              key={`btns-${e?.name}`}
+            >
+              {e?.name}
+            </button>
+          ))}
+        </div>
+      </RoundContainer>
+    </Modal>
   );
 }

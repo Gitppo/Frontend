@@ -20,7 +20,7 @@ const timer = () => {
 
 const client = axios.create({
   baseURL: process.env.REACT_APP_BACKEND,
-  timeout: 5 * 60 * 1000,
+  timeout: 1 * 60 * 1000,
 });
 
 const progressClient = (show = true) => {
@@ -38,6 +38,12 @@ client.interceptors.request.use(
     return config;
   },
   (error) => {
+    if (timerId) {
+      clearTimeout(timerId);
+      timerId = null;
+    }
+    setProgress(100);
+
     return Promise.reject(error);
   }
 );
@@ -58,6 +64,12 @@ client.interceptors.response.use(
     return response;
   },
   (error) => {
+    if (timerId) {
+      clearTimeout(timerId);
+      timerId = null;
+    }
+    setProgress(100);
+
     return Promise.reject(error);
   }
 );

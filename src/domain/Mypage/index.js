@@ -1,19 +1,21 @@
 import "./style.css";
+
 import {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 
+import moment from "moment";
+
 import RoundContainer from "../../components/RoundContainer";
 import TitleInputModal from "../../components/Modal/TitleInputModal";
-import Modal from "../../components/Modal";
-import AlertModal from "../../components/Modal/AlertModal";
+import BtnModal from "../../components/Modal/BtnModal";
 
 import Pin from "../../assets/pin-red.png";
 
 import {useUserContext} from "../../hooks/useUserContext";
 import {
-  deletePortfolio,
   getPortfolio,
   getPortfolioDetail,
+  deletePortfolio,
 } from "../../hooks/portfolio";
 
 function Mypage() {
@@ -38,6 +40,7 @@ function Mypage() {
   };
   const onRepair = async (id) => {
     getPortfolioDetail(id).then((r) => {
+      console.log(r);
       history.push("/new/repo-load", {data: r});
     });
   };
@@ -54,7 +57,6 @@ function Mypage() {
   useEffect(() => {
     getPortfolio(user.id)
       .then((data) => {
-        console.log(data);
         setPortfolio(data);
       })
       .catch((e) => {
@@ -100,10 +102,16 @@ function Mypage() {
               <img className={"pin-image"} src={Pin} alt={""} />
               <h4 className={"mypage-wrapper-box-title"}>{box?.pfName}</h4>
               <div className={"mypage-wrapper-box-date"}>
-                생성 {box?.creation}
+                생성{" "}
+                {box?.hasOwnProperty("createdDate")
+                  ? moment(box?.createdDate).format("YYYY.MM.DD")
+                  : "NULL"}
               </div>
               <div className={"mypage-wrapper-box-date"}>
-                수정 {box?.updated_at}
+                수정{" "}
+                {box?.hasOwnProperty("modifiedDate")
+                  ? moment(box?.modifiedDate).format("YYYY.MM.DD HH:mm")
+                  : "NULL"}
               </div>
               <div className={"mypage-wrapper-box-button"}>
                 <button
@@ -138,24 +146,22 @@ function Mypage() {
 
       {/* 제목 입력 모달 */}
       {showInputModal && (
-        <Modal backBlack={true}>
-          <TitleInputModal
-            text={portfolioTitle}
-            setText={setPortfolioTitle}
-            onStart={onTitleInput}
-            onCancle={() => setShowInputModal(false)}
-          />
-        </Modal>
+        <TitleInputModal
+          text={portfolioTitle}
+          setText={setPortfolioTitle}
+          onStart={onTitleInput}
+          onCancle={() => setShowInputModal(false)}
+          backBlack={true}
+        />
       )}
 
       {/* 경고창 */}
       {showModal && (
-        <Modal backBlack={true}>
-          <AlertModal
-            title={"포트폴리오 로딩에 실패하였습니다."}
-            setShow={setShowModal}
-          />
-        </Modal>
+        <BtnModal
+          title={"포트폴리오 로딩에 실패하였습니다."}
+          setShow={setShowModal}
+          btns={[{name: "닫기", onClick: () => setShowModal(false)}]}
+        />
       )}
     </div>
   );
