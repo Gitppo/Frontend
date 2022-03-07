@@ -1,7 +1,7 @@
 import "./style.css";
-import React, {useEffect, useState} from "react";
-import {useLocation} from "react-router";
-import {useHistory} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router";
+import { useHistory } from "react-router-dom";
 
 import axios from "axios";
 
@@ -13,6 +13,9 @@ import BtnModal from "../../../components/Modal/BtnModal";
 import PortfolioChoiceModal from "../../../components/Modal/PortfolioChoiceModal";
 
 import HippoImg from "../../../assets/profile.png";
+
+import { getOptions } from "../../../hooks/options";
+
 
 export default function InfoInput() {
   const location = useLocation();
@@ -36,25 +39,34 @@ export default function InfoInput() {
   };
 
   const [infoList, setInfoList] = useState([
-    {name: "", mail: "", birth: "", tel: ""},
+    { biName: "", biMail: "", biBirth: "", biPhone: "" },
   ]);
   const [careerList, setCareerList] = useState([]);
   const [schoolList, setSchoolList] = useState([]);
   const [certList, setCertList] = useState([]);
   const [awardList, setAwardList] = useState([]);
   const [etcList, setEtcList] = useState([]);
-  const [introList, setIntroList] = useState([{introShort: "", introLong: ""}]);
+  const [introList, setIntroList] = useState([{ shortIntro: "", longIntro: "" }]);
   const [snsList, setSnsList] = useState([]);
   const [stackList, setStackList] = useState([]);
   const [patentList, setPatentList] = useState([]);
 
+  const [skillList, setSkillList] = useState([]);
+
   const handleInputChange = (List, setList, i, e) => {
-    const {name, value} = e?.target;
+    const { name, value } = e?.target;
     const list = [...List];
     list[i][name] = value;
     setList(list);
     console.log(list);
   };
+
+  const handleInputChange2 = (List, setList, e) => {
+    const { name, value } = e?.target;
+    List[0][name] = value;
+    setList(List);
+    console.log(List);
+  }
 
   const handleRemoveClick = (List, setList, i) => {
     const list = [...List];
@@ -62,17 +74,7 @@ export default function InfoInput() {
     setList(list);
   };
 
-  const tmpSave = () => {};
-
-  const importSkill = () => {
-    axios.get("http://3.37.186.122:8080/api/skillList").then((r) => {
-      if (r.status !== 200 || r.data?.status !== "OK")
-        throw Error("NetErr : Failed to load skillList.");
-      const data = r.data.data;
-      console.log(data);
-      return data;
-    });
-  };
+  const tmpSave = () => { };
 
   const onPrev = () => {
     history.push("/new/2", {
@@ -102,53 +104,51 @@ export default function InfoInput() {
           <div>
             <h1 className="beautiful-title">기본 인적사항</h1>
             <br />
-            {infoList.map((x, i) => (
-              <form className="info-input-form">
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="이름"
-                  value={x?.name}
-                  onChange={(e) =>
-                    handleInputChange(infoList, setInfoList, i, e)
-                  }
-                  required
-                />
-                <input
-                  type="email"
-                  name="mail"
-                  placeholder="이메일"
-                  value={x?.mail}
-                  onChange={(e) =>
-                    handleInputChange(infoList, setInfoList, i, e)
-                  }
-                  required
-                />
-                <input
-                  type="text"
-                  name="birth"
-                  placeholder="생년월일 (ex.19951004)"
-                  value={x?.birth}
-                  onChange={(e) =>
-                    handleInputChange(infoList, setInfoList, i, e)
-                  }
-                  onFocus={(e) => (e.target.type = "date")}
-                  onBlur={(e) => (e.target.type = "text")}
-                  required
-                />
-                <input
-                  type="text"
-                  name="tel"
-                  placeholder="전화번호"
-                  maxLength="11"
-                  value={x?.tel}
-                  onChange={(e) =>
-                    handleInputChange(infoList, setInfoList, i, e)
-                  }
-                  required
-                />
-              </form>
-            ))}
+            <form className="info-input-form">
+              <input
+                type="text"
+                name="biName"
+                placeholder="이름"
+                value={infoList.biName}
+                onChange={(e) =>
+                  handleInputChange2(infoList, setInfoList, e)
+                }
+                required
+              />
+              <input
+                type="email"
+                name="biMail"
+                placeholder="이메일"
+                value={infoList.biMail}
+                onChange={(e) =>
+                  handleInputChange2(infoList, setInfoList, e)
+                }
+                required
+              />
+              <input
+                type="text"
+                name="biBirth"
+                placeholder="생년월일 (ex.19951004)"
+                value={infoList.biBirth}
+                onChange={(e) =>
+                  handleInputChange2(infoList, setInfoList, e)
+                }
+                onFocus={(e) => (e.target.type = "date")}
+                onBlur={(e) => (e.target.type = "text")}
+                required
+              />
+              <input
+                type="text"
+                name="biPhone"
+                placeholder="전화번호"
+                maxLength="11"
+                value={infoList.biPhone}
+                onChange={(e) =>
+                  handleInputChange2(infoList, setInfoList, e)
+                }
+                required
+              />
+            </form>
           </div>
 
           {/* 사진 */}
@@ -165,7 +165,7 @@ export default function InfoInput() {
                 <label
                   for="img-file"
                   className="round-button"
-                  style={{textAlign: "center"}}
+                  style={{ textAlign: "center" }}
                 >
                   파일 선택
                 </label>
@@ -181,7 +181,7 @@ export default function InfoInput() {
                   type="file"
                   accept="image/*"
                   onChange={handleChangeFile}
-                  style={{display: "none"}}
+                  style={{ display: "none" }}
                 />
               </div>
             </div>
@@ -199,27 +199,27 @@ export default function InfoInput() {
               <h3>자기소개</h3>
             </div>
             {/* // TODO : List -> 단일 요소  */}
-            {introList.map((x, i) => (
-              <div className="info-intro">
-                <input
-                  id="introShort"
-                  type="text"
-                  placeholder="한줄소개"
-                  value={x?.introShort}
-                  onChange={(e) => {
-                    handleInputChange(introList, setIntroList, i, e);
-                  }}
-                />
-                <textarea
-                  id="introLong"
-                  placeholder="자기소개"
-                  value={x?.introLong}
-                  onChange={(e) => {
-                    handleInputChange(introList, setIntroList, i, e);
-                  }}
-                />
-              </div>
-            ))}
+            <div className="info-intro">
+              <input
+                id="introShort"
+                type="text"
+                name="shortIntro"
+                placeholder="한줄소개"
+                value={introList.shortIntro}
+                onChange={(e) => {
+                  handleInputChange2(introList, setIntroList, e);
+                }}
+              />
+              <textarea
+                id="introLong"
+                placeholder="자기소개"
+                name="longIntro"
+                value={introList.longIntro}
+                onChange={(e) => {
+                  handleInputChange2(introList, setIntroList, e);
+                }}
+              />
+            </div>
           </div>
           <br />
 
@@ -231,12 +231,12 @@ export default function InfoInput() {
                   setCareerList([
                     ...careerList,
                     {
-                      company: "",
-                      depart: "",
-                      start: "",
-                      end: "",
-                      position: "",
-                      job: "",
+                      carName: "",
+                      carDepartmentName: "",
+                      carPosition: "",
+                      carEndDate: "",
+                      carPosition: "",
+                      carJob: "",
                     },
                   ]);
                 }}
@@ -264,7 +264,7 @@ export default function InfoInput() {
                       type="text"
                       name="company"
                       placeholder="회사명"
-                      value={x?.company}
+                      value={x?.carName}
                       onChange={(e) =>
                         handleInputChange(careerList, setCareerList, i, e)
                       }
@@ -273,7 +273,7 @@ export default function InfoInput() {
                       type="text"
                       name="depart"
                       placeholder="부서명"
-                      value={x?.depart}
+                      value={x?.carDepartmentName}
                       onChange={(e) =>
                         handleInputChange(careerList, setCareerList, i, e)
                       }
@@ -282,7 +282,7 @@ export default function InfoInput() {
                       type="text"
                       name="start"
                       placeholder="입사일"
-                      value={x?.start}
+                      value={x?.carStartDate}
                       onChange={(e) =>
                         handleInputChange(careerList, setCareerList, i, e)
                       }
@@ -293,7 +293,7 @@ export default function InfoInput() {
                       type="text"
                       name="end"
                       placeholder="퇴사일"
-                      value={x?.end}
+                      value={x?.carEndDate}
                       onChange={(e) =>
                         handleInputChange(careerList, setCareerList, i, e)
                       }
@@ -303,7 +303,7 @@ export default function InfoInput() {
                     <input
                       type="text"
                       name="position"
-                      value={x?.position}
+                      value={x?.carPosition}
                       placeholder="직위"
                       onChange={(e) =>
                         handleInputChange(careerList, setCareerList, i, e)
@@ -312,12 +312,12 @@ export default function InfoInput() {
                     <input
                       type="text"
                       name="job"
-                      value={x?.job}
+                      value={x?.carJob}
                       placeholder="직무"
                       onChange={(e) =>
                         handleInputChange(careerList, setCareerList, i, e)
                       }
-                      style={{flex: "2"}}
+                      style={{ flex: "2" }}
                     />
                   </div>
                 </li>
@@ -333,7 +333,7 @@ export default function InfoInput() {
                 onClick={() => {
                   setSchoolList([
                     ...schoolList,
-                    {schoolType: "", start: "", end: "", schoolStat: ""},
+                    { eduType: "", eduStartDate: "", eduEndDate: "", eduGrade: "" },
                   ]);
                 }}
               >
@@ -358,11 +358,12 @@ export default function InfoInput() {
                   <div className="right">
                     <select
                       name="schoolType"
-                      value={x?.schoolType}
+                      value={x?.eduType}
                       onChange={(e) =>
                         handleInputChange(schoolList, setSchoolList, i, e)
                       }
                     >
+                      <option value="">학교</option>
                       <option value="high">고등학교</option>
                       <option value="univ">대학교</option>
                       <option value="grad">대학원</option>
@@ -370,11 +371,12 @@ export default function InfoInput() {
                     </select>
                     <select
                       name="schoolStat"
-                      value={x?.schoolStat}
+                      value={x?.eduGrade}
                       onChange={(e) =>
                         handleInputChange(schoolList, setSchoolList, i, e)
                       }
                     >
+                      <option value="">상태</option>
                       <option value="attend">재학</option>
                       <option value="graduate">졸업</option>
                     </select>
@@ -382,19 +384,19 @@ export default function InfoInput() {
                       type="text"
                       name="start"
                       placeholder="입학일"
-                      value={x?.start}
+                      value={x?.eduStartDate}
                       onChange={(e) =>
                         handleInputChange(schoolList, setSchoolList, i, e)
                       }
                       onFocus={(e) => (e.target.type = "date")}
                       onBlur={(e) => (e.target.type = "text")}
                     />
-                    {x?.schoolStat !== "attend" && (
+                    {x?.eduGrade !== "attend" && (
                       <input
                         type="text"
                         name="end"
                         placeholder="졸업일"
-                        value={x?.end}
+                        value={x?.eduEndDate}
                         onChange={(e) =>
                           handleInputChange(schoolList, setSchoolList, i, e)
                         }
@@ -416,7 +418,7 @@ export default function InfoInput() {
                 onClick={() => {
                   setCertList([
                     ...certList,
-                    {cert: "", level: "", auth: "", issueDate: ""},
+                    { licName: "", licLevel: "", licOrganization: "", licDate: "" },
                   ]);
                 }}
               >
@@ -438,12 +440,12 @@ export default function InfoInput() {
                     </button>
                   </div>
 
-                  <div className="right" style={{width: "100%"}}>
+                  <div className="right" style={{ width: "100%" }}>
                     <input
                       type="text"
                       name="cert"
                       placeholder="자격/어학 종류"
-                      value={x?.cert}
+                      value={x?.licName}
                       onChange={(e) =>
                         handleInputChange(certList, setCertList, i, e)
                       }
@@ -452,7 +454,7 @@ export default function InfoInput() {
                       type="text"
                       name="level"
                       placeholder="등급/레벨/점수"
-                      value={x?.level}
+                      value={x?.licLevel}
                       onChange={(e) =>
                         handleInputChange(certList, setCertList, i, e)
                       }
@@ -461,7 +463,7 @@ export default function InfoInput() {
                       type="text"
                       name="auth"
                       placeholder="발급기관"
-                      value={x?.auth}
+                      value={x?.licOrganization}
                       onChange={(e) =>
                         handleInputChange(certList, setCertList, i, e)
                       }
@@ -470,7 +472,7 @@ export default function InfoInput() {
                       type="text"
                       name="issueDate"
                       placeholder="취득일"
-                      value={x?.issueDate}
+                      value={x?.licDate}
                       onChange={(e) =>
                         handleInputChange(certList, setCertList, i, e)
                       }
@@ -491,7 +493,7 @@ export default function InfoInput() {
                 onClick={() => {
                   setAwardList([
                     ...awardList,
-                    {award: "", place: "", auth: "", issueDate: ""},
+                    { awContents: "", awName: "", awOrganization: "", awDate: "" },
                   ]);
                 }}
               >
@@ -513,12 +515,12 @@ export default function InfoInput() {
                     </button>
                   </div>
 
-                  <div className="right" style={{width: "100%"}}>
+                  <div className="right" style={{ width: "100%" }}>
                     <input
                       type="text"
                       name="award"
                       placeholder="대회명"
-                      value={x?.award}
+                      value={x?.awName}
                       onChange={(e) =>
                         handleInputChange(awardList, setAwardList, i, e)
                       }
@@ -527,7 +529,7 @@ export default function InfoInput() {
                       type="text"
                       name="auth"
                       placeholder="주최"
-                      value={x?.auth}
+                      value={x?.awOrganization}
                       onChange={(e) =>
                         handleInputChange(awardList, setAwardList, i, e)
                       }
@@ -536,7 +538,7 @@ export default function InfoInput() {
                       type="text"
                       name="issueDate"
                       placeholder="수상일"
-                      value={x?.issueDate}
+                      value={x?.awDate}
                       onChange={(e) =>
                         handleInputChange(awardList, setAwardList, i, e)
                       }
@@ -547,11 +549,11 @@ export default function InfoInput() {
                       type="text"
                       name="place"
                       placeholder="수상내용"
-                      value={x?.place}
+                      value={x?.awContents}
                       onChange={(e) =>
                         handleInputChange(awardList, setAwardList, i, e)
                       }
-                      style={{flex: "2"}}
+                      style={{ flex: "2" }}
                     />
                   </div>
                 </li>
@@ -567,7 +569,7 @@ export default function InfoInput() {
                 onClick={() =>
                   setEtcList([
                     ...etcList,
-                    {etc: "", about: "", start: "", end: ""},
+                    { actName: "", actContents: "", actStartDate: "", actEndDate: "" },
                   ])
                 }
               >
@@ -587,12 +589,12 @@ export default function InfoInput() {
                     </button>
                   </div>
 
-                  <div className="right" style={{width: "100%"}}>
+                  <div className="right" style={{ width: "100%" }}>
                     <input
                       type="text"
                       name="etc"
                       placeholder="활동명"
-                      value={x?.etc}
+                      value={x?.actName}
                       onChange={(e) =>
                         handleInputChange(etcList, setEtcList, i, e)
                       }
@@ -601,7 +603,7 @@ export default function InfoInput() {
                       type="text"
                       name="start"
                       placeholder="시작일"
-                      value={x?.start}
+                      value={x?.actStartDate}
                       onChange={(e) =>
                         handleInputChange(etcList, setEtcList, i, e)
                       }
@@ -612,7 +614,7 @@ export default function InfoInput() {
                       type="text"
                       name="end"
                       placeholder="종료일"
-                      value={x?.end}
+                      value={x?.actEndDate}
                       onChange={(e) =>
                         handleInputChange(etcList, setEtcList, i, e)
                       }
@@ -623,11 +625,11 @@ export default function InfoInput() {
                       type="text"
                       name="about"
                       placeholder="설명"
-                      value={x?.about}
+                      value={x?.actContents}
                       onChange={(e) =>
                         handleInputChange(etcList, setEtcList, i, e)
                       }
-                      style={{flex: "2"}}
+                      style={{ flex: "2" }}
                     />
                   </div>
                 </li>
@@ -641,7 +643,7 @@ export default function InfoInput() {
               <h3>SNS</h3>
               <button
                 onClick={() => {
-                  setSnsList([...snsList, {sns: "", link: ""}]);
+                  setSnsList([...snsList, { snsName: "", snsLink: "" }]);
                 }}
               >
                 +
@@ -664,7 +666,7 @@ export default function InfoInput() {
                       type="text"
                       name="sns"
                       placeholder="종류"
-                      value={x?.sns}
+                      value={x?.snsName}
                       onChange={(e) =>
                         handleInputChange(snsList, setSnsList, i, e)
                       }
@@ -673,7 +675,7 @@ export default function InfoInput() {
                       type="text"
                       name="link"
                       placeholder="계정주소"
-                      value={x?.link}
+                      value={x?.snsLink}
                       onChange={(e) =>
                         handleInputChange(snsList, setSnsList, i, e)
                       }
@@ -690,9 +692,13 @@ export default function InfoInput() {
               <h3>기술스택</h3>
               <button
                 onClick={() => {
-                  setStackList([...stackList, {stack: "", level: ""}]);
-                  console.log(importSkill());
-                  importSkill();
+                  setStackList([...stackList, { skName: "", skLevel: "" }]);
+                  console.log(getOptions())
+                  // const skills = getOptions()
+                  // console.log(skills)
+                  // skills.map((skill) => {
+                  //   console.log(skill)
+                  // })
                 }}
               >
                 +
@@ -718,7 +724,7 @@ export default function InfoInput() {
                       type="text"
                       name="stack"
                       placeholder="기술 종류"
-                      value={x?.stack}
+                      value={x?.skName}
                       onChange={(e) =>
                         handleInputChange(stackList, setStackList, i, e)
                       }
@@ -730,7 +736,7 @@ export default function InfoInput() {
                     </datalist>
                     <select
                       name="level"
-                      value={x?.level}
+                      value={x?.skLevel}
                       onChange={(e) =>
                         handleInputChange(stackList, setStackList, i, e)
                       }
@@ -755,13 +761,13 @@ export default function InfoInput() {
                   setPatentList([
                     ...patentList,
                     {
-                      name: "",
-                      number: "",
-                      company: "",
-                      author: "",
-                      date: "",
-                      link: "",
-                      des: "",
+                      ppName: "",
+                      ppNumber: "",
+                      ppPublisher: "",
+                      ppWriter: "",
+                      ppDate: "",
+                      ppLink: "",
+                      ppContents: "",
                     },
                   ]);
                 }}
@@ -789,7 +795,7 @@ export default function InfoInput() {
                       type="text"
                       name="name"
                       placeholder="이름"
-                      value={x?.name}
+                      value={x?.ppName}
                       onChange={(e) =>
                         handleInputChange(patentList, setPatentList, i, e)
                       }
@@ -798,7 +804,7 @@ export default function InfoInput() {
                       type="text"
                       name="number"
                       placeholder="고유번호/출원번호"
-                      value={x?.number}
+                      value={x?.ppNumber}
                       onChange={(e) =>
                         handleInputChange(patentList, setPatentList, i, e)
                       }
@@ -807,7 +813,7 @@ export default function InfoInput() {
                       type="text"
                       name="author"
                       placeholder="저자/출판인"
-                      value={x?.author}
+                      value={x?.ppWriter}
                       onChange={(e) =>
                         handleInputChange(patentList, setPatentList, i, e)
                       }
@@ -816,7 +822,7 @@ export default function InfoInput() {
                       type="text"
                       name="company"
                       placeholder="출판사/출원국가"
-                      value={x?.company}
+                      value={x?.ppPublisher}
                       onChange={(e) =>
                         handleInputChange(patentList, setPatentList, i, e)
                       }
@@ -825,7 +831,7 @@ export default function InfoInput() {
                       type="text"
                       name="date"
                       placeholder="발행/출원일"
-                      value={x?.date}
+                      value={x?.ppDate}
                       onChange={(e) =>
                         handleInputChange(patentList, setPatentList, i, e)
                       }
@@ -836,19 +842,19 @@ export default function InfoInput() {
                       type="text"
                       name="link"
                       placeholder="링크"
-                      value={x?.link}
+                      value={x?.ppLink}
                       onChange={(e) =>
                         handleInputChange(patentList, setPatentList, i, e)
                       }
                       onFocus={(e) => (e.target.type = "date")}
                       onBlur={(e) => (e.target.type = "text")}
-                      style={{flex: "2"}}
+                      style={{ flex: "2" }}
                     />
                     <div className="patent-intro">
                       <textarea
                         name="des"
                         placeholder="설명"
-                        value={x?.des}
+                        value={x?.ppContents}
                         onChange={(e) =>
                           handleInputChange(patentList, setPatentList, i, e)
                         }
@@ -863,33 +869,37 @@ export default function InfoInput() {
       </RoundContainer>
 
       {/* 포트폴리오 선택 여부 묻기 */}
-      {showModal && (
-        <Modal backBlack={true}>
-          <BtnModal
-            title={"기존에 입력한 정보를 가져오시겠습니까?"}
-            onBtn1={() => {
-              setShowModal(false);
-              setShowModal2(true);
-              axios
-                .get(`${process.env.REACT_APP_BACKEND}/api/portfolio`)
-                .then((Response) => {
-                  console.log(Response.data);
-                })
-                .catch((Error) => {
-                  console.log(Error);
-                });
-            }}
-            onBtn2={() => setShowModal(false)}
-          />
-        </Modal>
-      )}
+      {
+        showModal && (
+          <Modal backBlack={true}>
+            <BtnModal
+              title={"기존에 입력한 정보를 가져오시겠습니까?"}
+              onBtn1={() => {
+                setShowModal(false);
+                setShowModal2(true);
+                axios
+                  .get(`${process.env.REACT_APP_BACKEND}/api/portfolio`)
+                  .then((Response) => {
+                    console.log(Response.data);
+                  })
+                  .catch((Error) => {
+                    console.log(Error);
+                  });
+              }}
+              onBtn2={() => setShowModal(false)}
+            />
+          </Modal>
+        )
+      }
 
       {/* 포트폴리오 선택 모달 */}
-      {showModal2 && (
-        <Modal backBlack={true}>
-          <PortfolioChoiceModal onNo={() => setShowModal2(false)} />
-        </Modal>
-      )}
-    </div>
+      {
+        showModal2 && (
+          <Modal backBlack={true}>
+            <PortfolioChoiceModal onNo={() => setShowModal2(false)} />
+          </Modal>
+        )
+      }
+    </div >
   );
 }
