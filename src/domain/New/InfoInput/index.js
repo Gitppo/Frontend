@@ -13,7 +13,6 @@ import BtnModal from "../../../components/Modal/BtnModal";
 import PortfolioChoiceModal from "../../../components/Modal/PortfolioChoiceModal";
 
 import HippoImg from "../../../assets/profile.png";
-
 import {getOptions} from "../../../hooks/options";
 
 export default function InfoInput() {
@@ -253,7 +252,7 @@ export default function InfoInput() {
                   <div className="right">
                     <input
                       type="text"
-                      name="company"
+                      name="carName"
                       placeholder="회사명"
                       value={x?.carName}
                       onChange={(e) =>
@@ -262,7 +261,7 @@ export default function InfoInput() {
                     />
                     <input
                       type="text"
-                      name="depart"
+                      name="carDepartmentName"
                       placeholder="부서명"
                       value={x?.carDepartmentName}
                       onChange={(e) =>
@@ -271,7 +270,7 @@ export default function InfoInput() {
                     />
                     <input
                       type="text"
-                      name="start"
+                      name="carStartDate"
                       placeholder="입사일"
                       value={x?.carStartDate}
                       onChange={(e) =>
@@ -282,7 +281,7 @@ export default function InfoInput() {
                     />
                     <input
                       type="text"
-                      name="end"
+                      name="carEndDate"
                       placeholder="퇴사일"
                       value={x?.carEndDate}
                       onChange={(e) =>
@@ -302,7 +301,7 @@ export default function InfoInput() {
                     />
                     <input
                       type="text"
-                      name="job"
+                      name="carJob"
                       value={x?.carJob}
                       placeholder="직무"
                       onChange={(e) =>
@@ -353,7 +352,7 @@ export default function InfoInput() {
 
                   <div className="right">
                     <select
-                      name="schoolType"
+                      name="eduType"
                       value={x?.eduType}
                       onChange={(e) =>
                         handleInputChange(schoolList, setSchoolList, i, e)
@@ -366,7 +365,7 @@ export default function InfoInput() {
                       <option value="etc">기타</option>
                     </select>
                     <select
-                      name="schoolStat"
+                      name="eduGrade"
                       value={x?.eduGrade}
                       onChange={(e) =>
                         handleInputChange(schoolList, setSchoolList, i, e)
@@ -378,7 +377,7 @@ export default function InfoInput() {
                     </select>
                     <input
                       type="text"
-                      name="start"
+                      name="eduStartDate"
                       placeholder="입학일"
                       value={x?.eduStartDate}
                       onChange={(e) =>
@@ -390,7 +389,7 @@ export default function InfoInput() {
                     {x?.eduGrade !== "attend" && (
                       <input
                         type="text"
-                        name="end"
+                        name="eduEndDate"
                         placeholder="졸업일"
                         value={x?.eduEndDate}
                         onChange={(e) =>
@@ -444,7 +443,7 @@ export default function InfoInput() {
                   <div className="right" style={{width: "100%"}}>
                     <input
                       type="text"
-                      name="cert"
+                      name="licName"
                       placeholder="자격/어학 종류"
                       value={x?.licName}
                       onChange={(e) =>
@@ -453,7 +452,7 @@ export default function InfoInput() {
                     />
                     <input
                       type="text"
-                      name="level"
+                      name="licLevel"
                       placeholder="등급/레벨/점수"
                       value={x?.licLevel}
                       onChange={(e) =>
@@ -462,7 +461,7 @@ export default function InfoInput() {
                     />
                     <input
                       type="text"
-                      name="auth"
+                      name="licOrganization"
                       placeholder="발급기관"
                       value={x?.licOrganization}
                       onChange={(e) =>
@@ -471,7 +470,7 @@ export default function InfoInput() {
                     />
                     <input
                       type="text"
-                      name="issueDate"
+                      name="licDate"
                       placeholder="취득일"
                       value={x?.licDate}
                       onChange={(e) =>
@@ -524,7 +523,7 @@ export default function InfoInput() {
                   <div className="right" style={{width: "100%"}}>
                     <input
                       type="text"
-                      name="award"
+                      name="awName"
                       placeholder="대회명"
                       value={x?.awName}
                       onChange={(e) =>
@@ -533,7 +532,7 @@ export default function InfoInput() {
                     />
                     <input
                       type="text"
-                      name="auth"
+                      name="awOrganization"
                       placeholder="주최"
                       value={x?.awOrganization}
                       onChange={(e) =>
@@ -542,7 +541,7 @@ export default function InfoInput() {
                     />
                     <input
                       type="text"
-                      name="issueDate"
+                      name="awDate"
                       placeholder="수상일"
                       value={x?.awDate}
                       onChange={(e) =>
@@ -553,7 +552,7 @@ export default function InfoInput() {
                     />
                     <input
                       type="text"
-                      name="place"
+                      name="awContents"
                       placeholder="수상내용"
                       value={x?.awContents}
                       onChange={(e) =>
@@ -603,7 +602,7 @@ export default function InfoInput() {
                   <div className="right" style={{width: "100%"}}>
                     <input
                       type="text"
-                      name="etc"
+                      name="actName"
                       placeholder="활동명"
                       value={x?.actName}
                       onChange={(e) =>
@@ -612,7 +611,7 @@ export default function InfoInput() {
                     />
                     <input
                       type="text"
-                      name="start"
+                      name="actStartDate"
                       placeholder="시작일"
                       value={x?.actStartDate}
                       onChange={(e) =>
@@ -623,7 +622,7 @@ export default function InfoInput() {
                     />
                     <input
                       type="text"
-                      name="end"
+                      name="actEndDate"
                       placeholder="종료일"
                       value={x?.actEndDate}
                       onChange={(e) =>
@@ -634,7 +633,7 @@ export default function InfoInput() {
                     />
                     <input
                       type="text"
-                      name="about"
+                      name="actContents"
                       placeholder="설명"
                       value={x?.actContents}
                       onChange={(e) =>
@@ -675,7 +674,7 @@ export default function InfoInput() {
                   <div className="right">
                     <input
                       type="text"
-                      name="sns"
+                      name="snsName"
                       placeholder="종류"
                       value={x?.snsName}
                       onChange={(e) =>
@@ -684,7 +683,7 @@ export default function InfoInput() {
                     />
                     <input
                       type="text"
-                      name="link"
+                      name="snsLink"
                       placeholder="계정주소"
                       value={x?.snsLink}
                       onChange={(e) =>
@@ -703,13 +702,13 @@ export default function InfoInput() {
               <h3>기술스택</h3>
               <button
                 onClick={() => {
-                  setStackList([...stackList, {skName: "", skLevel: ""}]);
-                  console.log(getOptions());
-                  // const skills = getOptions()
-                  // console.log(skills)
-                  // skills.map((skill) => {
-                  //   console.log(skill)
-                  // })
+                // TODO : Repair
+                  setStackList([...stackList, { skName: "", skLevel: "" }]);
+                  getOptions().then((skills) => {
+                    skills.map((x) => {
+                      setSkillList(x)
+                    })
+                  })
                 }}
               >
                 +
@@ -733,7 +732,7 @@ export default function InfoInput() {
                   <div className="right">
                     <input
                       type="text"
-                      name="stack"
+                      name="skName"
                       placeholder="기술 종류"
                       value={x?.skName}
                       onChange={(e) =>
@@ -743,10 +742,12 @@ export default function InfoInput() {
                     />
 
                     <datalist id="stackoption">
-                      {/* <option value={importSkill()} /> */}
+                      {skillList.map((x) => {
+                        <option value={x?.name} />
+                      })}
                     </datalist>
                     <select
-                      name="level"
+                      name="skLevel"
                       value={x?.skLevel}
                       onChange={(e) =>
                         handleInputChange(stackList, setStackList, i, e)
@@ -804,7 +805,7 @@ export default function InfoInput() {
                   <div className="right">
                     <input
                       type="text"
-                      name="name"
+                      name="ppName"
                       placeholder="이름"
                       value={x?.ppName}
                       onChange={(e) =>
@@ -813,7 +814,7 @@ export default function InfoInput() {
                     />
                     <input
                       type="text"
-                      name="number"
+                      name="ppNumber"
                       placeholder="고유번호/출원번호"
                       value={x?.ppNumber}
                       onChange={(e) =>
@@ -822,7 +823,7 @@ export default function InfoInput() {
                     />
                     <input
                       type="text"
-                      name="author"
+                      name="ppWriter"
                       placeholder="저자/출판인"
                       value={x?.ppWriter}
                       onChange={(e) =>
@@ -831,7 +832,7 @@ export default function InfoInput() {
                     />
                     <input
                       type="text"
-                      name="company"
+                      name="ppPublisher"
                       placeholder="출판사/출원국가"
                       value={x?.ppPublisher}
                       onChange={(e) =>
@@ -840,7 +841,7 @@ export default function InfoInput() {
                     />
                     <input
                       type="text"
-                      name="date"
+                      name="ppDate"
                       placeholder="발행/출원일"
                       value={x?.ppDate}
                       onChange={(e) =>
@@ -851,7 +852,7 @@ export default function InfoInput() {
                     />
                     <input
                       type="text"
-                      name="link"
+                      name="ppLink"
                       placeholder="링크"
                       value={x?.ppLink}
                       onChange={(e) =>
@@ -863,7 +864,7 @@ export default function InfoInput() {
                     />
                     <div className="patent-intro">
                       <textarea
-                        name="des"
+                        name="ppContents"
                         placeholder="설명"
                         value={x?.ppContents}
                         onChange={(e) =>
