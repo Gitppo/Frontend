@@ -1,7 +1,7 @@
 import "./style.css";
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router";
-import { useHistory } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {useLocation} from "react-router";
+import {useHistory} from "react-router-dom";
 
 import axios from "axios";
 
@@ -14,8 +14,7 @@ import PortfolioChoiceModal from "../../../components/Modal/PortfolioChoiceModal
 
 import HippoImg from "../../../assets/profile.png";
 
-import { getOptions } from "../../../hooks/options";
-
+import {getOptions} from "../../../hooks/options";
 
 export default function InfoInput() {
   const location = useLocation();
@@ -39,14 +38,14 @@ export default function InfoInput() {
   };
 
   const [infoList, setInfoList] = useState([
-    { biName: "", biMail: "", biBirth: "", biPhone: "" },
+    {biName: "", biMail: "", biBirth: "", biPhone: ""},
   ]);
   const [careerList, setCareerList] = useState([]);
   const [schoolList, setSchoolList] = useState([]);
   const [certList, setCertList] = useState([]);
   const [awardList, setAwardList] = useState([]);
   const [etcList, setEtcList] = useState([]);
-  const [introList, setIntroList] = useState([{ shortIntro: "", longIntro: "" }]);
+  const [introList, setIntroList] = useState([{shortIntro: "", longIntro: ""}]);
   const [snsList, setSnsList] = useState([]);
   const [stackList, setStackList] = useState([]);
   const [patentList, setPatentList] = useState([]);
@@ -54,7 +53,7 @@ export default function InfoInput() {
   const [skillList, setSkillList] = useState([]);
 
   const handleInputChange = (List, setList, i, e) => {
-    const { name, value } = e?.target;
+    const {name, value} = e?.target;
     const list = [...List];
     list[i][name] = value;
     setList(list);
@@ -62,11 +61,11 @@ export default function InfoInput() {
   };
 
   const handleInputChange2 = (List, setList, e) => {
-    const { name, value } = e?.target;
+    const {name, value} = e?.target;
     List[0][name] = value;
     setList(List);
     console.log(List);
-  }
+  };
 
   const handleRemoveClick = (List, setList, i) => {
     const list = [...List];
@@ -74,7 +73,7 @@ export default function InfoInput() {
     setList(list);
   };
 
-  const tmpSave = () => { };
+  const tmpSave = () => {};
 
   const onPrev = () => {
     history.push("/new/2", {
@@ -110,9 +109,7 @@ export default function InfoInput() {
                 name="biName"
                 placeholder="이름"
                 value={infoList.biName}
-                onChange={(e) =>
-                  handleInputChange2(infoList, setInfoList, e)
-                }
+                onChange={(e) => handleInputChange2(infoList, setInfoList, e)}
                 required
               />
               <input
@@ -120,9 +117,7 @@ export default function InfoInput() {
                 name="biMail"
                 placeholder="이메일"
                 value={infoList.biMail}
-                onChange={(e) =>
-                  handleInputChange2(infoList, setInfoList, e)
-                }
+                onChange={(e) => handleInputChange2(infoList, setInfoList, e)}
                 required
               />
               <input
@@ -130,9 +125,7 @@ export default function InfoInput() {
                 name="biBirth"
                 placeholder="생년월일 (ex.19951004)"
                 value={infoList.biBirth}
-                onChange={(e) =>
-                  handleInputChange2(infoList, setInfoList, e)
-                }
+                onChange={(e) => handleInputChange2(infoList, setInfoList, e)}
                 onFocus={(e) => (e.target.type = "date")}
                 onBlur={(e) => (e.target.type = "text")}
                 required
@@ -143,9 +136,7 @@ export default function InfoInput() {
                 placeholder="전화번호"
                 maxLength="11"
                 value={infoList.biPhone}
-                onChange={(e) =>
-                  handleInputChange2(infoList, setInfoList, e)
-                }
+                onChange={(e) => handleInputChange2(infoList, setInfoList, e)}
                 required
               />
             </form>
@@ -165,7 +156,7 @@ export default function InfoInput() {
                 <label
                   for="img-file"
                   className="round-button"
-                  style={{ textAlign: "center" }}
+                  style={{textAlign: "center"}}
                 >
                   파일 선택
                 </label>
@@ -181,7 +172,7 @@ export default function InfoInput() {
                   type="file"
                   accept="image/*"
                   onChange={handleChangeFile}
-                  style={{ display: "none" }}
+                  style={{display: "none"}}
                 />
               </div>
             </div>
@@ -317,7 +308,7 @@ export default function InfoInput() {
                       onChange={(e) =>
                         handleInputChange(careerList, setCareerList, i, e)
                       }
-                      style={{ flex: "2" }}
+                      style={{flex: "2"}}
                     />
                   </div>
                 </li>
@@ -333,7 +324,12 @@ export default function InfoInput() {
                 onClick={() => {
                   setSchoolList([
                     ...schoolList,
-                    { eduType: "", eduStartDate: "", eduEndDate: "", eduGrade: "" },
+                    {
+                      eduType: "",
+                      eduStartDate: "",
+                      eduEndDate: "",
+                      eduGrade: "",
+                    },
                   ]);
                 }}
               >
@@ -418,7 +414,12 @@ export default function InfoInput() {
                 onClick={() => {
                   setCertList([
                     ...certList,
-                    { licName: "", licLevel: "", licOrganization: "", licDate: "" },
+                    {
+                      licName: "",
+                      licLevel: "",
+                      licOrganization: "",
+                      licDate: "",
+                    },
                   ]);
                 }}
               >
@@ -440,7 +441,7 @@ export default function InfoInput() {
                     </button>
                   </div>
 
-                  <div className="right" style={{ width: "100%" }}>
+                  <div className="right" style={{width: "100%"}}>
                     <input
                       type="text"
                       name="cert"
@@ -493,7 +494,12 @@ export default function InfoInput() {
                 onClick={() => {
                   setAwardList([
                     ...awardList,
-                    { awContents: "", awName: "", awOrganization: "", awDate: "" },
+                    {
+                      awContents: "",
+                      awName: "",
+                      awOrganization: "",
+                      awDate: "",
+                    },
                   ]);
                 }}
               >
@@ -515,7 +521,7 @@ export default function InfoInput() {
                     </button>
                   </div>
 
-                  <div className="right" style={{ width: "100%" }}>
+                  <div className="right" style={{width: "100%"}}>
                     <input
                       type="text"
                       name="award"
@@ -553,7 +559,7 @@ export default function InfoInput() {
                       onChange={(e) =>
                         handleInputChange(awardList, setAwardList, i, e)
                       }
-                      style={{ flex: "2" }}
+                      style={{flex: "2"}}
                     />
                   </div>
                 </li>
@@ -569,7 +575,12 @@ export default function InfoInput() {
                 onClick={() =>
                   setEtcList([
                     ...etcList,
-                    { actName: "", actContents: "", actStartDate: "", actEndDate: "" },
+                    {
+                      actName: "",
+                      actContents: "",
+                      actStartDate: "",
+                      actEndDate: "",
+                    },
                   ])
                 }
               >
@@ -589,7 +600,7 @@ export default function InfoInput() {
                     </button>
                   </div>
 
-                  <div className="right" style={{ width: "100%" }}>
+                  <div className="right" style={{width: "100%"}}>
                     <input
                       type="text"
                       name="etc"
@@ -629,7 +640,7 @@ export default function InfoInput() {
                       onChange={(e) =>
                         handleInputChange(etcList, setEtcList, i, e)
                       }
-                      style={{ flex: "2" }}
+                      style={{flex: "2"}}
                     />
                   </div>
                 </li>
@@ -643,7 +654,7 @@ export default function InfoInput() {
               <h3>SNS</h3>
               <button
                 onClick={() => {
-                  setSnsList([...snsList, { snsName: "", snsLink: "" }]);
+                  setSnsList([...snsList, {snsName: "", snsLink: ""}]);
                 }}
               >
                 +
@@ -692,8 +703,8 @@ export default function InfoInput() {
               <h3>기술스택</h3>
               <button
                 onClick={() => {
-                  setStackList([...stackList, { skName: "", skLevel: "" }]);
-                  console.log(getOptions())
+                  setStackList([...stackList, {skName: "", skLevel: ""}]);
+                  console.log(getOptions());
                   // const skills = getOptions()
                   // console.log(skills)
                   // skills.map((skill) => {
@@ -848,7 +859,7 @@ export default function InfoInput() {
                       }
                       onFocus={(e) => (e.target.type = "date")}
                       onBlur={(e) => (e.target.type = "text")}
-                      style={{ flex: "2" }}
+                      style={{flex: "2"}}
                     />
                     <div className="patent-intro">
                       <textarea
@@ -869,12 +880,14 @@ export default function InfoInput() {
       </RoundContainer>
 
       {/* 포트폴리오 선택 여부 묻기 */}
-      {
-        showModal && (
-          <Modal backBlack={true}>
-            <BtnModal
-              title={"기존에 입력한 정보를 가져오시겠습니까?"}
-              onBtn1={() => {
+      {showModal && (
+        <BtnModal
+          title={"기존에 입력한 정보를 가져오시겠습니까?"}
+          setShow={setShowModal}
+          btns={[
+            {
+              name: "예",
+              onClick: () => {
                 setShowModal(false);
                 setShowModal2(true);
                 axios
@@ -885,21 +898,19 @@ export default function InfoInput() {
                   .catch((Error) => {
                     console.log(Error);
                   });
-              }}
-              onBtn2={() => setShowModal(false)}
-            />
-          </Modal>
-        )
-      }
+              },
+            },
+            {name: "아니오", onClick: () => setShowModal(false)},
+          ]}
+        />
+      )}
 
       {/* 포트폴리오 선택 모달 */}
-      {
-        showModal2 && (
-          <Modal backBlack={true}>
-            <PortfolioChoiceModal onNo={() => setShowModal2(false)} />
-          </Modal>
-        )
-      }
-    </div >
+      {showModal2 && (
+        <Modal backBlack={true}>
+          <PortfolioChoiceModal onNo={() => setShowModal2(false)} />
+        </Modal>
+      )}
+    </div>
   );
 }

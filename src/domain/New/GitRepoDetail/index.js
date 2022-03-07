@@ -6,14 +6,16 @@ import {useHistory} from "react-router-dom";
 import Select from "react-select";
 
 import {getOptions} from "../../../hooks/options";
+import {editRepository, saveRepository} from "../../../hooks/repository";
 
 import BeforeAfterBtn from "../../../components/Btn/BeforeAfterBtn";
+import BtnModal from "../../../components/Modal/BtnModal";
 
 import Star from "../../../assets/star.png";
 import BlueEye from "../../../assets/eye-blue.png";
 import GrayEye from "../../../assets/eye-gray.png";
 import Fold from "../../../assets/arrow-no-head.png";
-import {saveRepository} from "../../../hooks/repository";
+import {getPortfolioDetail} from "../../../hooks/portfolio";
 
 // react-select style
 const styles = {
@@ -84,77 +86,181 @@ function GitRepoDetail({match}) {
 
   const [repos, setRepos] = useState([]);
   const [skillOptions, setSkillOptions] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
+
+  const initRepo = useCallback(() => {
+    let tmpRepos = [];
+    for (let e of location.state.gitrepos.filter((e) => e.checked)) {
+      const {languages} = e;
+
+      // language sum
+      let total = 0;
+      let langArr = [];
+      for (let i in languages) {
+        total += languages[i];
+        langArr.push({
+          lang: i,
+          val: languages[i],
+        });
+      }
+
+      // 비율 계산
+      for (let i = 0; i < langArr.length; i++) {
+        langArr[i].perc = ((langArr[i].val / total) * 100).toFixed(1);
+      }
+      // 비율을 내림차순으로 정렬
+      langArr.sort((a, b) => b.perc - a.perc);
+      // to string
+      let langStr = "";
+      for (let i = 0; i < langArr.length && i < 2; i++) {
+        langStr += `${langArr[i].lang}: ${langArr[i].perc}% / `;
+      }
+      if (langStr?.length > 0) {
+        langStr = langStr.substring(0, langStr.length - 2);
+      }
+
+      tmpRepos.push({
+        ...e,
+        pfId: parseInt(match.params.pfID),
+        repoGitId: e?.repoGitId || -1,
+        rpName: e?.rpName ?? e?.name ?? "",
+        rpSdate: e?.rpSdate ?? e?.created_at ?? "",
+        rpEdate: e?.rpEdate ?? e?.updated_at ?? "",
+        rpShortContents: e?.rpShortContents ?? e?.html_url ?? "",
+        rpLongContents: e?.rpLongContents ?? e?.description ?? "",
+        rpReadme: e?.readme || "",
+        rpRole: e?.rpRole || "",
+        rpStar: e?.rpStar ?? e?.stargazers_count ?? 0,
+        rpSkills: e?.rpSkills || [],
+        rpLanguages: languages,
+        langStr: langStr,
+        skillsArr: e?.rpSkills?.map((e) => ({value: e, label: e})) || [],
+        skillsValue: "",
+        useReadme: e?.useReadme ?? true,
+        fold: false,
+      });
+    }
+
+    // Deep copy
+    setRepos(JSON.parse(JSON.stringify(tmpRepos)));
+  }, [location.state.gitrepos, match.params.pfID]);
 
   const onInputChange = (e, index) => {
     repos[index][e.target.name] = e.target.value;
     setRepos([...repos]);
   };
-  const deletePortfolio = (id) => {
-    let i = 0;
-    for (i = 0; i < repos.length; i++) {
-      if (repos[i].id === id) {
-        break;
-      }
-    }
-
-    repos[i].checked = false;
-    repos.splice(i, 1);
-
+  const onFold = (index) => {
+    // fold: true - 접힘 / false - 열림
+    repos[index].fold = !(repos[index]?.fold || false);
+    setRepos([...repos]);
+  };
+  const onDelete = (index) => {
+    repos.splice(index, 1);
     setRepos([...repos]);
   };
 
-  const tmpSave = () => {
-    // console.log(repos);
-    const tmp = repos.map((e) => ({
-      pfId: match.params.pfID,
-      rpGpId: e.id,
-      rpName: e.name,
-      rpSdate: e?.rpSdate || "",
-      rpEdate: e?.rpEdate || "",
-      rpShortContents: e?.rpShortContents || "",
-      rpLongContents: e?.rpLongContents || "",
-      rpReadme: e?.useReadme ?? true ? e?.readme : "",
-      rpRole: e?.rpRole || "",
-      rpStar: e?.stargazers_count || 0,
-    }));
+  const onSave = async (isReturn = false) => {
+    let newRepos = [],
+      editRepos = [];
 
-    console.log(tmp);
-
-    saveRepository(tmp).then((r) => {
-      for (let i in r) repos[i].rpID = r[i];
-      setRepos([...repos]);
-      location.state = {
-        ...location.state,
-        data: {
-          ...location.state?.data,
-          repo: repos,
-        },
+    for (let e of repos) {
+      // 전송 전 한번 더 정리
+      const tmp = {
+        repoGitId: e?.repoGitId || -1,
+        rpName: e?.rpName || "noname",
+        rpSdate: e?.rpSdate || "",
+        rpEdate: e?.rpEdate || "",
+        rpShortContents: e?.rpShortContents ?? "",
+        rpLongContents: e?.rpLongContents ?? "",
+        rpReadme: (!e?.useReadme ? "" : e?.readme) || "",
+        rpRole: e?.rpRole || "",
+        rpStar: e?.rpStar || 0,
+        rpSkills: e?.skillsArr?.map((e) => e?.value) || [],
+        rpLanguages: e?.rpLanguages || [],
       };
-    });
+
+      // Reformat
+      if (e?.saved) {
+        // PUT
+        editRepos.push({
+          ...tmp,
+          id: e?.id,
+        });
+      } else {
+        // POST
+        newRepos.push({
+          ...tmp,
+          pfId: e?.pfId,
+        });
+      }
+    }
+
+    if (newRepos) {
+      await saveRepository(newRepos)
+        .then((r) => {
+          for (let i = 0; i < r.length; i++) {
+            repos[i].id = r[i];
+            repos[i].saved = true;
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+          setShowAlert(true);
+        });
+    }
+
+    if (editRepos) {
+      await editRepository(editRepos)
+        .then((r) => {
+          for (let i = 0; i < r.length; i++) {
+            repos[i].id = r[i];
+            repos[i].saved = true;
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+          setShowAlert(true);
+        });
+    }
+
+    return await getPortfolioDetail(match.params.pfID)
+      .then((r) => {
+        if (!r) throw Error("NetErr : Failed to reload portfolio.");
+
+        const newState = {
+          ...(location?.state || {}),
+          data: r,
+          gitrepos: location.state?.gitrepos?.map((e) => {
+            for (let repo of repos) {
+              if (e?.repoGitId === repo?.repoGitId) {
+                return repo;
+              }
+            }
+            return e;
+          }),
+        };
+
+        if (isReturn) return newState;
+        else history.replace(location.pathname, newState);
+      })
+      .catch((e) => {
+        console.error(e);
+        history.push("/error/load-fail");
+      });
   };
-
-  const repoDC = useCallback(() => {
-    setRepos(
-      JSON.parse(
-        JSON.stringify(
-          location.state.gitrepos
-            .filter((e) => e.checked)
-            .map((e) => ({...e, fold: false}))
-        )
-      )
-    );
-  }, [location.state.gitrepos]);
-
   const onPrev = () => {
     history.push(`/new/1/${match.params.pfID}`, {
       ...location.state,
     });
   };
   const onNext = () => {
-    tmpSave();
-    history.push(`/new/3/${match.params.pfID}`, {
-      ...location.state,
-    });
+    onSave(true)
+      .then((r) => {
+        history.push(`/new/3/${match.params.pfID}`, r);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   };
 
   useEffect(() => {
@@ -167,17 +273,13 @@ function GitRepoDetail({match}) {
       return;
     }
 
-    console.log(location.state);
-    console.log(location.state.gitrepos.filter((e) => e.checked));
-
-    repoDC();
+    initRepo();
 
     getOptions()
       .then((r) => {
-        if (!r) {
+        if (!(r?.length > 0)) {
           throw Error("Failed to load getOptions.");
         }
-
         setSkillOptions(
           r?.map((e) => ({
             value: e.name,
@@ -187,8 +289,14 @@ function GitRepoDetail({match}) {
       })
       .catch((e) => {
         console.error(e);
+        setSkillOptions(
+          ["C", "C++", "JavaScript", "CSS", "React", "Firebase"].map((e) => ({
+            value: e,
+            label: e,
+          }))
+        );
       });
-  }, [history, location.state, match.params, repoDC]);
+  }, [history, location.state, match.params, initRepo]);
 
   return (
     <div className="grd">
@@ -196,39 +304,35 @@ function GitRepoDetail({match}) {
         saveShow={true}
         onPrev={onPrev}
         onNext={onNext}
-        onSave={tmpSave}
+        onSave={onSave}
       />
 
       <div className="grd-wrapper">
         <div className="grd-top-container">
           <div className="grd-top-container-title">레포지토리</div>
-          <button className="round-button" onClick={repoDC}>
+          <button className="round-button" onClick={initRepo}>
             초기화
           </button>
         </div>
         {repos.map((box, index) => (
-          <li className="grd-inner-box" key={box?.id}>
-            <div
-              className="grd-inner-box-info-container"
-              onClick={() => {
-                // fold: true - 접힘 / false - 열림
-                repos[index].fold = !(box?.fold || false);
-                setRepos([...repos]);
-              }}
-            >
+          <li className="grd-inner-box" key={box?.repoGitId}>
+            <div className="grd-inner-box-info-container">
               <div className="grd-inner-box-top-container">
-                <h3 className="grd-inner-box-repo-title">{box?.name}</h3>
+                <h3
+                  className="grd-inner-box-repo-title"
+                  onClick={() => onFold(index)}
+                >
+                  {box?.rpName}
+                </h3>
                 <img
                   style={{height: "1rem", width: "auto", marginRight: "0.2em"}}
                   src={Star}
                   alt={""}
                 />
-                <div className="grd-inner-box-star-num">
-                  {box?.stargazers_count}
-                </div>
+                <div className="grd-inner-box-star-num">{box?.rpStar}</div>
                 <button
                   className="round-button"
-                  onClick={() => deletePortfolio(box?.id)}
+                  onClick={() => onDelete(index)}
                 >
                   삭제
                 </button>
@@ -236,16 +340,15 @@ function GitRepoDetail({match}) {
               <div className="grd-inner-box-bottom-container">
                 <div className="grd-inner-box-bottom-title">생성일</div>
                 <div className="grd-inner-box-bottom-detail">
-                  {box?.created_at}
+                  {box?.created_at || box?.rpSdate}
                 </div>
                 <div className="grd-inner-box-bottom-title">최근 업데이트</div>
                 <div className="grd-inner-box-bottom-detail">
-                  {box?.updated_at}
+                  {box?.updated_at || box?.rpEdate}
                 </div>
                 <div className="grd-inner-box-bottom-title">사용언어</div>
                 <div className="grd-inner-box-bottom-detail">
-                  {/* //TODO : repair */}
-                  {box?.languages[0]}
+                  {box?.langStr}
                 </div>
               </div>
             </div>
@@ -325,8 +428,39 @@ function GitRepoDetail({match}) {
                     className="grd-inner-box-skill"
                     classNamePrefix="select"
                     options={skillOptions}
+                    value={box?.skillsArr}
+                    inputValue={box?.skillsValue}
+                    onInputChange={(e) => {
+                      repos[index]["skillsValue"] = e;
+                      setRepos([...repos]);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        const {value} = e.target;
+                        if (
+                          box?.skillsArr?.filter((t) => t.value === value)
+                            ?.length > 0
+                        ) {
+                          return;
+                        }
+                        if (!(box?.skillsValue?.length > 0)) {
+                          return;
+                        }
+
+                        repos[index]["skillsArr"] = [
+                          ...(box?.skillsArr ?? []),
+                          {
+                            value: box?.skillsValue,
+                            label: box?.skillsValue,
+                          },
+                        ];
+                        repos[index].skillsValue = "";
+                        setRepos([...repos]);
+                      }
+                    }}
                     onChange={(e) => {
-                      repos[index]["skillOptions"] = e;
+                      repos[index]["skillsArr"] = e;
+                      setRepos([...repos]);
                     }}
                   />
                 </div>
@@ -360,15 +494,19 @@ function GitRepoDetail({match}) {
               className={`grd-inner-box-fold-image${box?.fold ? "-down" : ""}`}
               src={Fold}
               alt={""}
-              onClick={() => {
-                // fold: true - 접힘 / false - 열림
-                repos[index].fold = !(box?.fold || false);
-                setRepos([...repos]);
-              }}
+              onClick={() => onFold(index)}
             />
           </li>
         ))}
       </div>
+
+      {showAlert && (
+        <BtnModal
+          title={"저장에 실패하였습니다"}
+          setShow={setShowAlert}
+          btns={[{name: "닫기", onClick: () => setShowAlert(false)}]}
+        />
+      )}
     </div>
   );
 }

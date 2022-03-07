@@ -13,7 +13,6 @@ export const getPortfolio = async (id) => {
     .then((r) => {
       if (r.status !== 200 || r.data?.status !== "OK")
         throw Error("NetErr : Failed to load portfolio.");
-
       return r.data.data;
     })
     .catch((e) => {
@@ -73,7 +72,6 @@ export const getPortfolioDetail = async (pfID) => {
       params: {id: pfID},
     })
     .then((r) => {
-      console.log(r);
       if (r.status !== 200 || r.data?.status !== "OK")
         throw Error("NetErr : Failed to load portfolio's detail.");
 
