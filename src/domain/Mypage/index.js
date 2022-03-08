@@ -24,6 +24,7 @@ function Mypage() {
 
   const [portfolio, setPortfolio] = useState([]);
   const [portfolioTitle, setPortfolioTitle] = useState("");
+  const [pfCnt, setPfCnt] = useState([0, 0]);
 
   const [showModal, setShowModal] = useState(false);
   const [showInputModal, setShowInputModal] = useState(false);
@@ -55,9 +56,31 @@ function Mypage() {
   };
 
   useEffect(() => {
+    const total = portfolio?.length || 0;
+
+    if (!(total > 0)) setPfCnt([0, 0, 0]);
+    else {
+      const tmpSave = portfolio?.filter((e) => e.pfTmpSave)?.length;
+      setPfCnt([total, tmpSave, total - tmpSave]);
+    }
+  }, [portfolio]);
+
+  useEffect(() => {
     getPortfolio(user.id)
       .then((data) => {
-        setPortfolio(data);
+        console.log(data);
+
+        setPortfolio(
+          data.map((e) => ({
+            ...e,
+            createDateStr: e?.hasOwnProperty("createdDate")
+              ? moment(e?.createdDate).format("YYYY.MM.DD")
+              : "NULL",
+            modifiedDateStr: e?.hasOwnProperty("modifiedDate")
+              ? moment(e?.modifiedDate).format("YYYY.MM.DD HH:mm")
+              : "NULL",
+          }))
+        );
       })
       .catch((e) => {
         console.error(e);
@@ -67,53 +90,47 @@ function Mypage() {
 
   return (
     <div>
-      <div className={"mypage-upper-box"}>
-        <div className={"mypage-upper-box-left"}>
-          <h3 className={"mypage-new-title"}>새로운 포트폴리오 생성</h3>
+      <div className={"mp-upper"}>
+        <div className={"mp-upper-left"}>
+          <h3>새로운 포트폴리오 생성</h3>
           <button className={"round-button"} onClick={createPortfolio}>
             바로가기
           </button>
         </div>
 
-        <div className={"mypage-upper-box-right"}>
-          <div className={"mypage-manage"}>
+        <ul className={"mp-upper-right"}>
+          <li>
             <span>임시 저장 중인 포트폴리오</span>
-            <span className={"beautiful-title"}>
-              {portfolio?.filter((e) => e?.pfTmpSave ?? true).length || 0}
-            </span>
-          </div>
-          <div className={"mypage-manage"}>
+            <span className={"beautiful-title"}>{pfCnt[1]}</span>
+          </li>
+          <li>
             <span>최종 완성 포트폴리오</span>
-            <span className={"beautiful-title"}>
-              {portfolio?.filter((e) => !(e?.pfTmpSave ?? true)).length || 0}
-            </span>
-          </div>
-        </div>
+            <span className={"beautiful-title"}>{pfCnt[2]}</span>
+          </li>
+        </ul>
       </div>
 
       <RoundContainer>
-        <h1 className={"beautiful-title"}>
-          기존 포트폴리오 ({portfolio?.length || 0})
-        </h1>
+        <h1 className={"beautiful-title"}>기존 포트폴리오 ({pfCnt[0]})</h1>
 
-        <ul className={"mypage-wrapper-box"}>
+        <ul className={"mp-pf-wrapper"}>
           {portfolio?.map((box) => (
-            <li className={"mypage-wrapper"} key={box?.id}>
-              <img className={"pin-image"} src={Pin} alt={""} />
-              <h4 className={"mypage-wrapper-box-title"}>{box?.pfName}</h4>
-              <div className={"mypage-wrapper-box-date"}>
-                생성{" "}
-                {box?.hasOwnProperty("createdDate")
-                  ? moment(box?.createdDate).format("YYYY.MM.DD")
-                  : "NULL"}
+            <li className={"mp-pf-item"} key={box?.id}>
+              <img className={"mp-pf-pin"} src={Pin} alt={""} />
+              <h3 className={"mp-pf-item-title"}>{box?.pfName}</h3>
+
+              <div className={"mp-pf-item-date"}>
+                <div>생성 {box?.createDateStr}</div>
+                <div>수정 {box?.modifiedDateStr}</div>
+                <div
+                  className="mp-pf-item-comment"
+                  style={!box?.pfTmpSave ? {visibility: "hidden"} : {}}
+                >
+                  * 임시저장 상태입니다
+                </div>
               </div>
-              <div className={"mypage-wrapper-box-date"}>
-                수정{" "}
-                {box?.hasOwnProperty("modifiedDate")
-                  ? moment(box?.modifiedDate).format("YYYY.MM.DD HH:mm")
-                  : "NULL"}
-              </div>
-              <div className={"mypage-wrapper-box-button"}>
+
+              <div className={"mp-pf-item-button"}>
                 <button
                   className={"round-button"}
                   onClick={() => onRepair(box?.id)}

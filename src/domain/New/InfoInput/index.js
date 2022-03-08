@@ -153,7 +153,7 @@ export default function InfoInput() {
 
               <div className="img-btns">
                 <label
-                  for="img-file"
+                  htmlFor="img-file"
                   className="round-button"
                   style={{textAlign: "center"}}
                 >
@@ -702,13 +702,13 @@ export default function InfoInput() {
               <h3>기술스택</h3>
               <button
                 onClick={() => {
-                // TODO : Repair
-                  setStackList([...stackList, { skName: "", skLevel: "" }]);
+                  // TODO : Repair
+                  setStackList([...stackList, {skName: "", skLevel: ""}]);
                   getOptions().then((skills) => {
                     skills.map((x) => {
-                      setSkillList(x)
-                    })
-                  })
+                      setSkillList(x);
+                    });
+                  });
                 }}
               >
                 +
@@ -743,7 +743,7 @@ export default function InfoInput() {
 
                     <datalist id="stackoption">
                       {skillList.map((x) => {
-                        <option value={x?.name} />
+                        <option value={x?.name} />;
                       })}
                     </datalist>
                     <select

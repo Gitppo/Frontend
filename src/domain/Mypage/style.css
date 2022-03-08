@@ -1,4 +1,4 @@
-.mypage-upper-box {
+.mp-upper {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -8,12 +8,13 @@
   margin-bottom: 4rem;
 }
 /* 새로운 포트폴리오 생성 */
-.mypage-upper-box-left {
+.mp-upper-left {
   width: 50%;
   max-width: 350px;
 
   padding: 1.5em;
 
+  color: white;
   text-align: center;
 
   border-radius: 0.5rem;
@@ -21,19 +22,16 @@
 
   background-color: var(--dark-blue1);
 }
-/* 새로운 포트폴리오 생성 제목 */
-.mypage-new-title {
-  color: white;
-  margin-bottom: 0.8em;
-}
 /* 새로운 포트폴리오 생성 버튼 */
-.mypage-upper-box-left > .round-button {
+.mp-upper-left > .round-button {
+  margin-top: 0.8em;
+
   background-color: white;
   color: var(--dark-blue2);
 }
 
 /* 임시 저장 중인 포트폴리오 & 최종 완성 포트폴리오 */
-.mypage-upper-box-right {
+.mp-upper-right {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -43,7 +41,7 @@
   max-width: 310px;
   height: 90%;
 }
-.mypage-manage {
+.mp-upper-right > li {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -55,7 +53,7 @@
   border-radius: 0.5rem;
   background-color: var(--dark-blue1);
 }
-.mypage-manage .beautiful-title {
+.mp-upper-right > li .beautiful-title {
   margin-left: 0.8em;
 
   font-size: 1.4em;
@@ -63,10 +61,25 @@
 }
 
 /* 기존 포트폴리오 */
-.mypage-wrapper {
-  position: relative;
+.mp-pf-wrapper {
+  width: 100%;
+
+  display: flex;
+  flex-wrap: wrap;
 }
-.mypage-wrapper .pin-image {
+
+.mp-pf-item {
+  position: relative;
+
+  padding: 1rem 2rem;
+  margin: 1rem;
+
+  border: 1px solid gray;
+  border-radius: 0.5rem;
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.16);
+}
+
+.mp-pf-pin {
   position: absolute;
   left: -10px;
   top: -10px;
@@ -76,44 +89,35 @@
 
   transform: rotate(-45deg);
 }
-.mypage-wrapper-box {
-  width: 100%;
 
-  display: flex;
-  flex-wrap: wrap;
-}
-.mypage-wrapper-box > li {
-  padding: 1rem;
-  margin: 1rem;
-
-  border: 1px solid gray;
-  border-radius: 0.5rem;
-  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.16);
-}
-
-.mypage-wrapper-box-title {
+.mp-pf-item-title {
   color: var(--dark-blue1);
 }
 
-.mypage-wrapper-box-date {
-  color: gray;
+.mp-pf-item-date {
+  margin: 0.5rem 0 1rem 0;
+  color: #707070;
 }
 
-.mypage-wrapper-box-button {
+.mp-pf-item-button {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5em;
-  margin-top: 0.5em;
+}
+
+.mp-pf-item-comment {
+  font-size: 0.8em;
+  color: var(--dark-red);
 }
 
 @media screen and (max-width: 700px) {
-  .mypage-upper-box-left,
-  .mypage-upper-box-right {
+  .mp-upper-left,
+  .mp-upper-right {
     width: 100%;
     max-width: none;
   }
-  .mypage-wrapper-box > li {
+  .mp-pf-item {
     width: 100%;
     margin: 1rem 0.5rem;
   }

@@ -135,6 +135,10 @@
     flex-direction: column;
     gap: 2em;
   }
+  .info-input .main-info .img-container {
+    justify-content: space-between;
+  }
+
   .info-input .clist-item {
     margin: 0.5em 0 1em 0;
   }

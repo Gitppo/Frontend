@@ -103,7 +103,7 @@ export default function GitRepo({match}) {
 
           <div>레포지토리가 private모드이면 인식되지 않습니다.</div>
 
-          <ul className="gr-plist-wrapper">
+          <ul>
             {repolist.map((box, index) => (
               <li key={index} className={"gr-plist-item"}>
                 <b
@@ -125,7 +125,7 @@ export default function GitRepo({match}) {
           </ul>
 
           <button className="round-button" onClick={onNext}>
-            불러오기
+            선택하기
           </button>
         </RoundContainer>
       </div>

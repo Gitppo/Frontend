@@ -5,7 +5,7 @@ import {useHistory} from "react-router-dom";
 
 import Select from "react-select";
 
-import {getOptions} from "../../../hooks/options";
+import {DEFAULT_SKILL_LIST, getOptions} from "../../../hooks/options";
 import {editRepository, saveRepository} from "../../../hooks/repository";
 
 import BeforeAfterBtn from "../../../components/Btn/BeforeAfterBtn";
@@ -277,9 +277,6 @@ function GitRepoDetail({match}) {
 
     getOptions()
       .then((r) => {
-        if (!(r?.length > 0)) {
-          throw Error("Failed to load getOptions.");
-        }
         setSkillOptions(
           r?.map((e) => ({
             value: e.name,
@@ -290,7 +287,7 @@ function GitRepoDetail({match}) {
       .catch((e) => {
         console.error(e);
         setSkillOptions(
-          ["C", "C++", "JavaScript", "CSS", "React", "Firebase"].map((e) => ({
+          DEFAULT_SKILL_LIST.map((e) => ({
             value: e,
             label: e,
           }))
@@ -307,86 +304,81 @@ function GitRepoDetail({match}) {
         onSave={onSave}
       />
 
-      <div className="grd-wrapper">
-        <div className="grd-top-container">
-          <div className="grd-top-container-title">레포지토리</div>
+      <div className="grd-outer">
+        <div className="grd-outer-title">
+          <div className="beautiful-title">레포지토리</div>
           <button className="round-button" onClick={initRepo}>
             초기화
           </button>
         </div>
-        {repos.map((box, index) => (
-          <li className="grd-inner-box" key={box?.repoGitId}>
-            <div className="grd-inner-box-info-container">
-              <div className="grd-inner-box-top-container">
-                <h3
-                  className="grd-inner-box-repo-title"
-                  onClick={() => onFold(index)}
-                >
-                  {box?.rpName}
-                </h3>
+
+        {repos.map((e, i) => (
+          <div className="grd-inner" key={e?.repoGitId}>
+            <div className="grd-inner-header">
+              <div className="grd-inner-header-title">
+                <h3 onClick={() => onFold(i)}>{e?.rpName}</h3>
                 <img
                   style={{height: "1rem", width: "auto", marginRight: "0.2em"}}
                   src={Star}
                   alt={""}
                 />
-                <div className="grd-inner-box-star-num">{box?.rpStar}</div>
-                <button
-                  className="round-button"
-                  onClick={() => onDelete(index)}
-                >
+                <h4>{e?.rpStar}</h4>
+                <button className="round-button" onClick={() => onDelete(i)}>
                   삭제
                 </button>
               </div>
-              <div className="grd-inner-box-bottom-container">
-                <div className="grd-inner-box-bottom-title">생성일</div>
-                <div className="grd-inner-box-bottom-detail">
-                  {box?.created_at || box?.rpSdate}
-                </div>
-                <div className="grd-inner-box-bottom-title">최근 업데이트</div>
-                <div className="grd-inner-box-bottom-detail">
-                  {box?.updated_at || box?.rpEdate}
-                </div>
-                <div className="grd-inner-box-bottom-title">사용언어</div>
-                <div className="grd-inner-box-bottom-detail">
-                  {box?.langStr}
-                </div>
-              </div>
+
+              <ul className="grd-inner-header-info">
+                <li>
+                  <h4>생성일</h4>
+                  <span className="grd-inner-bottom-detail">
+                    {e?.created_at || e?.rpSdate}
+                  </span>
+                </li>
+
+                <li>
+                  <h4>최근 업데이트</h4>
+                  <div className="grd-inner-bottom-detail">
+                    {e?.updated_at || e?.rpEdate}
+                  </div>
+                </li>
+
+                <li>
+                  <h4>사용언어</h4>
+                  <div className="grd-inner-bottom-detail">{e?.langStr}</div>
+                </li>
+              </ul>
             </div>
 
-            <div style={box?.fold ? {display: "none"} : {}}>
-              <div className="grd-inner-box-title">
-                <div className="grd-inner-box-text">
-                  {box?.description ?? "Description이 없습니다."}
-                </div>
-              </div>
-              <div className="grd-inner-box-readme">
+            <div
+              style={e?.fold ? {display: "none"} : {}}
+              className="grd-inner-body"
+            >
+              <li>{e?.description ?? "Description이 없습니다."}</li>
+              <li className="grd-inner-readme">
                 README.md
                 <img
-                  style={{
-                    height: "1rem",
-                    width: "auto",
-                    marginLeft: "0.5em",
-                    cursor: "pointer",
-                  }}
-                  src={box?.useReadme ? GrayEye : BlueEye}
+                  src={e?.useReadme ? GrayEye : BlueEye}
                   alt={""}
                   onClick={() => {
-                    repos[index].useReadme = !(box?.useReadme ?? false);
+                    repos[i].useReadme = !(e?.useReadme ?? false);
                     setRepos([...repos]);
                   }}
                 />
-              </div>
-              <h3 className="grd-inner-box-detail">상세 설명</h3>
-              <div className="grd-inner-box-title-container">
-                <div className="container-title">기간</div>
-                <div className="grd-inner-box-right">
+              </li>
+
+              <li style={{borderBottom: "none", paddingBottom: "0"}}>
+                <h3>상세 설명</h3>
+              </li>
+              <li>
+                <div className="grd-detail-left">기간</div>
+                <div className="grd-detail-right">
                   <input
                     type={"text"}
                     name="rpSdate"
-                    className="grd-inner-box-date"
                     placeholder="시작일"
-                    value={box?.rpSdate || ""}
-                    onChange={(e) => onInputChange(e, index)}
+                    value={e?.rpSdate || ""}
+                    onChange={(e) => onInputChange(e, i)}
                     onFocus={(e) => (e.target.type = "date")}
                     onBlur={(e) => (e.target.type = "text")}
                   />
@@ -394,109 +386,108 @@ function GitRepoDetail({match}) {
                   <input
                     type={"text"}
                     name="rpEdate"
-                    className="grd-inner-box-date"
                     placeholder="마감일"
-                    value={box?.rpEdate || ""}
-                    onChange={(e) => onInputChange(e, index)}
+                    value={e?.rpEdate || ""}
+                    onChange={(e) => onInputChange(e, i)}
                     onFocus={(e) => (e.target.type = "date")}
                     onBlur={(e) => (e.target.type = "text")}
                   />
                 </div>
-              </div>
+              </li>
 
-              <div className="grd-inner-box-title-container">
-                <div className="container-title">역할</div>
-                <div className="grd-inner-box-right">
+              <li>
+                <div className="grd-detail-left">역할</div>
+                <div className="grd-detail-right">
                   <input
                     name="rpRole"
-                    className="grd-inner-box-right"
                     placeholder="프론트엔드 개발 / 디자인"
-                    value={box?.rpRole || ""}
-                    onChange={(e) => onInputChange(e, index)}
+                    value={e?.rpRole || ""}
+                    onChange={(e) => onInputChange(e, i)}
                   />
                 </div>
-              </div>
+              </li>
 
-              <div className="grd-inner-box-title-container">
-                <div className="container-title">기술스택</div>
-                <div className="grd-inner-box-right">
+              <li>
+                <div className="grd-detail-left">기술스택</div>
+                <div className="grd-detail-right">
                   <Select
                     isMulti
                     styles={styles}
                     placeholder=""
                     name="selects"
-                    className="grd-inner-box-skill"
+                    className="grd-inner-skill"
                     classNamePrefix="select"
                     options={skillOptions}
-                    value={box?.skillsArr}
-                    inputValue={box?.skillsValue}
+                    value={e?.skillsArr}
+                    inputValue={e?.skillsValue}
                     onInputChange={(e) => {
-                      repos[index]["skillsValue"] = e;
+                      repos[i]["skillsValue"] = e;
                       setRepos([...repos]);
                     }}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
                         const {value} = e.target;
                         if (
-                          box?.skillsArr?.filter((t) => t.value === value)
+                          e?.skillsArr?.filter((t) => t.value === value)
                             ?.length > 0
                         ) {
                           return;
                         }
-                        if (!(box?.skillsValue?.length > 0)) {
+                        if (!(e?.skillsValue?.length > 0)) {
                           return;
                         }
 
-                        repos[index]["skillsArr"] = [
-                          ...(box?.skillsArr ?? []),
+                        repos[i]["skillsArr"] = [
+                          ...(e?.skillsArr ?? []),
                           {
-                            value: box?.skillsValue,
-                            label: box?.skillsValue,
+                            value: e?.skillsValue,
+                            label: e?.skillsValue,
                           },
                         ];
-                        repos[index].skillsValue = "";
+                        repos[i].skillsValue = "";
                         setRepos([...repos]);
                       }
                     }}
                     onChange={(e) => {
-                      repos[index]["skillsArr"] = e;
+                      repos[i]["skillsArr"] = e;
                       setRepos([...repos]);
                     }}
                   />
                 </div>
-              </div>
+              </li>
 
-              <div className="grd-inner-box-title-container">
-                <div className="container-title">URL</div>
-                <div className="grd-inner-box-right">
+              <li>
+                <div className="grd-detail-left">URL</div>
+                <div className="grd-detail-right">
                   <input
                     name="rpShortContents"
-                    className="grd-inner-box-right"
                     placeholder="000.000.000"
-                    value={box?.rpShortContents || ""}
-                    onChange={(e) => onInputChange(e, index)}
+                    value={e?.rpShortContents || ""}
+                    onChange={(e) => onInputChange(e, i)}
                   />
                 </div>
-              </div>
+              </li>
 
-              <div className="grd-inner-box-title-container-info">
-                <div className="container-title">설명</div>
+              <li>
+                <div className="grd-detail-left">설명</div>
                 <textarea
                   name="rpLongContents"
-                  className="grd-inner-box-info-text"
                   placeholder="설명"
-                  value={box?.rpLongContents || ""}
-                  onChange={(e) => onInputChange(e, index)}
+                  value={e?.rpLongContents || ""}
+                  onChange={(e) => onInputChange(e, i)}
                 />
-              </div>
+              </li>
             </div>
-            <img
-              className={`grd-inner-box-fold-image${box?.fold ? "-down" : ""}`}
-              src={Fold}
-              alt={""}
-              onClick={() => onFold(index)}
-            />
-          </li>
+
+            <div className="grd-inner-fold-img-wrapper">
+              <img
+                src={Fold}
+                alt={""}
+                onClick={() => onFold(i)}
+                style={{transform: `rotate(${e?.fold ? 90 : -90}deg)`}}
+              />
+            </div>
+          </div>
         ))}
       </div>
 
