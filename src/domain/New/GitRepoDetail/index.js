@@ -5,17 +5,20 @@ import {useHistory} from "react-router-dom";
 
 import Select from "react-select";
 
+import {loginBack} from "../../../hooks/login";
+import {getPortfolioDetail, userHasPortfoilo} from "../../../hooks/portfolio";
 import {DEFAULT_SKILL_LIST, getOptions} from "../../../hooks/options";
 import {editRepository, saveRepository} from "../../../hooks/repository";
+import {isValidUser, useUserContext} from "../../../hooks/useUserContext";
 
 import BeforeAfterBtn from "../../../components/Btn/BeforeAfterBtn";
 import BtnModal from "../../../components/Modal/BtnModal";
+import MdPreviewModal from "../../../components/Modal/MdPreviewModal";
 
 import Star from "../../../assets/star.png";
 import BlueEye from "../../../assets/eye-blue.png";
 import GrayEye from "../../../assets/eye-gray.png";
 import Fold from "../../../assets/arrow-no-head.png";
-import {getPortfolioDetail} from "../../../hooks/portfolio";
 
 // react-select style
 const styles = {
@@ -84,13 +87,22 @@ function GitRepoDetail({match}) {
   const location = useLocation();
   const history = useHistory();
 
+  const {user} = useUserContext();
+
   const [repos, setRepos] = useState([]);
   const [skillOptions, setSkillOptions] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
+  const [readmeModal, setReadmeModal] = useState({show: false});
 
   const initRepo = useCallback(() => {
     let tmpRepos = [];
-    for (let e of location.state.gitrepos.filter((e) => e.checked)) {
+    let total = location.state?.gitrepos?.filter((e) => e.checked);
+    if (!(total?.length > 0)) {
+      total = location.state?.data?.repo?.map((e) => ({...e, saved: true}));
+    }
+    total = total || [];
+
+    for (let e of total) {
       const {languages} = e;
 
       // language sum
@@ -143,7 +155,7 @@ function GitRepoDetail({match}) {
 
     // Deep copy
     setRepos(JSON.parse(JSON.stringify(tmpRepos)));
-  }, [location.state.gitrepos, match.params.pfID]);
+  }, [location.state, match.params.pfID]);
 
   const onInputChange = (e, index) => {
     repos[index][e.target.name] = e.target.value;
@@ -166,7 +178,6 @@ function GitRepoDetail({match}) {
     for (let e of repos) {
       // 전송 전 한번 더 정리
       const tmp = {
-        repoGitId: e?.repoGitId || -1,
         rpName: e?.rpName || "noname",
         rpSdate: e?.rpSdate || "",
         rpEdate: e?.rpEdate || "",
@@ -176,7 +187,7 @@ function GitRepoDetail({match}) {
         rpRole: e?.rpRole || "",
         rpStar: e?.rpStar || 0,
         rpSkills: e?.skillsArr?.map((e) => e?.value) || [],
-        rpLanguages: e?.rpLanguages || [],
+        rpLanguages: e?.rpLanguages || {},
       };
 
       // Reformat
@@ -191,6 +202,7 @@ function GitRepoDetail({match}) {
         newRepos.push({
           ...tmp,
           pfId: e?.pfId,
+          repoGitId: e?.repoGitId,
         });
       }
     }
@@ -254,27 +266,44 @@ function GitRepoDetail({match}) {
     });
   };
   const onNext = () => {
-    onSave(true)
-      .then((r) => {
-        history.push(`/new/3/${match.params.pfID}`, r);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+    onSave(true).then((r) => {
+      history.push(`/new/3/${match.params.pfID}`, r);
+    });
   };
 
   useEffect(() => {
-    if (
-      !match.params?.hasOwnProperty("pfID") ||
-      !location.state ||
-      !location?.state?.hasOwnProperty("gitrepos")
-    ) {
-      history.replace("/error/load-fail");
+    // url check
+    if (!match.params?.hasOwnProperty("pfID")) {
+      history.replace("/error");
+      return;
+    }
+
+    // invalid user
+    if (!isValidUser(user)) {
+      loginBack(location.pathname);
+      return;
+    }
+
+    // authority check
+    if (!userHasPortfoilo(user.id, match.params.pfID)) {
+      history.replace("/error/unauthorized");
+      return;
+    }
+
+    // data check
+    if (!location.state?.gitrepos && !location.state?.data?.repo) {
+      getPortfolioDetail(match.params.pfID)
+        .then((r) => {
+          history.replace(location.pathname, {data: r});
+        })
+        .catch((e) => {
+          console.error(e);
+          history.replace("/error/load-fail");
+        });
       return;
     }
 
     initRepo();
-
     getOptions()
       .then((r) => {
         setSkillOptions(
@@ -293,7 +322,7 @@ function GitRepoDetail({match}) {
           }))
         );
       });
-  }, [history, location.state, match.params, initRepo]);
+  }, [history, location, match.params, user, initRepo]);
 
   return (
     <div className="grd">
@@ -307,7 +336,7 @@ function GitRepoDetail({match}) {
       <div className="grd-outer">
         <div className="grd-outer-title">
           <div className="beautiful-title">레포지토리</div>
-          <button className="round-button" onClick={initRepo}>
+          <button className="round-white-btn" onClick={initRepo}>
             초기화
           </button>
         </div>
@@ -323,7 +352,7 @@ function GitRepoDetail({match}) {
                   alt={""}
                 />
                 <h4>{e?.rpStar}</h4>
-                <button className="round-button" onClick={() => onDelete(i)}>
+                <button className="round-btn" onClick={() => onDelete(i)}>
                   삭제
                 </button>
               </div>
@@ -356,7 +385,14 @@ function GitRepoDetail({match}) {
             >
               <li>{e?.description ?? "Description이 없습니다."}</li>
               <li className="grd-inner-readme">
-                README.md
+                <span
+                  onClick={() => {
+                    console.log(e?.readme);
+                    setReadmeModal({show: true, source: e?.readme});
+                  }}
+                >
+                  README.md
+                </span>
                 <img
                   src={e?.useReadme ? GrayEye : BlueEye}
                   alt={""}
@@ -496,6 +532,13 @@ function GitRepoDetail({match}) {
           title={"저장에 실패하였습니다"}
           setShow={setShowAlert}
           btns={[{name: "닫기", onClick: () => setShowAlert(false)}]}
+        />
+      )}
+
+      {readmeModal?.show && (
+        <MdPreviewModal
+          source={readmeModal?.source || ""}
+          setModal={setReadmeModal}
         />
       )}
     </div>

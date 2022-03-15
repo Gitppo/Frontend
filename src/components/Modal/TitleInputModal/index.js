@@ -53,7 +53,7 @@ export default function TitleInputModal({
         <div className="alert-msg">{alert}</div>
         <div className={"yn-modal-btn-wrapper"}>
           <button
-            className={"round-button"}
+            className={"round-btn"}
             onClick={() => {
               if (text?.length === 0)
                 setAlert("포트폴리오 제목을 입력해주세요.");
@@ -62,7 +62,7 @@ export default function TitleInputModal({
           >
             시작하기
           </button>
-          <button className={"round-button"} onClick={onCancle}>
+          <button className={"round-btn"} onClick={onCancle}>
             취소
           </button>
         </div>

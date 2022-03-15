@@ -4,20 +4,26 @@ import {useCallback, useEffect} from "react";
 import {useLocation} from "react-router";
 import {useHistory} from "react-router-dom";
 
-import {useUserContext} from "../../../hooks/useUserContext";
+import {isValidUser, useUserContext} from "../../../hooks/useUserContext";
 import {getRepository} from "../../../hooks/repository";
-import {createPortfolio} from "../../../hooks/portfolio";
+import {createPortfolio, getPortfolioDetail} from "../../../hooks/portfolio";
 
 import hippoIcon from "../../../assets/hippo-blue.png";
 
 export default function LoadRepo() {
   const history = useHistory();
   const location = useLocation();
+
   const {user} = useUserContext();
 
   const createPF = useCallback(async () => {
+    if (!isValidUser(user)) {
+      history.replace("/error/login-require");
+      return;
+    }
+
     try {
-      let pfID;
+      let pfID, data;
       if (!location.state?.hasOwnProperty("data")) {
         // create new portfolio
         pfID = await createPortfolio(user.id, location.state?.title);
@@ -26,18 +32,23 @@ export default function LoadRepo() {
         }
       } else {
         pfID = location.state.data.id;
+        data = await getPortfolioDetail(pfID);
       }
 
       // load repositories
       const repos = await getRepository(user.githubUserName);
 
       // move to next page
-      history.push(`/new/1/${pfID}`, {...location.state, gitrepos: repos});
+      history.push(`/new/1/${pfID}`, {
+        ...(location.state || {}),
+        data: data,
+        gitrepos: repos,
+      });
     } catch (e) {
       console.error(e);
       history.replace("/error/load-fail");
     }
-  }, [history, location.state, user.githubUserName, user.id]);
+  }, [history, location.state, user]);
 
   useEffect(createPF, [createPF]);
 

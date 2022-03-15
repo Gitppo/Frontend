@@ -6,7 +6,7 @@
   flex-direction: row;
   justify-content: space-between;
 }
-.info-input .main-info .round-button {
+.info-input .main-info .round-btn {
   width: 8rem;
 }
 .info-input .main-info .img-container {
@@ -60,7 +60,7 @@
 }
 
 .info-input input[type="file"] {
-  display:none;
+  display: none;
 }
 
 .info-input input[type="text"],

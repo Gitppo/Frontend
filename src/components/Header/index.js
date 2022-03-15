@@ -20,38 +20,44 @@ function Header() {
 
   const {user, setUser} = useUserContext();
 
-  const [path, setPath] = useState();
-  const [isHome, setIsHome] = useState(true);
+  const [headerColor, setHeaderColor] = useState("#0046d0");
+  const [curMenu, setCurMenu] = useState(1);
 
   const isValid = useCallback(() => isValidUser(user), [user]);
   const logout = () => {
     setUser({id: -1, githubUserName: null});
-    history.push("/");
+    history.replace("/", {});
   };
 
   useEffect(() => {
-    setPath(location.pathname);
-    setIsHome(location.pathname === "/");
+    const color = blueHeader.includes(location.pathname)
+      ? "#0046d0"
+      : "#0f2c7f";
+
+    document.head.getElementsByTagName("meta")["theme-color"].content = color;
+    setHeaderColor(color);
+
+    if (location.pathname.indexOf("/error") === 0) {
+      setCurMenu(0);
+    } else if (location.pathname === "/") {
+      setCurMenu(1);
+    } else {
+      setCurMenu(2);
+    }
   }, [location.pathname]);
 
   return (
-    <header
-      className={
-        blueHeader.includes(path)
-          ? "header-background-color1"
-          : "header-background-color2"
-      }
-    >
+    <header style={{backgroundColor: headerColor}}>
       <div>
         {/* 메뉴 */}
         <div className="left">
-          <span style={{opacity: isHome ? 1 : 0.3}}>
+          <span style={{opacity: curMenu === 1 ? 1 : 0.3}}>
             <Link to={"/"}>홈</Link>
           </span>
 
           {isValid() ? (
             <>
-              <span style={{opacity: isHome ? 0.3 : 1}}>
+              <span style={{opacity: curMenu === 2 ? 1 : 0.3}}>
                 <Link to={"/my-page"}>마이페이지</Link>
               </span>
               <span style={{opacity: 0.3, cursor: "pointer"}} onClick={logout}>
@@ -60,7 +66,7 @@ function Header() {
             </>
           ) : (
             <span
-              style={{opacity: isHome ? 0.3 : 1}}
+              style={{opacity: curMenu === 2 ? 1 : 0.3}}
               onClick={() => loginBack()}
             >
               마이페이지

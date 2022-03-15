@@ -2,16 +2,26 @@ import "./style.css";
 
 import {Route} from "react-router-dom";
 
-import ErrorLoading from "./ErrorLoading";
-import Error404 from "./Error404";
+import NotFound from "./NotFound";
+import LoadFail from "./LoadFail";
+import Unauthorized from "./Unauthorized";
+import RequireLogin from "./RequireLogin";
 
-function Error({match}) {
+export default function Error({match}) {
   return (
     <div className={"error"}>
-      <Route exact path={`${match.url}/load-fail`} component={ErrorLoading} />
-      <Route path={"*"} component={Error404} />
+      <Route exact path={`${match.url}/`} component={NotFound} />
+      <Route
+        exact
+        path={`${match.url}/unauthorized`}
+        component={Unauthorized}
+      />
+      <Route
+        exact
+        path={`${match.url}/login-require`}
+        component={RequireLogin}
+      />
+      <Route exact path={`${match.url}/load-fail`} component={LoadFail} />
     </div>
   );
 }
-
-export default Error;

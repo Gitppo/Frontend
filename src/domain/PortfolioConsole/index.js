@@ -1,17 +1,21 @@
 import "./style.css";
-import {useState} from "react";
-import {useHistory} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {useHistory, useLocation} from "react-router-dom";
 
 import RadioBtn from "../../components/Btn/RadioBtn";
 import BeforeAfterBtn from "../../components/Btn/BeforeAfterBtn";
-
 import Portfolio1 from "../../components/Portfolio/Portfolio1";
 import Portfolio2 from "../../components/Portfolio/Portfolio2";
-import {useLocation} from "react-router-dom";
 
-export default function PortfolioConsole() {
+import {loginBack} from "../../hooks/login";
+import {userHasPortfoilo} from "../../hooks/portfolio";
+import {isValidUser, useUserContext} from "../../hooks/useUserContext";
+
+export default function PortfolioConsole({match}) {
   const location = useLocation();
   const history = useHistory();
+
+  const {user} = useUserContext();
 
   const pInfo = {
     title: "2021 조깃포 삼성 포트폴리오",
@@ -20,8 +24,28 @@ export default function PortfolioConsole() {
   const [pStyleIndex, setPStyleIndex] = useState(0);
 
   const onPrev = () => {
-    history.push("/new/3", {...location.state});
+    history.push(`/new/3/${match.params.pfID}`, {...location.state});
   };
+
+  useEffect(() => {
+    // url check
+    if (!match.params?.hasOwnProperty("pfID")) {
+      history.replace("/error");
+      return;
+    }
+
+    // invalid user
+    if (!isValidUser(user)) {
+      loginBack(location.pathname);
+      return;
+    }
+
+    // authority check
+    if (!userHasPortfoilo(user.id, match.params.pfID)) {
+      history.replace("/error/unauthorized");
+      return;
+    }
+  }, []);
 
   return (
     <div className="portfolio-console">
@@ -30,8 +54,8 @@ export default function PortfolioConsole() {
       <div className="title-wrapper">
         <h2 className="title">{pInfo?.title}</h2>
         <div className="title-btn-wrapper">
-          <button className="round-button">추출하기</button>
-          <button className="round-button">공유하기</button>
+          <button className="round-btn">추출하기</button>
+          <button className="round-btn">공유하기</button>
         </div>
       </div>
 

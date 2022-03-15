@@ -1,18 +1,16 @@
 import errorHippo from "../../assets/hippo-transparent.png";
 
-function ErrorLoading() {
+export default function NotFound() {
   return (
     <>
       <div className={"large-text-front"}>
-        로딩-실패
-        <br />
-        ㅠ_ㅠ
+        <div>404</div>
+        <div>NOT FOUND</div>
       </div>
+
       <div className="error-hippo">
-        <img src={errorHippo} alt="" />
+        <img src={errorHippo} alt="" style={{transform: "scaleX(-1)"}} />
       </div>
     </>
   );
 }
-
-export default ErrorLoading;

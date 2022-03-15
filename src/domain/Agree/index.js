@@ -42,7 +42,14 @@ function Agreement() {
     }
 
     let agree = true;
+    let parsed = [];
     for (let e of contract) {
+      parsed.push({
+        termID: e.id,
+        termAgreementIsAgree: e?.agree ? true : false,
+        userID: user?.id,
+      });
+
       if (e?.required && !e?.agree) {
         agree = false;
         break;
@@ -53,7 +60,7 @@ function Agreement() {
       setErrMsg("필수 항목에 동의하지 않으셨습니다.");
     } else {
       // 동의 시 등록
-      saveTermToAgree(user.id, contract)
+      saveTermToAgree(user.id, parsed)
         .then((r) => {
           if (r) history.push("/my-page");
           else
@@ -152,7 +159,7 @@ function Agreement() {
         </div>
 
         <div className={"agree-button-container"}>
-          <button className={"round-button"} onClick={onAgree}>
+          <button className={"round-btn"} onClick={onAgree}>
             동의
           </button>
         </div>

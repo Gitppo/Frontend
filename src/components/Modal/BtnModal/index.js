@@ -31,7 +31,7 @@ export default function BtnModal({
         <div className={"yn-modal-btn-wrapper"}>
           {btns?.map((e) => (
             <button
-              className={"round-button"}
+              className={"round-btn"}
               onClick={e?.onClick}
               key={`btns-${e?.name}`}
             >

@@ -2,6 +2,9 @@ import "./style.css";
 import {useEffect, useState} from "react";
 import {useHistory, useLocation} from "react-router-dom";
 
+import {loginBack} from "../../../hooks/login";
+import {isValidUser, useUserContext} from "../../../hooks/useUserContext";
+
 import RadioBtn from "../../../components/Btn/RadioBtn";
 import BeforeAfterBtn from "../../../components/Btn/BeforeAfterBtn";
 import RoundContainer from "../../../components/RoundContainer";
@@ -11,14 +14,10 @@ export default function GitRepo({match}) {
   const history = useHistory();
   const location = useLocation();
 
+  const {user} = useUserContext();
+
   const [alertShow, setAlertShow] = useState(false);
-  const [repolist, setRepolist] = useState([
-    {
-      id: 1,
-      name: "hyu-likelion/NESI",
-      description: "바닐라 자바스크립트 구현 프로젝트 리액트로 바꿔보기",
-    },
-  ]);
+  const [repolist, setRepolist] = useState([]);
 
   const onNext = () => {
     const target = repolist.filter((e) => e.checked);
@@ -34,12 +33,26 @@ export default function GitRepo({match}) {
   };
 
   useEffect(() => {
-    if (
-      !match.params?.hasOwnProperty("pfID") ||
-      !location.state ||
-      !location.state.hasOwnProperty("gitrepos")
-    ) {
-      history.replace("/error/load-fail");
+    // url check
+    if (!match.params?.hasOwnProperty("pfID")) {
+      history.replace("/error");
+      return;
+    }
+
+    // invalid user
+    if (!isValidUser(user)) {
+      loginBack(location.pathname);
+      return;
+    }
+
+    if (!location.state?.hasOwnProperty("gitrepos")) {
+      history.push("/new/repo-load", {
+        ...(location.state || {}),
+        data: {
+          ...(location.state?.data || {}),
+          id: match.params.pfID,
+        },
+      });
       return;
     }
 
@@ -51,7 +64,7 @@ export default function GitRepo({match}) {
       })
     );
 
-    if (location.state.hasOwnProperty("data")) {
+    if (location.state?.data?.hasOwnProperty("repo")) {
       for (let e of location.state?.data?.repo) {
         let search = false;
         for (let j in gitrepos) {
@@ -86,7 +99,7 @@ export default function GitRepo({match}) {
     }
 
     setRepolist(gitrepos);
-  }, [history, location.state, match.params]);
+  }, [history, location.pathname, location.state, match.params, user]);
 
   return (
     <div className="gr">
@@ -124,7 +137,7 @@ export default function GitRepo({match}) {
             ))}
           </ul>
 
-          <button className="round-button" onClick={onNext}>
+          <button className="round-btn" onClick={onNext}>
             선택하기
           </button>
         </RoundContainer>

@@ -10,14 +10,7 @@ export const getPortfolio = async (id) => {
     .get("/api/portfolio", {
       params: {id: id},
     })
-    .then((r) => {
-      if (r.status !== 200 || r.data?.status !== "OK")
-        throw Error("NetErr : Failed to load portfolio.");
-      return r.data.data;
-    })
-    .catch((e) => {
-      throw e;
-    });
+    .then((r) => r.data);
 };
 
 export const createPortfolio = async (id, pfName) => {
@@ -31,15 +24,7 @@ export const createPortfolio = async (id, pfName) => {
       pfStar: true,
       usrId: id,
     })
-    .then((r) => {
-      if (r.status !== 200 || r.data?.message !== "포트폴리오 추가 완료")
-        throw Error("NetErr : Failed to create a new portfolio.");
-
-      return r.data.id;
-    })
-    .catch((e) => {
-      throw e;
-    });
+    .then((r) => r.id);
 };
 
 export const deletePortfolio = async (pfID) => {
@@ -47,19 +32,11 @@ export const deletePortfolio = async (pfID) => {
     throw Error("InputErr : Invalid portfolio ID.");
   }
 
-  return await progressClient(true)
+  return progressClient(true)
     .delete("/api/portfolio", {
       params: {id: pfID},
     })
-    .then((r) => {
-      if (r.status !== 200 || r.data?.message !== "포트폴리오 삭제 완료") {
-        throw Error(`NetErr : Failed to delete a portfolio. : id=${pfID}`);
-      }
-      return r.data?.id;
-    })
-    .catch((e) => {
-      throw e;
-    });
+    .then((r) => r?.id);
 };
 
 export const getPortfolioDetail = async (pfID) => {
@@ -71,13 +48,28 @@ export const getPortfolioDetail = async (pfID) => {
     .get("/api/portfolio/all", {
       params: {id: pfID},
     })
-    .then((r) => {
-      if (r.status !== 200 || r.data?.status !== "OK")
-        throw Error("NetErr : Failed to load portfolio's detail.");
+    .then((r) => r?.data);
+};
 
-      return r.data?.data;
+export const userHasPortfoilo = async (userId, pfId) => {
+  if (!isValidId(userId) || !pfId) {
+    return false;
+  }
+
+  return getPortfolio(userId)
+    .then((r) => {
+      for (let e of r) {
+        if (e?.id === pfId) {
+          return true;
+        }
+      }
+      return false;
     })
     .catch((e) => {
-      throw e;
+      console.error(e);
+      console.error(
+        `UserErr : Unauthorized user is approaching portfolio ${pfId}`
+      );
+      return false;
     });
 };

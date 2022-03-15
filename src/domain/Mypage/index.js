@@ -30,20 +30,27 @@ function Mypage() {
   const [showInputModal, setShowInputModal] = useState(false);
 
   const onDelete = async (id) => {
-    const targetID = await deletePortfolio(id);
-    for (let i = 0; i < portfolio.length; i++) {
-      if (portfolio[i].id === targetID) {
-        portfolio.splice(i, 1);
-        break;
-      }
-    }
-    setPortfolio([...portfolio]);
+    await deletePortfolio(id)
+      .then((r) => {
+        for (let i = 0; i < portfolio.length; i++) {
+          if (portfolio[i].id === r) {
+            portfolio.splice(i, 1);
+            break;
+          }
+        }
+        setPortfolio([...portfolio]);
+      })
+      .catch((e) => {
+        console.error(`NetErr : Failed to delete portfolio ${id}. : ${e}`);
+      });
   };
   const onRepair = async (id) => {
-    getPortfolioDetail(id).then((r) => {
-      console.log(r);
-      history.push("/new/repo-load", {data: r});
-    });
+    // getPortfolioDetail(id).then((r) => {
+    //   console.log(r);
+    //   history.push("/new/repo-load", {data: r});
+    // });
+
+    history.push("/new/repo-load", {data: {id: id}});
   };
 
   const createPortfolio = () => {
@@ -73,7 +80,7 @@ function Mypage() {
         setPortfolio(
           data.map((e) => ({
             ...e,
-            createDateStr: e?.hasOwnProperty("createdDate")
+            createdDateStr: e?.hasOwnProperty("createdDate")
               ? moment(e?.createdDate).format("YYYY.MM.DD")
               : "NULL",
             modifiedDateStr: e?.hasOwnProperty("modifiedDate")
@@ -93,7 +100,7 @@ function Mypage() {
       <div className={"mp-upper"}>
         <div className={"mp-upper-left"}>
           <h3>새로운 포트폴리오 생성</h3>
-          <button className={"round-button"} onClick={createPortfolio}>
+          <button className={"round-white-btn"} onClick={createPortfolio}>
             바로가기
           </button>
         </div>
@@ -120,7 +127,7 @@ function Mypage() {
               <h3 className={"mp-pf-item-title"}>{box?.pfName}</h3>
 
               <div className={"mp-pf-item-date"}>
-                <div>생성 {box?.createDateStr}</div>
+                <div>생성 {box?.createdDateStr}</div>
                 <div>수정 {box?.modifiedDateStr}</div>
                 <div
                   className="mp-pf-item-comment"
@@ -132,13 +139,13 @@ function Mypage() {
 
               <div className={"mp-pf-item-button"}>
                 <button
-                  className={"round-button"}
+                  className={"round-btn"}
                   onClick={() => onRepair(box?.id)}
                 >
                   수정
                 </button>
                 <button
-                  className={"round-button"}
+                  className={"round-red-btn"}
                   onClick={() => onDelete(box?.id)}
                 >
                   삭제

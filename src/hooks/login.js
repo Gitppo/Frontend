@@ -8,12 +8,6 @@ export const doLogin = async (path) => {
 
   return await progressClient(true)
     .post(`/auth?code=${code}`)
-    .then((r) => {
-      if (r.status !== 200) {
-        throw Error("NetErr : Github login fail");
-      }
-      return r.data;
-    })
     .catch((e) => {
       throw e;
     });

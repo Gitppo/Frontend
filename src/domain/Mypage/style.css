@@ -23,11 +23,8 @@
   background-color: var(--dark-blue1);
 }
 /* 새로운 포트폴리오 생성 버튼 */
-.mp-upper-left > .round-button {
+.mp-upper-left > .round-white-btn {
   margin-top: 0.8em;
-
-  background-color: white;
-  color: var(--dark-blue2);
 }
 
 /* 임시 저장 중인 포트폴리오 & 최종 완성 포트폴리오 */

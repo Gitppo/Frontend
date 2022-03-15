@@ -1,4 +1,6 @@
 .error {
+  position: relative;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,20 +8,26 @@
 
   width: 100%;
   min-height: calc(100vh - 7.5rem);
-
-  position: relative;
-  overflow: hidden;
 }
 
 .error-hippo {
   position: absolute;
   left: -75%;
 
-  width: 150%;
-  height: fit-content;
+  width: 140%;
+  max-height: calc(100vh - 7.5rem);
+
   overflow: hidden;
 }
 .error-hippo img {
   width: 100%;
   height: auto;
+
+  margin-top: -10%;
+}
+
+@media screen and (max-width: 700px) {
+  .error {
+    word-break: break-all;
+  }
 }

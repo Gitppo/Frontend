@@ -61,7 +61,7 @@ client.interceptors.response.use(
         `NetErr : API response is not 200. : ${response?.statusText}`
       );
     }
-    return response;
+    return response.data;
   },
   (error) => {
     if (timerId) {

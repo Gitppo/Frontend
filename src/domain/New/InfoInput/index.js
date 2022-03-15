@@ -1,90 +1,247 @@
 import "./style.css";
-import React, {useEffect, useState} from "react";
+
+import {useCallback, useEffect, useState} from "react";
 import {useLocation} from "react-router";
 import {useHistory} from "react-router-dom";
-
-import axios from "axios";
-
-import RoundContainer from "../../../components/RoundContainer";
-import BeforeAfterBtn from "../../../components/Btn/BeforeAfterBtn";
 
 import Modal from "../../../components/Modal";
 import BtnModal from "../../../components/Modal/BtnModal";
 import PortfolioChoiceModal from "../../../components/Modal/PortfolioChoiceModal";
+import RoundContainer from "../../../components/RoundContainer";
+import BeforeAfterBtn from "../../../components/Btn/BeforeAfterBtn";
 
 import HippoImg from "../../../assets/profile.png";
-import {getOptions} from "../../../hooks/options";
 
-export default function InfoInput() {
+import {DEFAULT_SKILL_LIST, getOptions} from "../../../hooks/options";
+import {editPersonal, savePersonal} from "../../../hooks/personal";
+import {isValidUser, useUserContext} from "../../../hooks/useUserContext";
+import {loginBack} from "../../../hooks/login";
+import {getPortfolioDetail, userHasPortfoilo} from "../../../hooks/portfolio";
+
+const onArrChange = (target, setTarget, i, e) => {
+  const {name, value} = e?.target;
+  target[i][name] = value;
+  setTarget([...target]);
+};
+const onJsonChange = (target, setTarget, e) => {
+  const {name, value} = e?.target;
+  target[name] = value;
+  setTarget({...target});
+};
+
+const onRemove = (target, setTarget, i) => {
+  const list = [...target];
+  list.splice(i, 1);
+  setTarget(list);
+};
+
+export default function InfoInput({match}) {
   const location = useLocation();
   const history = useHistory();
 
-  const [showModal, setShowModal] = useState(true);
-  const [showModal2, setShowModal2] = useState(false);
-  const [imgBase64, setImgBase64] = useState("");
+  const {user} = useUserContext();
 
-  const handleChangeFile = (event) => {
+  const [showFirstModal, setShowFirstModal] = useState(false),
+    [showSecondModal, setShowSecondModal] = useState(false),
+    [alertModal, setAlertModal] = useState({show: false});
+
+  const [skillStack, setSkillStack] = useState([]),
+    [personalId, setPersonalId] = useState(-1);
+
+  const [basicList, setBasicList] = useState({
+      biName: "",
+      biMail: "",
+      biBirth: "",
+      biPhone: "",
+    }),
+    [introList, setIntroList] = useState({shortIntro: "", longIntro: ""}),
+    [careerList, setCareerList] = useState([]),
+    [eduList, setEduList] = useState([]),
+    [licList, setLicList] = useState([]),
+    [awardList, setAwardList] = useState([]),
+    [actList, setActList] = useState([]),
+    [snsList, setSnsList] = useState([]),
+    [skillList, setSkillList] = useState([]),
+    [paperList, setPaperList] = useState([]);
+
+  const onImgChange = (e) => {
     const reader = new FileReader();
     reader.onloadend = () => {
       const base64 = reader.result;
       if (base64) {
-        setImgBase64(base64.toString());
+        basicList.biImage = base64.toString();
+        setBasicList({...basicList});
       }
     };
-    if (event.target.files[0]) {
-      reader.readAsDataURL(event.target.files[0]);
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
     }
   };
 
-  const [infoList, setInfoList] = useState([
-    {biName: "", biMail: "", biBirth: "", biPhone: ""},
-  ]);
-  const [careerList, setCareerList] = useState([]);
-  const [schoolList, setSchoolList] = useState([]);
-  const [certList, setCertList] = useState([]);
-  const [awardList, setAwardList] = useState([]);
-  const [etcList, setEtcList] = useState([]);
-  const [introList, setIntroList] = useState([{shortIntro: "", longIntro: ""}]);
-  const [snsList, setSnsList] = useState([]);
-  const [stackList, setStackList] = useState([]);
-  const [patentList, setPatentList] = useState([]);
+  const initPersonal = useCallback((data = undefined) => {
+    if (!data) {
+      setPersonalId(-1);
+      setShowFirstModal(true);
+      return;
+    }
 
-  const [skillList, setSkillList] = useState([]);
+    setPersonalId(data?.id ?? -1);
+    setActList(data?.activities || []);
+    setAwardList(data?.awards || []);
+    setBasicList(data?.basicInfo || {});
+    setCareerList(data?.careers || []);
+    setEduList(data?.educations || []);
+    setIntroList(data?.introduction || {});
+    setLicList(data?.licenses || []);
+    setPaperList(data?.papers || []);
+    setSnsList(data?.snsList || []);
+    setSkillList(data?.skillList || []);
+  }, []);
 
-  const handleInputChange = (List, setList, i, e) => {
-    const {name, value} = e?.target;
-    const list = [...List];
-    list[i][name] = value;
-    setList(list);
-    console.log(list);
+  const onSave = () => {
+    let result = {
+      pfId: parseInt(match.params.pfID),
+      activities: actList || [],
+      awards: awardList || [],
+      basicInfo: basicList || {},
+      careers: careerList || [],
+      educations: eduList || [],
+      introduction: introList,
+      licenses: licList || [],
+      papers: paperList || [],
+      snsList: snsList || [],
+      skills: skillList || [],
+    };
+
+    for (let i in result) {
+      if (!Array.isArray(result[i])) {
+        continue;
+      }
+
+      let delList = [];
+      for (let j = 0; j < result[i]?.length || 0; j++) {
+        let blank = true;
+        for (let k in result[i][j]) {
+          if (result[i][j][k]?.length > 0) {
+            blank = false;
+            break;
+          }
+        }
+        if (blank) delList.push(j);
+      }
+
+      delList.sort((a, b) => b - a);
+      for (let j of delList) {
+        result[i].splice(j, 1);
+      }
+    }
+
+    if (personalId > -1) {
+      result.id = personalId;
+      return editPersonal(result)
+        .then((r) => {
+          if (!r) {
+            throw Error("DataErr : Failed to reload personal information.");
+          }
+
+          // history 교체
+          let newState = location?.state || {};
+          newState.data.personal = r;
+          history.replace(location.pathname, newState);
+
+          return true;
+        })
+        .catch((e) => {
+          console.error(e);
+          setAlertModal({
+            show: true,
+            title: "입력 내용을 수정하는데 실패하였습니다",
+          });
+          return false;
+        });
+    } else {
+      return savePersonal(result)
+        .then((r) => {
+          if (!r) {
+            throw Error("DataErr : Failed to reload personal information.");
+          }
+
+          // history 교체
+          let newState = location?.state || {};
+          newState.data.personal = r;
+          history.replace(location.pathname, newState);
+
+          return true;
+        })
+        .catch((e) => {
+          console.error(e);
+          setAlertModal({
+            show: true,
+            title: "입력 내용을 저장하는데 실패하였습니다.",
+          });
+
+          return false;
+        });
+    }
   };
-
-  const handleInputChange2 = (List, setList, e) => {
-    const {name, value} = e?.target;
-    List[0][name] = value;
-    setList(List);
-    console.log(List);
-  };
-
-  const handleRemoveClick = (List, setList, i) => {
-    const list = [...List];
-    list.splice(i, 1);
-    setList(list);
-  };
-
-  const tmpSave = () => {};
 
   const onPrev = () => {
-    history.push("/new/2", {
+    history.push(`/new/2/${match.params.pfID}`, {
       ...location.state,
     });
   };
   const onNext = () => {
-    tmpSave();
-    history.push("/export", {
-      ...location.state,
+    onSave().then((r) => {
+      if (r) {
+        history.push(`/export/${match.params.pfID}`, {
+          ...location.state,
+        });
+      }
     });
   };
+
+  useEffect(() => {
+    // url check
+    if (!match.params?.hasOwnProperty("pfID")) {
+      history.replace("/error");
+      return;
+    }
+
+    // invalid user
+    if (!isValidUser(user)) {
+      loginBack(location.pathname);
+      return;
+    }
+
+    // authority check
+    if (!userHasPortfoilo(user.id, match.params.pfID)) {
+      history.replace("/error/unauthorized");
+      return;
+    }
+
+    // data check
+    if (!location.state?.data?.repo) {
+      getPortfolioDetail(match.params.pfID)
+        .then((r) => {
+          history.replace(location.pathname, {data: r});
+        })
+        .catch((e) => {
+          console.error(e);
+          history.replace("/error/load-fail");
+        });
+      return;
+    }
+
+    initPersonal(location?.state?.data?.personal);
+    getOptions()
+      .then((r) => {
+        setSkillStack(r.map((e) => e?.name || ""));
+      })
+      .catch((e) => {
+        console.error(e);
+        setSkillStack(DEFAULT_SKILL_LIST);
+      });
+  }, [history, location, match.params, user, initPersonal]);
 
   return (
     <div className="info-input">
@@ -92,76 +249,74 @@ export default function InfoInput() {
         saveShow={true}
         onPrev={onPrev}
         onNext={onNext}
-        onSave={tmpSave}
+        onSave={onSave}
       />
 
       <RoundContainer blueHeader={true}>
         {/* mainInfo: 기본 인적사항, 사진 */}
         <div className="main-info">
           {/* generalInfo: 기본 인적사항 */}
-          <div>
+          <div className="left">
             <h1 className="beautiful-title">기본 인적사항</h1>
             <br />
-            <form className="info-input-form">
+            <div className="info-input-form">
               <input
                 type="text"
                 name="biName"
                 placeholder="이름"
-                value={infoList.biName}
-                onChange={(e) => handleInputChange2(infoList, setInfoList, e)}
-                required
+                value={basicList.biName || ""}
+                onChange={(e) => onJsonChange(basicList, setBasicList, e)}
               />
               <input
                 type="email"
                 name="biMail"
                 placeholder="이메일"
-                value={infoList.biMail}
-                onChange={(e) => handleInputChange2(infoList, setInfoList, e)}
-                required
+                value={basicList.biMail || ""}
+                onChange={(e) => onJsonChange(basicList, setBasicList, e)}
               />
               <input
                 type="text"
                 name="biBirth"
                 placeholder="생년월일 (ex.19951004)"
-                value={infoList.biBirth}
-                onChange={(e) => handleInputChange2(infoList, setInfoList, e)}
+                value={basicList.biBirth || ""}
+                onChange={(e) => onJsonChange(basicList, setBasicList, e)}
                 onFocus={(e) => (e.target.type = "date")}
                 onBlur={(e) => (e.target.type = "text")}
-                required
               />
               <input
                 type="text"
                 name="biPhone"
                 placeholder="전화번호"
-                maxLength="11"
-                value={infoList.biPhone}
-                onChange={(e) => handleInputChange2(infoList, setInfoList, e)}
-                required
+                value={basicList.biPhone || ""}
+                onChange={(e) => onJsonChange(basicList, setBasicList, e)}
               />
-            </form>
+            </div>
           </div>
 
           {/* 사진 */}
-          <div>
+          <div className="right">
             <h1 className="beautiful-title">사진</h1>
             <br />
 
             <div className="img-container">
               <div className="img-preview">
-                <img src={imgBase64 || HippoImg} alt={""} />
+                <img src={basicList?.biImage || HippoImg} alt={""} />
               </div>
 
               <div className="img-btns">
                 <label
                   htmlFor="img-file"
-                  className="round-button"
+                  className="round-btn"
                   style={{textAlign: "center"}}
                 >
                   파일 선택
                 </label>
                 <button
-                  className="round-button"
-                  onClick={() => setImgBase64("")}
+                  className="round-red-btn"
+                  onClick={() => {
+                    basicList.biImage = "";
+                    setBasicList({...basicList});
+                  }}
                 >
                   기본 이미지로
                 </button>
@@ -170,15 +325,13 @@ export default function InfoInput() {
                   id="img-file"
                   type="file"
                   accept="image/*"
-                  onChange={handleChangeFile}
+                  onChange={onImgChange}
                   style={{display: "none"}}
                 />
               </div>
             </div>
           </div>
         </div>
-
-        <br />
 
         <div className="ii-etc">
           <h1 className="beautiful-title">그 외의 정보</h1>
@@ -188,25 +341,24 @@ export default function InfoInput() {
             <div className="title">
               <h3>자기소개</h3>
             </div>
-            {/* // TODO : List -> 단일 요소  */}
             <div className="info-intro">
               <input
                 id="introShort"
                 type="text"
                 name="shortIntro"
                 placeholder="한줄소개"
-                value={introList.shortIntro}
+                value={introList.shortIntro || ""}
                 onChange={(e) => {
-                  handleInputChange2(introList, setIntroList, e);
+                  onJsonChange(introList, setIntroList, e);
                 }}
               />
               <textarea
                 id="introLong"
                 placeholder="자기소개"
                 name="longIntro"
-                value={introList.longIntro}
+                value={introList.longIntro || ""}
                 onChange={(e) => {
-                  handleInputChange2(introList, setIntroList, e);
+                  onJsonChange(introList, setIntroList, e);
                 }}
               />
             </div>
@@ -225,7 +377,6 @@ export default function InfoInput() {
                       carDepartmentName: "",
                       carPosition: "",
                       carEndDate: "",
-                      carPosition: "",
                       carJob: "",
                     },
                   ]);
@@ -241,9 +392,7 @@ export default function InfoInput() {
                   <div>
                     <button
                       className="del-btn"
-                      onClick={() =>
-                        handleRemoveClick(careerList, setCareerList, i)
-                      }
+                      onClick={() => onRemove(careerList, setCareerList, i)}
                     >
                       -
                     </button>
@@ -254,27 +403,27 @@ export default function InfoInput() {
                       type="text"
                       name="carName"
                       placeholder="회사명"
-                      value={x?.carName}
+                      value={x?.carName || ""}
                       onChange={(e) =>
-                        handleInputChange(careerList, setCareerList, i, e)
+                        onArrChange(careerList, setCareerList, i, e)
                       }
                     />
                     <input
                       type="text"
                       name="carDepartmentName"
                       placeholder="부서명"
-                      value={x?.carDepartmentName}
+                      value={x?.carDepartmentName || ""}
                       onChange={(e) =>
-                        handleInputChange(careerList, setCareerList, i, e)
+                        onArrChange(careerList, setCareerList, i, e)
                       }
                     />
                     <input
                       type="text"
                       name="carStartDate"
                       placeholder="입사일"
-                      value={x?.carStartDate}
+                      value={x?.carStartDate || ""}
                       onChange={(e) =>
-                        handleInputChange(careerList, setCareerList, i, e)
+                        onArrChange(careerList, setCareerList, i, e)
                       }
                       onFocus={(e) => (e.target.type = "date")}
                       onBlur={(e) => (e.target.type = "text")}
@@ -283,29 +432,29 @@ export default function InfoInput() {
                       type="text"
                       name="carEndDate"
                       placeholder="퇴사일"
-                      value={x?.carEndDate}
+                      value={x?.carEndDate || ""}
                       onChange={(e) =>
-                        handleInputChange(careerList, setCareerList, i, e)
+                        onArrChange(careerList, setCareerList, i, e)
                       }
                       onFocus={(e) => (e.target.type = "date")}
                       onBlur={(e) => (e.target.type = "text")}
                     />
                     <input
                       type="text"
-                      name="position"
-                      value={x?.carPosition}
+                      name="carPosition"
+                      value={x?.carPosition || ""}
                       placeholder="직위"
                       onChange={(e) =>
-                        handleInputChange(careerList, setCareerList, i, e)
+                        onArrChange(careerList, setCareerList, i, e)
                       }
                     />
                     <input
                       type="text"
                       name="carJob"
-                      value={x?.carJob}
+                      value={x?.carJob || ""}
                       placeholder="직무"
                       onChange={(e) =>
-                        handleInputChange(careerList, setCareerList, i, e)
+                        onArrChange(careerList, setCareerList, i, e)
                       }
                       style={{flex: "2"}}
                     />
@@ -321,8 +470,8 @@ export default function InfoInput() {
               <h3>학력사항</h3>
               <button
                 onClick={() => {
-                  setSchoolList([
-                    ...schoolList,
+                  setEduList([
+                    ...eduList,
                     {
                       eduType: "",
                       eduStartDate: "",
@@ -337,14 +486,12 @@ export default function InfoInput() {
             </div>
 
             <ul>
-              {schoolList.map((x, i) => (
+              {eduList.map((x, i) => (
                 <li key={`school-list-${i}`} className="clist-item">
                   <div>
                     <button
                       className="del-btn"
-                      onClick={() =>
-                        handleRemoveClick(schoolList, setSchoolList, i)
-                      }
+                      onClick={() => onRemove(eduList, setEduList, i)}
                     >
                       -
                     </button>
@@ -353,48 +500,45 @@ export default function InfoInput() {
                   <div className="right">
                     <select
                       name="eduType"
-                      value={x?.eduType}
-                      onChange={(e) =>
-                        handleInputChange(schoolList, setSchoolList, i, e)
-                      }
+                      defaultValue={x?.eduType || ""}
+                      onChange={(e) => onArrChange(eduList, setEduList, i, e)}
                     >
-                      <option value="">학교</option>
-                      <option value="high">고등학교</option>
-                      <option value="univ">대학교</option>
-                      <option value="grad">대학원</option>
-                      <option value="etc">기타</option>
+                      <option value="" disabled>
+                        구분
+                      </option>
+                      <option value="고등학교">고등학교</option>
+                      <option value="대학교">대학교</option>
+                      <option value="대학원">대학원</option>
+                      <option value="기타">기타</option>
                     </select>
+
                     <select
                       name="eduGrade"
-                      value={x?.eduGrade}
-                      onChange={(e) =>
-                        handleInputChange(schoolList, setSchoolList, i, e)
-                      }
+                      defaultValue={x?.eduGrade || ""}
+                      onChange={(e) => onArrChange(eduList, setEduList, i, e)}
                     >
-                      <option value="">상태</option>
-                      <option value="attend">재학</option>
-                      <option value="graduate">졸업</option>
+                      <option value="" disabled>
+                        상태
+                      </option>
+                      <option value="재학">재학</option>
+                      <option value="졸업">졸업</option>
                     </select>
                     <input
                       type="text"
                       name="eduStartDate"
                       placeholder="입학일"
-                      value={x?.eduStartDate}
-                      onChange={(e) =>
-                        handleInputChange(schoolList, setSchoolList, i, e)
-                      }
+                      value={x?.eduStartDate || ""}
+                      onChange={(e) => onArrChange(eduList, setEduList, i, e)}
                       onFocus={(e) => (e.target.type = "date")}
                       onBlur={(e) => (e.target.type = "text")}
                     />
-                    {x?.eduGrade !== "attend" && (
+                    {x?.eduGrade !== "재학" && (
                       <input
                         type="text"
                         name="eduEndDate"
                         placeholder="졸업일"
-                        value={x?.eduEndDate}
-                        onChange={(e) =>
-                          handleInputChange(schoolList, setSchoolList, i, e)
-                        }
+                        value={x?.eduEndDate || ""}
+                        onChange={(e) => onArrChange(eduList, setEduList, i, e)}
                         onFocus={(e) => (e.target.type = "date")}
                         onBlur={(e) => (e.target.type = "text")}
                       />
@@ -411,8 +555,8 @@ export default function InfoInput() {
               <h3>자격/어학사항</h3>
               <button
                 onClick={() => {
-                  setCertList([
-                    ...certList,
+                  setLicList([
+                    ...licList,
                     {
                       licName: "",
                       licLevel: "",
@@ -427,14 +571,12 @@ export default function InfoInput() {
             </div>
 
             <ul>
-              {certList.map((x, i) => (
+              {licList.map((x, i) => (
                 <li key={`cer-list-${i}`} className="clist-item">
                   <div>
                     <button
                       className="del-btn"
-                      onClick={() =>
-                        handleRemoveClick(certList, setCertList, i)
-                      }
+                      onClick={() => onRemove(licList, setLicList, i)}
                     >
                       -
                     </button>
@@ -445,37 +587,29 @@ export default function InfoInput() {
                       type="text"
                       name="licName"
                       placeholder="자격/어학 종류"
-                      value={x?.licName}
-                      onChange={(e) =>
-                        handleInputChange(certList, setCertList, i, e)
-                      }
+                      value={x?.licName || ""}
+                      onChange={(e) => onArrChange(licList, setLicList, i, e)}
                     />
                     <input
                       type="text"
                       name="licLevel"
                       placeholder="등급/레벨/점수"
-                      value={x?.licLevel}
-                      onChange={(e) =>
-                        handleInputChange(certList, setCertList, i, e)
-                      }
+                      value={x?.licLevel || ""}
+                      onChange={(e) => onArrChange(licList, setLicList, i, e)}
                     />
                     <input
                       type="text"
                       name="licOrganization"
                       placeholder="발급기관"
-                      value={x?.licOrganization}
-                      onChange={(e) =>
-                        handleInputChange(certList, setCertList, i, e)
-                      }
+                      value={x?.licOrganization || ""}
+                      onChange={(e) => onArrChange(licList, setLicList, i, e)}
                     />
                     <input
                       type="text"
                       name="licDate"
                       placeholder="취득일"
-                      value={x?.licDate}
-                      onChange={(e) =>
-                        handleInputChange(certList, setCertList, i, e)
-                      }
+                      value={x?.licDate || ""}
+                      onChange={(e) => onArrChange(licList, setLicList, i, e)}
                       onFocus={(e) => (e.target.type = "date")}
                       onBlur={(e) => (e.target.type = "text")}
                     />
@@ -512,9 +646,7 @@ export default function InfoInput() {
                   <div>
                     <button
                       className="del-btn"
-                      onClick={() =>
-                        handleRemoveClick(awardList, setAwardList, i)
-                      }
+                      onClick={() => onRemove(awardList, setAwardList, i)}
                     >
                       -
                     </button>
@@ -525,27 +657,27 @@ export default function InfoInput() {
                       type="text"
                       name="awName"
                       placeholder="대회명"
-                      value={x?.awName}
+                      value={x?.awName || ""}
                       onChange={(e) =>
-                        handleInputChange(awardList, setAwardList, i, e)
+                        onArrChange(awardList, setAwardList, i, e)
                       }
                     />
                     <input
                       type="text"
                       name="awOrganization"
                       placeholder="주최"
-                      value={x?.awOrganization}
+                      value={x?.awOrganization || ""}
                       onChange={(e) =>
-                        handleInputChange(awardList, setAwardList, i, e)
+                        onArrChange(awardList, setAwardList, i, e)
                       }
                     />
                     <input
                       type="text"
                       name="awDate"
                       placeholder="수상일"
-                      value={x?.awDate}
+                      value={x?.awDate || ""}
                       onChange={(e) =>
-                        handleInputChange(awardList, setAwardList, i, e)
+                        onArrChange(awardList, setAwardList, i, e)
                       }
                       onFocus={(e) => (e.target.type = "date")}
                       onBlur={(e) => (e.target.type = "text")}
@@ -554,9 +686,9 @@ export default function InfoInput() {
                       type="text"
                       name="awContents"
                       placeholder="수상내용"
-                      value={x?.awContents}
+                      value={x?.awContents || ""}
                       onChange={(e) =>
-                        handleInputChange(awardList, setAwardList, i, e)
+                        onArrChange(awardList, setAwardList, i, e)
                       }
                       style={{flex: "2"}}
                     />
@@ -572,8 +704,8 @@ export default function InfoInput() {
               <h3>기타 활동</h3>
               <button
                 onClick={() =>
-                  setEtcList([
-                    ...etcList,
+                  setActList([
+                    ...actList,
                     {
                       actName: "",
                       actContents: "",
@@ -588,12 +720,12 @@ export default function InfoInput() {
             </div>
 
             <ul>
-              {etcList.map((x, i) => (
+              {actList.map((x, i) => (
                 <li key={`etc-list-${i}`} className="clist-item">
                   <div>
                     <button
                       className="del-btn"
-                      onClick={() => handleRemoveClick(etcList, setEtcList, i)}
+                      onClick={() => onRemove(actList, setActList, i)}
                     >
                       -
                     </button>
@@ -604,19 +736,15 @@ export default function InfoInput() {
                       type="text"
                       name="actName"
                       placeholder="활동명"
-                      value={x?.actName}
-                      onChange={(e) =>
-                        handleInputChange(etcList, setEtcList, i, e)
-                      }
+                      value={x?.actName || ""}
+                      onChange={(e) => onArrChange(actList, setActList, i, e)}
                     />
                     <input
                       type="text"
                       name="actStartDate"
                       placeholder="시작일"
-                      value={x?.actStartDate}
-                      onChange={(e) =>
-                        handleInputChange(etcList, setEtcList, i, e)
-                      }
+                      value={x?.actStartDate || ""}
+                      onChange={(e) => onArrChange(actList, setActList, i, e)}
                       onFocus={(e) => (e.target.type = "date")}
                       onBlur={(e) => (e.target.type = "text")}
                     />
@@ -624,10 +752,8 @@ export default function InfoInput() {
                       type="text"
                       name="actEndDate"
                       placeholder="종료일"
-                      value={x?.actEndDate}
-                      onChange={(e) =>
-                        handleInputChange(etcList, setEtcList, i, e)
-                      }
+                      value={x?.actEndDate || ""}
+                      onChange={(e) => onArrChange(actList, setActList, i, e)}
                       onFocus={(e) => (e.target.type = "date")}
                       onBlur={(e) => (e.target.type = "text")}
                     />
@@ -635,10 +761,8 @@ export default function InfoInput() {
                       type="text"
                       name="actContents"
                       placeholder="설명"
-                      value={x?.actContents}
-                      onChange={(e) =>
-                        handleInputChange(etcList, setEtcList, i, e)
-                      }
+                      value={x?.actContents || ""}
+                      onChange={(e) => onArrChange(actList, setActList, i, e)}
                       style={{flex: "2"}}
                     />
                   </div>
@@ -665,7 +789,7 @@ export default function InfoInput() {
                   <div>
                     <button
                       className="del-btn"
-                      onClick={() => handleRemoveClick(snsList, setSnsList, i)}
+                      onClick={() => onRemove(snsList, setSnsList, i)}
                     >
                       -
                     </button>
@@ -676,19 +800,15 @@ export default function InfoInput() {
                       type="text"
                       name="snsName"
                       placeholder="종류"
-                      value={x?.snsName}
-                      onChange={(e) =>
-                        handleInputChange(snsList, setSnsList, i, e)
-                      }
+                      value={x?.snsName || ""}
+                      onChange={(e) => onArrChange(snsList, setSnsList, i, e)}
                     />
                     <input
                       type="text"
                       name="snsLink"
-                      placeholder="계정주소"
-                      value={x?.snsLink}
-                      onChange={(e) =>
-                        handleInputChange(snsList, setSnsList, i, e)
-                      }
+                      placeholder="계정/링크"
+                      value={x?.snsLink || ""}
+                      onChange={(e) => onArrChange(snsList, setSnsList, i, e)}
                     />
                   </div>
                 </li>
@@ -702,13 +822,7 @@ export default function InfoInput() {
               <h3>기술스택</h3>
               <button
                 onClick={() => {
-                  // TODO : Repair
-                  setStackList([...stackList, {skName: "", skLevel: ""}]);
-                  getOptions().then((skills) => {
-                    skills.map((x) => {
-                      setSkillList(x);
-                    });
-                  });
+                  setSkillList([...skillList, {skName: "", skLevel: ""}]);
                 }}
               >
                 +
@@ -716,14 +830,12 @@ export default function InfoInput() {
             </div>
 
             <ul>
-              {stackList.map((x, i) => (
+              {skillList.map((x, i) => (
                 <li key={`stack-list-${i}`} className="clist-item">
                   <div>
                     <button
                       className="del-btn"
-                      onClick={() =>
-                        handleRemoveClick(stackList, setStackList, i)
-                      }
+                      onClick={() => onRemove(skillList, setSkillList, i)}
                     >
                       -
                     </button>
@@ -734,26 +846,30 @@ export default function InfoInput() {
                       type="text"
                       name="skName"
                       placeholder="기술 종류"
-                      value={x?.skName}
+                      value={x?.skName || ""}
                       onChange={(e) =>
-                        handleInputChange(stackList, setStackList, i, e)
+                        onArrChange(skillList, setSkillList, i, e)
                       }
                       list="stackoption"
                     />
 
                     <datalist id="stackoption">
-                      {skillList.map((x) => {
-                        <option value={x?.name} />;
-                      })}
+                      {skillStack.map((e) => (
+                        <option value={e} key={`skill-stack-${e}`}>
+                          {e}
+                        </option>
+                      ))}
                     </datalist>
                     <select
                       name="skLevel"
-                      value={x?.skLevel}
+                      defaultValue={x?.skLevel || ""}
                       onChange={(e) =>
-                        handleInputChange(stackList, setStackList, i, e)
+                        onArrChange(skillList, setSkillList, i, e)
                       }
                     >
-                      <option value="">레벨</option>
+                      <option value="" disabled>
+                        레벨
+                      </option>
                       <option value="1">상</option>
                       <option value="2">중</option>
                       <option value="3">하</option>
@@ -770,8 +886,8 @@ export default function InfoInput() {
               <h3>출판 / 논문 / 특허</h3>
               <button
                 onClick={() => {
-                  setPatentList([
-                    ...patentList,
+                  setPaperList([
+                    ...paperList,
                     {
                       ppName: "",
                       ppNumber: "",
@@ -789,14 +905,12 @@ export default function InfoInput() {
             </div>
 
             <ul>
-              {patentList.map((x, i) => (
+              {paperList.map((x, i) => (
                 <li key={`patent-list-${i}`} className="clist-item">
                   <div>
                     <button
                       className="del-btn"
-                      onClick={() =>
-                        handleRemoveClick(patentList, setPatentList, i)
-                      }
+                      onClick={() => onRemove(paperList, setPaperList, i)}
                     >
                       -
                     </button>
@@ -807,45 +921,45 @@ export default function InfoInput() {
                       type="text"
                       name="ppName"
                       placeholder="이름"
-                      value={x?.ppName}
+                      value={x?.ppName || ""}
                       onChange={(e) =>
-                        handleInputChange(patentList, setPatentList, i, e)
+                        onArrChange(paperList, setPaperList, i, e)
                       }
                     />
                     <input
                       type="text"
                       name="ppNumber"
                       placeholder="고유번호/출원번호"
-                      value={x?.ppNumber}
+                      value={x?.ppNumber || ""}
                       onChange={(e) =>
-                        handleInputChange(patentList, setPatentList, i, e)
+                        onArrChange(paperList, setPaperList, i, e)
                       }
                     />
                     <input
                       type="text"
                       name="ppWriter"
                       placeholder="저자/출판인"
-                      value={x?.ppWriter}
+                      value={x?.ppWriter || ""}
                       onChange={(e) =>
-                        handleInputChange(patentList, setPatentList, i, e)
+                        onArrChange(paperList, setPaperList, i, e)
                       }
                     />
                     <input
                       type="text"
                       name="ppPublisher"
                       placeholder="출판사/출원국가"
-                      value={x?.ppPublisher}
+                      value={x?.ppPublisher || ""}
                       onChange={(e) =>
-                        handleInputChange(patentList, setPatentList, i, e)
+                        onArrChange(paperList, setPaperList, i, e)
                       }
                     />
                     <input
                       type="text"
                       name="ppDate"
                       placeholder="발행/출원일"
-                      value={x?.ppDate}
+                      value={x?.ppDate || ""}
                       onChange={(e) =>
-                        handleInputChange(patentList, setPatentList, i, e)
+                        onArrChange(paperList, setPaperList, i, e)
                       }
                       onFocus={(e) => (e.target.type = "month")}
                       onBlur={(e) => (e.target.type = "text")}
@@ -854,21 +968,19 @@ export default function InfoInput() {
                       type="text"
                       name="ppLink"
                       placeholder="링크"
-                      value={x?.ppLink}
+                      value={x?.ppLink || ""}
                       onChange={(e) =>
-                        handleInputChange(patentList, setPatentList, i, e)
+                        onArrChange(paperList, setPaperList, i, e)
                       }
-                      onFocus={(e) => (e.target.type = "date")}
-                      onBlur={(e) => (e.target.type = "text")}
                       style={{flex: "2"}}
                     />
                     <div className="patent-intro">
                       <textarea
                         name="ppContents"
                         placeholder="설명"
-                        value={x?.ppContents}
+                        value={x?.ppContents || ""}
                         onChange={(e) =>
-                          handleInputChange(patentList, setPatentList, i, e)
+                          onArrChange(paperList, setPaperList, i, e)
                         }
                       />
                     </div>
@@ -881,36 +993,46 @@ export default function InfoInput() {
       </RoundContainer>
 
       {/* 포트폴리오 선택 여부 묻기 */}
-      {showModal && (
+      {showFirstModal && (
         <BtnModal
           title={"기존에 입력한 정보를 가져오시겠습니까?"}
-          setShow={setShowModal}
+          setShow={setShowFirstModal}
           btns={[
             {
               name: "예",
               onClick: () => {
-                setShowModal(false);
-                setShowModal2(true);
-                axios
-                  .get(`${process.env.REACT_APP_BACKEND}/api/portfolio`)
-                  .then((Response) => {
-                    console.log(Response.data);
-                  })
-                  .catch((Error) => {
-                    console.log(Error);
-                  });
+                setShowFirstModal(false);
+                setShowSecondModal(true);
               },
             },
-            {name: "아니오", onClick: () => setShowModal(false)},
+            {name: "아니오", onClick: () => setShowFirstModal(false)},
           ]}
         />
       )}
 
       {/* 포트폴리오 선택 모달 */}
-      {showModal2 && (
+      {showSecondModal && (
         <Modal backBlack={true}>
-          <PortfolioChoiceModal onNo={() => setShowModal2(false)} />
+          <PortfolioChoiceModal
+            initPersonal={initPersonal}
+            onNo={() => setShowSecondModal(false)}
+          />
         </Modal>
+      )}
+
+      {alertModal?.show && (
+        <BtnModal
+          title={alertModal?.title}
+          msg={alertModal?.msg}
+          btns={[
+            {
+              name: "닫기",
+              onClick: () => {
+                setAlertModal({show: false});
+              },
+            },
+          ]}
+        />
       )}
     </div>
   );

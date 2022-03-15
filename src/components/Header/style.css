@@ -30,14 +30,6 @@ header .left > span:hover {
   color: white;
 }
 
-/* 헤더 배경 색상 */
-.header-background-color1 {
-  background-color: var(--blue2);
-}
-.header-background-color2 {
-  background-color: var(--dark-blue1);
-}
-
 @media screen and (max-width: 700px) {
   header .user {
     display: none;

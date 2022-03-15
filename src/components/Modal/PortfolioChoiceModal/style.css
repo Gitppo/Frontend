@@ -1,17 +1,49 @@
 .pfc-modal {
   background-color: white;
   text-align: center;
+
+  width: 100%;
+  max-width: 400px;
 }
+
+.pfc-modal #round-shadow-wrapper-inner {
+  padding: 2rem 1rem;
+}
+
 .pfc-modal .pf-list {
-  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  gap: 1em;
+
+  width: 100%;
+  max-height: min(calc(80vh - 6rem), 500px);
+
+  padding: 1rem;
+  margin-top: 1.5em;
+
+  overflow-y: scroll;
 }
+.pfc-modal .pf-list::-webkit-scrollbar {
+  width: 0;
+}
+
 .pfc-modal .pf-list-item {
+  width: 100%;
   position: relative;
   border: 1px solid #818181 !important;
   box-shadow: 0.4rem 0.4rem rgba(0, 0, 0, 0.16) !important;
 }
 .pfc-modal .pf-list-item:hover {
   background-color: var(--light-blue2);
+}
+
+.pfc-modal .pf-list-item-checked {
+  background-color: var(--dark-blue1) !important;
+}
+.pfc-modal .pf-list-item-checked * {
+  color: white !important;
 }
 
 /* 포트폴리오 설명 */
@@ -22,6 +54,7 @@
 }
 /* 포트폴리오 날짜 */
 .pfc-modal .pf-list-item .date {
+  margin-top: 0.5em;
   color: #707070;
   font-size: 0.9em;
 }
@@ -29,8 +62,26 @@
 /* 빨간 핀 */
 .pf-list-pin {
   position: absolute;
-  top: -0.5em;
-  left: -0.5em;
-  width: 1.2em;
+  top: -0.5rem;
+  left: -0.5rem;
+  z-index: 20;
+
+  width: 1.2rem;
   transform: rotate(-45deg);
+}
+
+.pfc-modal .alert-msg {
+  margin-top: 1em;
+  font-size: 0.9em;
+  color: var(--dark-red);
+}
+.pfc-modal .yn-modal-btn-wrapper {
+  margin-top: 1em;
+}
+
+@media screen and (max-width: 700px) {
+  .pfc-modal {
+    width: 90%;
+    max-width: none;
+  }
 }

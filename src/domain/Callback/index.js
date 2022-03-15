@@ -15,7 +15,8 @@ export default function Callback({match}) {
   const {setUser} = useUserContext();
 
   useEffect(() => {
-    const toURL = "/" + (match.params?.toURL ?? "my-page");
+    const toURL = "/" + (location.pathname.substring(10) || "my-page");
+
     doLogin(location.search)
       .then((r) => {
         if (!r) throw Error("DataErr : No user info.");
@@ -41,7 +42,7 @@ export default function Callback({match}) {
         console.error(e);
         history.push("/error");
       });
-  }, [history, location.search, match.params?.toURL, setUser]);
+  }, [history, location.pathname, location.search, setUser]);
 
   return (
     <div className={"loading"}>

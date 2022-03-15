@@ -39,10 +39,14 @@ function App() {
 
               <Route path={"/new"} component={New} />
 
-              <Route exact path={"/export"} component={PortfolioConsole} />
+              <Route
+                exact
+                path={"/export/:pfID?"}
+                component={PortfolioConsole}
+              />
 
               <Route path={"/error"} component={Error} />
-              <Route path={"*"} component={Error} />
+              <Route component={Error} />
             </Switch>
           </div>
 

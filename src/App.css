@@ -47,23 +47,41 @@
 }
 
 /* 둥그런 버튼 */
-.round-button {
+.round-btn,
+.round-red-btn,
+.round-white-btn {
   padding: 0.3em 1em;
 
   border: none;
   border-radius: 2em;
-  background-color: var(--dark-blue2);
 
   font-family: title;
   font-size: 1.4em;
   white-space: nowrap;
-  color: white;
 
   cursor: pointer;
   transition: background-color, color;
   transition-duration: 400ms;
 }
-.round-button:hover {
+.round-btn:hover,
+.round-red-btn:hover {
+  color: var(--dark-blue2) !important;
+  background-color: var(--light-blue2) !important;
+}
+
+.round-btn {
+  color: white;
+  background-color: var(--dark-blue2);
+}
+.round-red-btn {
+  color: white;
+  background-color: var(--dark-red);
+}
+.round-white-btn {
+  color: var(--dark-blue2);
+  background-color: white;
+}
+.round-white-btn:hover {
   color: white !important;
   background-color: var(--dark-red) !important;
 }

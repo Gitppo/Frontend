@@ -56,10 +56,6 @@
   font-size: 2rem;
   color: white;
 }
-.grd-outer-title .round-button {
-  background-color: white;
-  color: var(--dark-blue1);
-}
 
 /* 하얀색 박스 */
 .grd-inner {
@@ -101,7 +97,7 @@
 .grd-inner-header-title h3 {
   margin-right: auto;
 }
-.grd-inner-header .round-button {
+.grd-inner-header .round-btn {
   margin-left: 0.5em;
 }
 

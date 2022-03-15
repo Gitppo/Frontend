@@ -15,10 +15,10 @@
   align-items: center;
   gap: 0.5rem;
 }
-.portfolio-console .title-btn-wrapper .round-button {
+.portfolio-console .title-btn-wrapper .round-btn {
   background-color: var(--dark-red);
 }
-.portfolio-console .title-btn-wrapper .round-button:hover {
+.portfolio-console .title-btn-wrapper .round-btn:hover {
   background-color: var(--dark-blue2) !important;
 }
 

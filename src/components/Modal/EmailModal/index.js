@@ -119,15 +119,15 @@ export default function EmailModal({setShow}) {
         >
           {progress === 0 ? (
             <>
-              <button className="round-button" onClick={sendEmail}>
+              <button className="round-btn" onClick={sendEmail}>
                 제출
               </button>
-              <button className="round-button" onClick={() => setShow(false)}>
+              <button className="round-btn" onClick={() => setShow(false)}>
                 취소
               </button>
             </>
           ) : (
-            <button className="round-button" onClick={() => setShow(false)}>
+            <button className="round-btn" onClick={() => setShow(false)}>
               닫기
             </button>
           )}
