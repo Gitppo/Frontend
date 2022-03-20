@@ -1,30 +1,30 @@
 {
   "files": {
-    "main.css": "/gitppo.github.io/Frontend/static/css/main.cca20319.chunk.css",
-    "main.js": "/gitppo.github.io/Frontend/static/js/main.200d543b.chunk.js",
-    "main.js.map": "/gitppo.github.io/Frontend/static/js/main.200d543b.chunk.js.map",
-    "runtime-main.js": "/gitppo.github.io/Frontend/static/js/runtime-main.dbdcaf6e.js",
-    "runtime-main.js.map": "/gitppo.github.io/Frontend/static/js/runtime-main.dbdcaf6e.js.map",
-    "static/css/2.f7d5a786.chunk.css": "/gitppo.github.io/Frontend/static/css/2.f7d5a786.chunk.css",
-    "static/js/2.b7cf7b09.chunk.js": "/gitppo.github.io/Frontend/static/js/2.b7cf7b09.chunk.js",
-    "static/js/2.b7cf7b09.chunk.js.map": "/gitppo.github.io/Frontend/static/js/2.b7cf7b09.chunk.js.map",
-    "index.html": "/gitppo.github.io/Frontend/index.html",
-    "static/css/2.f7d5a786.chunk.css.map": "/gitppo.github.io/Frontend/static/css/2.f7d5a786.chunk.css.map",
-    "static/css/main.cca20319.chunk.css.map": "/gitppo.github.io/Frontend/static/css/main.cca20319.chunk.css.map",
-    "static/js/2.b7cf7b09.chunk.js.LICENSE.txt": "/gitppo.github.io/Frontend/static/js/2.b7cf7b09.chunk.js.LICENSE.txt",
-    "static/media/index.css": "/gitppo.github.io/Frontend/static/media/yoonu.8585c4b2.ttf",
-    "static/media/flag.ea050845.png": "/gitppo.github.io/Frontend/static/media/flag.ea050845.png",
-    "static/media/hippo-blue.d31d27bb.png": "/gitppo.github.io/Frontend/static/media/hippo-blue.d31d27bb.png",
-    "static/media/style.css": "/gitppo.github.io/Frontend/static/media/hippo-transparent.08e34c6b.png",
-    "static/media/pin-red.55411084.png": "/gitppo.github.io/Frontend/static/media/pin-red.55411084.png",
-    "static/media/profile.242072b8.png": "/gitppo.github.io/Frontend/static/media/profile.242072b8.png",
-    "static/media/radio-btn-out.2f2f1b58.png": "/gitppo.github.io/Frontend/static/media/radio-btn-out.2f2f1b58.png"
+    "main.css": "/Frontend/static/css/main.1073887f.chunk.css",
+    "main.js": "/Frontend/static/js/main.b4f9bf79.chunk.js",
+    "main.js.map": "/Frontend/static/js/main.b4f9bf79.chunk.js.map",
+    "runtime-main.js": "/Frontend/static/js/runtime-main.1c414c37.js",
+    "runtime-main.js.map": "/Frontend/static/js/runtime-main.1c414c37.js.map",
+    "static/css/2.f7d5a786.chunk.css": "/Frontend/static/css/2.f7d5a786.chunk.css",
+    "static/js/2.cfe6a097.chunk.js": "/Frontend/static/js/2.cfe6a097.chunk.js",
+    "static/js/2.cfe6a097.chunk.js.map": "/Frontend/static/js/2.cfe6a097.chunk.js.map",
+    "index.html": "/Frontend/index.html",
+    "static/css/2.f7d5a786.chunk.css.map": "/Frontend/static/css/2.f7d5a786.chunk.css.map",
+    "static/css/main.1073887f.chunk.css.map": "/Frontend/static/css/main.1073887f.chunk.css.map",
+    "static/js/2.cfe6a097.chunk.js.LICENSE.txt": "/Frontend/static/js/2.cfe6a097.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/Frontend/static/media/yoonu.8585c4b2.ttf",
+    "static/media/flag.ea050845.png": "/Frontend/static/media/flag.ea050845.png",
+    "static/media/hippo-blue.d31d27bb.png": "/Frontend/static/media/hippo-blue.d31d27bb.png",
+    "static/media/style.css": "/Frontend/static/media/hippo-transparent.08e34c6b.png",
+    "static/media/pin-red.55411084.png": "/Frontend/static/media/pin-red.55411084.png",
+    "static/media/profile.242072b8.png": "/Frontend/static/media/profile.242072b8.png",
+    "static/media/radio-btn-out.2f2f1b58.png": "/Frontend/static/media/radio-btn-out.2f2f1b58.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.dbdcaf6e.js",
+    "static/js/runtime-main.1c414c37.js",
     "static/css/2.f7d5a786.chunk.css",
-    "static/js/2.b7cf7b09.chunk.js",
-    "static/css/main.cca20319.chunk.css",
-    "static/js/main.200d543b.chunk.js"
+    "static/js/2.cfe6a097.chunk.js",
+    "static/css/main.1073887f.chunk.css",
+    "static/js/main.b4f9bf79.chunk.js"
   ]
 }
