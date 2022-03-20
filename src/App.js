@@ -22,7 +22,7 @@ function App() {
   return (
     <>
       <UserContextProvider>
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
           {/* 헤더 */}
           <Header />
 

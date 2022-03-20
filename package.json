@@ -3,6 +3,7 @@
   "description": "개발자들을 위한 포트폴리오 제작 서비스",
   "version": "0.1.0",
   "private": true,
+  "homepage": "gitppo.github.io/Frontend/",
   "dependencies": {
     "@emailjs/browser": "^3.4.0",
     "@fortawesome/fontawesome-svg-core": "^6.1.0",
@@ -12,6 +13,7 @@
     "@uiw/react-markdown-preview": "^3.5.1",
     "axios": "^0.26.0",
     "file-saver": "^2.0.5",
+    "gh-pages": "^3.2.3",
     "moment": "^2.29.1",
     "qs": "^6.10.3",
     "react": "^17.0.2",
@@ -24,7 +26,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "eject": "react-scripsts eject"
+    "eject": "react-scripsts eject",
+    "postbuild": "cp build/index.html build/404.html",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
