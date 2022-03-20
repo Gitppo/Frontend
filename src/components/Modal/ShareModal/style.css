@@ -1,0 +1,59 @@
+.share-modal {
+  text-align: center;
+  max-width: 90%;
+}
+.share-modal h4 {
+  margin-bottom: 0.5em;
+}
+.share-modal .msg {
+  color: var(--dark-red);
+  font-size: 0.9em;
+}
+
+.share-modal .link-box {
+  width: 100%;
+  padding: 0.5rem 1rem;
+
+  display: flex;
+  flex-direction: row;
+
+  border-radius: 0.5rem;
+  background-color: rgb(226, 226, 226);
+
+  cursor: pointer;
+}
+.share-modal .link-box .clipboard {
+  width: 1.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  padding-left: 0.5em;
+  margin-left: 0.5em;
+
+  border-left: 1px solid black;
+  text-align: right;
+}
+
+.share-modal .download {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+
+  font-size: 1.5em;
+  color: var(--blue2);
+}
+
+.share-modal .download > * {
+  cursor: pointer;
+}
+.share-modal .download > *:hover {
+  color: var(--dark-red);
+}
+
+.share-modal .yn-modal-btn-wrapper {
+  margin-top: 0;
+}

@@ -86,6 +86,10 @@
   background-color: var(--dark-red) !important;
 }
 
+.anchor {
+  display: none;
+}
+
 @media screen and (max-width: 700px) {
   .container > div {
     padding: 2rem 1rem;

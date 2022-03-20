@@ -1,0 +1,217 @@
+.pfcon {
+  position: relative;
+  width: 100vw;
+  max-width: none !important;
+  overflow: hidden;
+}
+.pfcon::after {
+  content: "";
+  position: absolute;
+  top: -25%;
+  left: -25%;
+  z-index: -10;
+
+  width: 150%;
+  height: 150%;
+
+  background-image: url("../../assets/hippo-transparent.png");
+  background-size: 15rem auto;
+  background-repeat: space;
+
+  opacity: 0.4;
+  transform: rotate(-20deg);
+}
+
+.pfcon > * {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pfcon > .title {
+  max-width: 210mm;
+  margin-bottom: 1rem;
+  color: var(--dark-blue2);
+}
+
+.pfcon-body {
+  position: relative;
+  margin: 0 auto;
+
+  max-width: 210mm;
+  height: calc(100vh - 17.8rem);
+}
+
+.pfcon-body .pf-pv-sect {
+  width: 100%;
+  height: 100%;
+  /* min-height: 297mm; */
+
+  padding-right: 18rem;
+
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+
+  overflow: scroll;
+  transition: all 500ms;
+}
+.pfcon-body .pf-pv-sect::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.pfcon-body .pf-pv-sect-fold {
+  padding-right: 0;
+}
+
+.pf-con-sect {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 300;
+
+  width: 18rem;
+  max-width: 50%;
+  height: 100%;
+
+  overflow: hidden;
+  border-radius: 0.5rem;
+
+  background-color: white;
+  transition: all 500ms;
+}
+.pf-con-sect-fold {
+  width: 7px;
+  height: calc(100vh - 18.8rem);
+
+  right: -6px;
+  margin-top: 0.5rem;
+}
+.pf-con-sect .show-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 7px;
+  height: 100%;
+  margin-top: 5px;
+
+  float: left;
+  z-index: 300;
+
+  font-size: 70%;
+  color: white;
+  background-color: #d0d0d0;
+
+  border-radius: 0.3rem 0 0 0.5rem;
+  cursor: pointer;
+  transition: all 300ms;
+}
+.pf-con-sect .show-btn:hover {
+  background-color: #808080;
+}
+.pf-con-sect .show-btn .arrow {
+  transition: all 300ms;
+}
+
+.pf-con-sect-fold .show-btn {
+  margin-top: 0;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+.pf-con-sect-fold .show-btn .arrow {
+  transform: rotate(180deg);
+}
+
+.pf-con-sect #round-shadow-wrapper {
+  width: 18rem;
+  height: 100%;
+  transition: all 300ms ease-in-out;
+}
+.pf-con-sect-fold #round-shadow-wrapper {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.pf-con-sect #round-shadow-wrapper-inner {
+  margin-left: 7px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.pf-con-sect .title-section {
+  padding: 0.5rem;
+  margin: 0 auto 0.5em auto;
+
+  font-family: title;
+  font-size: 1.5rem;
+  text-align: center;
+  color: white;
+
+  background-color: var(--dark-blue2);
+  border-radius: 0.5rem;
+}
+
+.pf-con-sect .export-btn-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+
+  margin-top: auto;
+}
+
+.pf-con-sect .title-section,
+.pf-con-sect .export-btn-wrapper .round-red-btn {
+  width: 10rem;
+  max-width: 100%;
+}
+
+.pfcon-tp-choice-wp {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+.pfcon-tp-choice-wp > li {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.pfcon-tp-choice-wp > li > span {
+  cursor: default;
+}
+
+@media screen and (max-width: 700px) {
+  .pfcon-body .pf-pv-sect {
+    padding-right: 0;
+  }
+  .pfcon-body .pf-con-sect {
+    position: fixed;
+    right: 0;
+    max-width: none;
+  }
+  .pfcon-body .pf-con-sect-fold {
+    width: 0 !important;
+    height: 100vh;
+    margin-top: 0;
+  }
+
+  .pf-con-sect-fold .show-btn {
+    position: fixed;
+    right: 1rem;
+    top: 9.5rem;
+
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 100%;
+
+    background-color: var(--dark-blue2);
+  }
+
+  .pfcon-body .pf-con-sect,
+  .pf-con-sect #round-shadow-wrapper {
+    width: 80vw;
+    max-width: 20rem;
+  }
+}

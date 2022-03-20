@@ -41,3 +41,28 @@ export const editRepository = async (data) => {
       return r?.data;
     });
 };
+
+export const deleteRepository = async (dataArr) => {
+  let result = true;
+
+  for (let repoId of dataArr) {
+    try {
+      await progressClient(true)
+        .delete("/api/repository", {
+          params: {
+            id: repoId,
+          },
+        })
+        .then((r) => {
+          if (r.status !== "OK") {
+            throw Error(`NetErr : Failed to delete repo ${repoId}`);
+          }
+        });
+    } catch (e) {
+      console.error(e);
+      result = false;
+    }
+  }
+
+  return result;
+};

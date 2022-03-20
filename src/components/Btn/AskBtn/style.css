@@ -1,8 +1,8 @@
 #ask-btn-wrapper {
   position: fixed;
   right: 1.2rem;
-  bottom: 4.5rem;
-  z-index: 20;
+  bottom: 3.5rem;
+  z-index: 500;
 
   margin: 0;
   padding: 0;

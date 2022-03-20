@@ -3,6 +3,7 @@
   border-radius: 0.5rem;
   border: 1px solid var(--dark-blue1);
   box-shadow: 0.5rem 0.5rem rgba(15, 44, 127, 0.5);
+  background-color: white;
 }
 #round-shadow-wrapper-inner {
   margin: 0 auto;

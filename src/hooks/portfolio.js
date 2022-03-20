@@ -13,6 +13,28 @@ export const getPortfolio = async (id) => {
     .then((r) => r.data);
 };
 
+export const getPortfolioDetail = async (pfID) => {
+  if (!pfID) {
+    throw Error("InputErr : Invalid portfolio ID.");
+  }
+
+  return progressClient(true)
+    .get("/api/portfolio/all", {
+      params: {id: pfID},
+    })
+    .then((r) => r?.data);
+};
+
+export const getSharedPortfoilo = (uuid) => {
+  return progressClient(true)
+    .get("/api/portfolio/lookup", {
+      params: {
+        uuid: uuid,
+      },
+    })
+    .then((r) => r?.data);
+};
+
 export const createPortfolio = async (id, pfName) => {
   if (!isValidId(id)) {
     throw Error("InputErr : Invalid user id.");
@@ -39,16 +61,18 @@ export const deletePortfolio = async (pfID) => {
     .then((r) => r?.id);
 };
 
-export const getPortfolioDetail = async (pfID) => {
-  if (!pfID) {
-    throw Error("InputErr : Invalid portfolio ID.");
-  }
-
+export const completePortfolio = async (pfInfo) => {
   return progressClient(true)
-    .get("/api/portfolio/all", {
-      params: {id: pfID},
+    .post("/api/portfolio/complete", {
+      pfId: pfInfo.pfId,
+      pfShare: pfInfo.pfShare,
+      pfTemplate: pfInfo.pfTemplate,
     })
-    .then((r) => r?.data);
+    .then((r) => {
+      if (r?.status !== "OK") {
+        throw Error(`NetErr : Failed to complete portfolio. ${pfInfo?.pfId}`);
+      }
+    });
 };
 
 export const userHasPortfoilo = async (userId, pfId) => {
@@ -66,10 +90,10 @@ export const userHasPortfoilo = async (userId, pfId) => {
       return false;
     })
     .catch((e) => {
-      console.error(e);
       console.error(
         `UserErr : Unauthorized user is approaching portfolio ${pfId}`
       );
+      console.error(e);
       return false;
     });
 };

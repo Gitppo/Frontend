@@ -1,0 +1,10 @@
+.share {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  /* background-color: rgb(25, 38, 90); */
+
+  width: 100%;
+  max-width: none !important;
+  background-color: var(--light-blue2);
+}

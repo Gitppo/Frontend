@@ -8,7 +8,7 @@ import {isValidUser, useUserContext} from "../../hooks/useUserContext";
 
 import hippoIcon from "../../assets/hippo-blue.png";
 
-export default function Callback({match}) {
+export default function Callback() {
   const history = useHistory();
   const location = useLocation();
 

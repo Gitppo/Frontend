@@ -1,139 +1,14 @@
-import "./style.css";
+import MarkdownPreview from "@uiw/react-markdown-preview";
+
+const COLORBAR = ["#E9EAF1", "#BBBFD6", "#777FAC", "#212A75"];
 
 export default function Portfolio1({pInfo}) {
-  pInfo = {
-    title: "Name's Protfolio",
-    onelineIntro: "한줄 자기소개",
-    freeIntro: "자유형태의 자기소개",
-    name: "홍길동",
-    tel: "010-1234-1234",
-    addr: "서울시 깃포구",
-    birth: "00.00.00",
-    edu: {
-      school: "00대학교 (서울)",
-      dept: "/ 00학부",
-      state: "2020.02 졸업",
-    },
-    skills: [
-      {name: "React.js", level: 3},
-      {name: "React.js", level: 2},
-      {name: "React.js", level: 1},
-      {name: "React.js", level: 3},
-      {name: "React.js", level: 3},
-      {name: "React.js", level: 3},
-      {name: "React.js", level: 3},
-    ],
-    careers: [
-      {
-        company: "Daum",
-        dept: "research team",
-        start: "2021.01",
-        end: "2021.02",
-        role: "Marketing, Research",
-      },
-      {
-        company: "Daum",
-        dept: "research team",
-        start: "2021.01",
-        end: "2021.02",
-        role: "Marketing, Research",
-      },
-    ],
-    experience: [
-      {
-        start: "2021.01",
-        end: "2021.02",
-        name: "활동명",
-        info: "설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명",
-      },
-      {start: "2021.01", end: "2021.02", name: "활동명", info: "설명설명설명"},
-    ],
-    license: [
-      {
-        name: "종류",
-        level: "레벨",
-        date: "취득일",
-        agency: "취득기관",
-      },
-      {
-        name: "종류",
-        level: "레벨",
-        date: "취득일",
-        agency: "취득기관",
-      },
-    ],
-    publishing: [
-      {
-        name: "이름(고유번호)",
-        publisher: "출판사",
-        author: "저자",
-        date: "발행일",
-        link: "링크",
-        info: "설명",
-      },
-      {
-        name: "이름(고유번호)",
-        publisher: "출판사",
-        author: "저자",
-        date: "발행일",
-        link: "링크",
-        info: "설명",
-      },
-    ],
-    awards: [
-      {
-        name: "수상내용",
-        date: "수상일",
-        agency: "취득기관",
-      },
-      {
-        name: "수상내용",
-        date: "수상일",
-        agency: "취득기관",
-      },
-    ],
-    projects: [
-      {
-        title: "프로젝트 이름",
-        start: "시작일",
-        end: "종료일",
-        intro: "역할",
-        lang: [
-          {value: "언어1", per: 0.4},
-          {value: "언어2", per: 0.6},
-        ],
-        info: "프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명",
-        github: "깃허브 주소",
-        domain: "도메인",
-        roles: [
-          {name: "역할 이름1", skill: "역할에 따른 기술 스택"},
-          {name: "역할 이름2", skill: "역할에 따른 기술 스택"},
-        ],
-      },
-      {
-        title: "프로젝트 이름",
-        start: "시작일",
-        end: "종료일",
-        intro: "역할",
-        lang: [
-          {value: "언어1", per: 0.4},
-          {value: "언어2", per: 0.6},
-        ],
-        info: "프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명 프로젝트 설명",
-        github: "깃허브 주소",
-        domain: "도메인",
-        roles: [
-          {name: "역할 이름1", skill: "역할에 따른 기술 스택"},
-          {name: "역할 이름2", skill: "역할에 따른 기술 스택"},
-        ],
-      },
-    ],
-  };
-
   return (
     <div
       style={{
         fontSize: "13px",
+        width: "210mm",
+        overflow: "hidden",
       }}
     >
       <div
@@ -145,14 +20,16 @@ export default function Portfolio1({pInfo}) {
       >
         {/* 포트폴리오 제목 */}
         <h1 style={{textAlign: "center", marginBottom: "5mm"}}>
-          {pInfo?.title}
+          {pInfo?.pfName}
         </h1>
 
         {/* 자기소개 */}
         <div style={{backgroundColor: "#172B7A", padding: "5mm 10mm"}}>
           <div>
-            <div style={{fontWeight: "bold"}}>{pInfo?.onelineIntro}</div>
-            <div>{pInfo?.freeIntro}</div>
+            <div style={{fontWeight: "bold"}}>
+              {pInfo?.personal?.introduction?.shortIntro || ""}
+            </div>
+            <div>{pInfo?.personal?.introduction?.longIntro || ""}</div>
           </div>
         </div>
 
@@ -178,17 +55,23 @@ export default function Portfolio1({pInfo}) {
                 borderRadius: "2mm",
               }}
             >
-              <li>- 이름 : {pInfo.name}</li>
-              <li>- 연락처 : {pInfo.tel}</li>
-              <li>- 주소 : {pInfo.addr}</li>
-              <li>- 생년월일 : {pInfo.birth}</li>
+              <li>- 이름 : {pInfo?.personal?.basicInfo?.biName || ""}</li>
+              <li>- 연락처 : {pInfo?.personal?.basicInfo?.biPhone || ""}</li>
+              <li>- 이메일 : {pInfo?.personal?.basicInfo?.biMail || ""}</li>
+              <li>- 생년월일 : {pInfo?.personal?.basicInfo?.biBirth || ""}</li>
               <li>
                 - 학력 :{" "}
                 <div>
-                  <div>
-                    {pInfo.edu?.school} {pInfo.edu?.dept}
-                  </div>
-                  <div>{pInfo.edu?.state}</div>
+                  {pInfo?.personal?.educations?.map((e, i) => (
+                    <div key={`education-${i}`}>
+                      <div>
+                        {e?.eduName || e?.eduType} {e?.eduMajor}
+                      </div>
+                      <div>
+                        {e?.eduStartDate} ~ {e?.eduEndDate} ({e?.eduGrade})
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </li>
             </ul>
@@ -212,7 +95,7 @@ export default function Portfolio1({pInfo}) {
                 borderRadius: "2mm",
               }}
             >
-              {pInfo.skills?.map((skill, index) => (
+              {pInfo?.personal?.skills?.map((skill, index) => (
                 <li
                   key={`skill-${index}`}
                   style={{
@@ -229,7 +112,7 @@ export default function Portfolio1({pInfo}) {
                       borderRadius: "2mm",
                     }}
                   >
-                    {skill?.name}
+                    {skill?.skName}
                   </div>
                   <div
                     style={{
@@ -247,7 +130,7 @@ export default function Portfolio1({pInfo}) {
                       zIndex: "10",
                     }}
                   >
-                    {["하", "중", "상"][skill?.level + 1] || "하"}
+                    {["상", "중", "하"][skill?.skLevel - 1] || "하"}
                   </div>
                 </li>
               ))}
@@ -273,20 +156,20 @@ export default function Portfolio1({pInfo}) {
               color: "#172B7A",
             }}
           >
-            {pInfo?.careers?.map((career, index) => (
+            {pInfo?.personal?.careers?.map((career, index) => (
               <li
                 style={{
                   display: "flex",
                   gap: "3mm",
                   alignContent: "center",
                   marginBottom: `${
-                    index < pInfo?.careers?.length - 1 ? "2mm" : "0"
+                    index < pInfo?.personal?.careers?.length - 1 ? "2mm" : "0"
                   }`,
                 }}
                 key={`career-${index}`}
               >
                 <b style={{flex: "1"}}>
-                  {career?.start}~{career?.end}
+                  {career?.carStartDate} ~ {career?.carEndDate}
                 </b>
                 <div
                   style={{
@@ -297,9 +180,11 @@ export default function Portfolio1({pInfo}) {
                     padding: "0 2mm",
                   }}
                 >
-                  {career?.company} / {career?.dept}
+                  {career?.carName} / {career?.carDepartmentName}
                 </div>
-                <div style={{flex: "2", textAlign: "end"}}>{career?.role}</div>
+                <div style={{flex: "2", textAlign: "end"}}>
+                  {career?.carPosition} / {career?.carJob}
+                </div>
               </li>
             ))}
           </ul>
@@ -334,26 +219,31 @@ export default function Portfolio1({pInfo}) {
                 color: "#172B7A",
               }}
             >
-              {pInfo?.experience?.map((entry, index) => (
+              {pInfo?.personal?.activities?.map((entry, index) => (
                 <li
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
                     gap: "2mm",
                     marginBottom: `${
-                      index < pInfo?.experience?.length - 1 ? "2mm" : "0"
+                      index < pInfo?.personal?.activities?.length - 1
+                        ? "2mm"
+                        : "0"
                     }`,
                   }}
                   key={`experience-${index}`}
                 >
-                  <div style={{flex: "1"}}>
+                  <div style={{wordBreak: "keep-all"}}>
                     <div>
-                      {entry?.start}~{entry?.end}
+                      {entry?.actStartDate}~{entry?.actEndDate}
                     </div>
-                    <b>{entry?.name}</b>
+                    <b>{entry?.actName}</b>
                   </div>
 
-                  <div style={{flex: "2"}}>{entry?.info}</div>
+                  <div style={{flex: "1"}}>
+                    <div>{entry?.actContents}</div>
+                    <div>{entry?.link}</div>
+                  </div>
                 </li>
               ))}
             </ul>
@@ -380,23 +270,25 @@ export default function Portfolio1({pInfo}) {
                 color: "#172B7A",
               }}
             >
-              {pInfo?.license?.map((entry, index) => (
+              {pInfo?.personal?.licenses?.map((entry, index) => (
                 <li
                   style={{
                     display: "flex",
                     alignItems: "center",
                     gap: "2mm",
                     marginBottom: `${
-                      index < pInfo?.license?.length - 1 ? "2mm" : "0"
+                      index < pInfo?.personal?.licenses?.length - 1
+                        ? "2mm"
+                        : "0"
                     }`,
                   }}
                   key={`license-${index}`}
                 >
-                  <div style={{flex: "2"}}>
-                    {entry?.name} / {entry?.level}
+                  <div style={{flex: "1"}}>
+                    {entry?.licName} / {entry?.licLevel}
                   </div>
-                  <div style={{flex: "1"}}>{entry?.date}</div>
-                  <div style={{flex: "2"}}>{entry?.agency}</div>
+                  <div style={{wordBreak: "keep-all"}}>{entry?.licDate}</div>
+                  <div style={{flex: "1"}}>{entry?.licOrganization}</div>
                 </li>
               ))}
             </ul>
@@ -432,22 +324,25 @@ export default function Portfolio1({pInfo}) {
                 color: "#172B7A",
               }}
             >
-              {pInfo?.publishing?.map((entry, index) => (
+              {pInfo?.personal?.papers?.map((entry, index) => (
                 <li
                   style={{
                     marginBottom: `${
-                      index < pInfo?.publishing?.length - 1 ? "2mm" : "0"
+                      index < pInfo?.personal?.papers?.length - 1 ? "2mm" : "0"
                     }`,
                   }}
                   key={`publishing-${index}`}
                 >
-                  <b>{entry?.name}</b>
                   <div>
-                    <span>{entry?.author}</span> <span>{entry?.publisher}</span>{" "}
-                    <span>{entry?.date}</span>
+                    <b>{entry?.ppName}</b>
+                    <span>{entry?.ppNumber}</span>
                   </div>
-                  <div>{entry?.link}</div>
-                  <div>{entry?.info}</div>
+                  <div>
+                    <span>{entry?.ppPublisher}</span>{" "}
+                    <span>{entry?.ppWriter}</span> <span>{entry?.ppDate}</span>
+                  </div>
+                  <div>{entry?.ppLink}</div>
+                  <div>{entry?.ppContents}</div>
                 </li>
               ))}
             </ul>
@@ -474,21 +369,24 @@ export default function Portfolio1({pInfo}) {
                 color: "#172B7A",
               }}
             >
-              {pInfo?.awards?.map((entry, index) => (
+              {pInfo?.personal?.awards?.map((entry, index) => (
                 <li
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "2mm",
                     marginBottom: `${
-                      index < pInfo?.license?.length - 1 ? "2mm" : "0"
+                      index < pInfo?.personal?.awards?.length - 1 ? "2mm" : "0"
                     }`,
                   }}
                   key={`award-${index}`}
                 >
-                  <div style={{flex: "2"}}>{entry?.name}</div>
-                  <div style={{flex: "1"}}>{entry?.date}</div>
-                  <div style={{flex: "2"}}>{entry?.agency}</div>
+                  <div>
+                    <b style={{flex: "1"}}>{entry?.awName}</b>{" "}
+                    <span style={{wordBreak: "keep-all"}}>{entry?.awDate}</span>
+                  </div>
+                  <div>
+                    <span style={{flex: "1"}}>{entry?.awOrganization}</span>
+                    {" / "}
+                    <span style={{flex: "1"}}>{entry?.awContents}</span>
+                  </div>
                 </li>
               ))}
             </ul>
@@ -515,12 +413,9 @@ export default function Portfolio1({pInfo}) {
             color: "#172B7A",
           }}
         >
-          {pInfo?.projects?.map((entry, index) => (
+          {pInfo?.repo?.map((entry, index) => (
             <li key={`project-${index}`}>
-              <h3 style={{marginBottom: "3mm"}}>{entry?.title}</h3>
-              <div>
-                {entry?.start}~{entry?.end} / {entry?.intro}
-              </div>
+              <h3 style={{marginBottom: "3mm"}}>{entry?.rpName}</h3>
               <div
                 style={{
                   width: "fit-content",
@@ -529,22 +424,41 @@ export default function Portfolio1({pInfo}) {
                   overflow: "hidden",
                 }}
               >
-                {entry?.lang?.map((lang, langIndex) => (
+                {entry?.lang?.slice(0, 4)?.map((lang, langIndex) => (
                   <div
                     style={{
                       display: "inline-block",
                       padding: "1mm 2mm",
-                      backgroundColor: "black",
+                      fontSize: "8px",
+                      backgroundColor: COLORBAR[langIndex],
+                      width: `${parseFloat(lang?.perc || 100) * 0.8}mm`,
                     }}
                     key={`project-lang-${langIndex}`}
+                    title={`${lang?.lang} : ${lang?.perc}%`}
                   >
-                    {lang?.value}
+                    {lang?.lang}
                   </div>
                 ))}
               </div>
-              <div style={{marginBottom: "3mm"}}>{entry?.info}</div>
+              <div>
+                {entry?.lang?.map((lang, langIndex) => (
+                  <span key={`project-lang-${langIndex}-str`}>
+                    {lang?.lang} {lang?.perc}%
+                    {langIndex < entry?.lang?.length - 1 && " / "}
+                  </span>
+                ))}
+              </div>
 
-              <div
+              <div>{entry?.rpLongContents}</div>
+
+              <div style={{margin: "2mm auto"}}>
+                <MarkdownPreview
+                  source={entry?.rpReadme}
+                  style={{fontSize: "13px"}}
+                />
+              </div>
+
+              {/* <div
                 style={{
                   width: "60%",
                   display: "flex",
@@ -554,6 +468,19 @@ export default function Portfolio1({pInfo}) {
               >
                 <h4 style={{width: "30%"}}>GitHub</h4>
                 <div style={{width: "70%"}}>{entry?.github}</div>
+              </div> */}
+              <div
+                style={{
+                  width: "60%",
+                  display: "flex",
+                  margin: "auto",
+                  textAlign: "start",
+                }}
+              >
+                <h4 style={{width: "40pt"}}>기간</h4>
+                <div>
+                  {entry?.rpSdate}~{entry?.rpEdate}
+                </div>
               </div>
               <div
                 style={{
@@ -563,26 +490,48 @@ export default function Portfolio1({pInfo}) {
                   textAlign: "start",
                 }}
               >
-                <h4 style={{width: "30%"}}>Domain</h4>
-                <div style={{width: "70%"}}>{entry?.domain}</div>
-              </div>
-              {entry?.roles?.map((role, roleIndex) => (
-                <div
-                  style={{
-                    width: "60%",
-                    display: "flex",
-                    margin: "auto",
-                    textAlign: "start",
-                  }}
-                  key={`project-role-${roleIndex}`}
-                >
-                  <h4 style={{width: "30%"}}>{role?.name}</h4>
-                  <div style={{width: "70%"}}>{role?.skill}</div>
+                <h4 style={{width: "40pt"}}>링크</h4>
+                <div>
+                  <a
+                    href={entry?.rpShortContents}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {entry?.rpShortContents}
+                  </a>
                 </div>
-              ))}
+              </div>
+              <div
+                style={{
+                  width: "60%",
+                  display: "flex",
+                  margin: "auto",
+                  textAlign: "start",
+                }}
+              >
+                <h4 style={{width: "40pt"}}>역할</h4>
+                <div>{entry?.rpRole}</div>
+              </div>
+
+              {index < pInfo?.repo?.length - 1 && <br />}
             </li>
           ))}
         </ul>
+      </div>
+
+      {/* SNS */}
+      <div
+        style={{
+          backgroundColor: "#19265A",
+          padding: "5mm 10mm",
+          color: "white",
+        }}
+      >
+        {pInfo?.personal?.snsList?.map((e) => (
+          <div key={`sns-${e?.id}`}>
+            {e?.snsName} : {e?.snsLink}
+          </div>
+        ))}
       </div>
     </div>
   );

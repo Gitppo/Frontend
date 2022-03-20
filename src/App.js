@@ -7,15 +7,16 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 import AskBtn from "./components/Btn/AskBtn";
+import ProgressModal from "./components/Modal/ProgressModal";
 
 import Home from "./domain/Home";
 import Agreement from "./domain/Agree";
 import Mypage from "./domain/Mypage";
-import Error from "./domain/Error";
-import PortfolioConsole from "./domain/PortfolioConsole/index";
-import Callback from "./domain/Callback";
 import New from "./domain/New/index";
-import ProgressModal from "./components/Modal/ProgressModal";
+import Export from "./domain/Export";
+import Share from "./domain/Share";
+import Callback from "./domain/Callback";
+import Error from "./domain/Error";
 
 function App() {
   return (
@@ -30,7 +31,6 @@ function App() {
             <AskBtn />
 
             <Switch>
-              {/* TOOD : URL 정리 */}
               <Route exact path={"/"} component={Home} />
               <Route path={"/callback/:toURL?"} component={Callback} />
 
@@ -38,12 +38,9 @@ function App() {
               <Route exact path={"/my-page"} component={Mypage} />
 
               <Route path={"/new"} component={New} />
+              <Route exact path={"/export/:pfID?"} component={Export} />
 
-              <Route
-                exact
-                path={"/export/:pfID?"}
-                component={PortfolioConsole}
-              />
+              <Route path={"/share"} component={Share} />
 
               <Route path={"/error"} component={Error} />
               <Route component={Error} />

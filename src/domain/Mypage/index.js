@@ -12,11 +12,7 @@ import BtnModal from "../../components/Modal/BtnModal";
 import Pin from "../../assets/pin-red.png";
 
 import {useUserContext} from "../../hooks/useUserContext";
-import {
-  getPortfolio,
-  getPortfolioDetail,
-  deletePortfolio,
-} from "../../hooks/portfolio";
+import {getPortfolio, deletePortfolio} from "../../hooks/portfolio";
 
 function Mypage() {
   const history = useHistory();
@@ -45,11 +41,6 @@ function Mypage() {
       });
   };
   const onRepair = async (id) => {
-    // getPortfolioDetail(id).then((r) => {
-    //   console.log(r);
-    //   history.push("/new/repo-load", {data: r});
-    // });
-
     history.push("/new/repo-load", {data: {id: id}});
   };
 
@@ -75,8 +66,6 @@ function Mypage() {
   useEffect(() => {
     getPortfolio(user.id)
       .then((data) => {
-        console.log(data);
-
         setPortfolio(
           data.map((e) => ({
             ...e,

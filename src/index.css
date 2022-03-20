@@ -66,16 +66,6 @@ h6 {
   font-family: "font-bold";
 }
 
-/* 얇은 폰트 */
-@font-face {
-  font-family: "font-ultra-light";
-  src: url("./font/NotoSansKR-Thin.otf");
-}
-@font-face {
-  font-family: "font-light";
-  src: url("./font/NotoSansKR-Light.otf");
-}
-
 /* 일반 폰트 */
 @font-face {
   font-family: "font-regular";
@@ -86,10 +76,6 @@ h6 {
 @font-face {
   font-family: "font-bold";
   src: url("./font/NotoSansKR-Bold.otf");
-}
-@font-face {
-  font-family: "font-ultra-bold";
-  src: url("./font/NotoSansKR-Black.otf");
 }
 
 /* 타이틀 폰트 */

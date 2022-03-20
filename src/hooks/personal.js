@@ -19,3 +19,23 @@ export const editPersonal = async (data) => {
       return r.data;
     });
 };
+
+export const deletePersonal = async (name, id) => {
+  return progressClient(true)
+    .delete(`/api/personal/${name}`, {
+      params: {
+        id: id,
+      },
+    })
+    .then((r) => {
+      if (r.status !== "OK")
+        throw Error(
+          `NetErr : Failed to delete personal information : ${name} ${id}`
+        );
+      return true;
+    })
+    .catch((e) => {
+      console.error(e);
+      return false;
+    });
+};
