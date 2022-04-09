@@ -1,30 +1,30 @@
 {
   "files": {
-    "main.css": "/static/css/main.84d24af1.chunk.css",
-    "main.js": "/static/js/main.63846ea3.chunk.js",
-    "main.js.map": "/static/js/main.63846ea3.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.83af5df1.js",
-    "runtime-main.js.map": "/static/js/runtime-main.83af5df1.js.map",
-    "static/css/2.f7d5a786.chunk.css": "/static/css/2.f7d5a786.chunk.css",
-    "static/js/2.0af585c5.chunk.js": "/static/js/2.0af585c5.chunk.js",
-    "static/js/2.0af585c5.chunk.js.map": "/static/js/2.0af585c5.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/2.f7d5a786.chunk.css.map": "/static/css/2.f7d5a786.chunk.css.map",
-    "static/css/main.84d24af1.chunk.css.map": "/static/css/main.84d24af1.chunk.css.map",
-    "static/js/2.0af585c5.chunk.js.LICENSE.txt": "/static/js/2.0af585c5.chunk.js.LICENSE.txt",
-    "static/media/index.css": "/static/media/yoonu.8585c4b2.ttf",
-    "static/media/flag.ea050845.png": "/static/media/flag.ea050845.png",
-    "static/media/hippo-blue.d31d27bb.png": "/static/media/hippo-blue.d31d27bb.png",
-    "static/media/style.css": "/static/media/hippo-transparent.08e34c6b.png",
-    "static/media/pin-red.55411084.png": "/static/media/pin-red.55411084.png",
-    "static/media/profile.242072b8.png": "/static/media/profile.242072b8.png",
-    "static/media/radio-btn-out.2f2f1b58.png": "/static/media/radio-btn-out.2f2f1b58.png"
+    "main.css": "/Frontend/static/css/main.4b555ec6.chunk.css",
+    "main.js": "/Frontend/static/js/main.b9776b87.chunk.js",
+    "main.js.map": "/Frontend/static/js/main.b9776b87.chunk.js.map",
+    "runtime-main.js": "/Frontend/static/js/runtime-main.1c414c37.js",
+    "runtime-main.js.map": "/Frontend/static/js/runtime-main.1c414c37.js.map",
+    "static/css/2.f7d5a786.chunk.css": "/Frontend/static/css/2.f7d5a786.chunk.css",
+    "static/js/2.0af585c5.chunk.js": "/Frontend/static/js/2.0af585c5.chunk.js",
+    "static/js/2.0af585c5.chunk.js.map": "/Frontend/static/js/2.0af585c5.chunk.js.map",
+    "index.html": "/Frontend/index.html",
+    "static/css/2.f7d5a786.chunk.css.map": "/Frontend/static/css/2.f7d5a786.chunk.css.map",
+    "static/css/main.4b555ec6.chunk.css.map": "/Frontend/static/css/main.4b555ec6.chunk.css.map",
+    "static/js/2.0af585c5.chunk.js.LICENSE.txt": "/Frontend/static/js/2.0af585c5.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/Frontend/static/media/yoonu.8585c4b2.ttf",
+    "static/media/flag.ea050845.png": "/Frontend/static/media/flag.ea050845.png",
+    "static/media/hippo-blue.d31d27bb.png": "/Frontend/static/media/hippo-blue.d31d27bb.png",
+    "static/media/style.css": "/Frontend/static/media/hippo-transparent.08e34c6b.png",
+    "static/media/pin-red.55411084.png": "/Frontend/static/media/pin-red.55411084.png",
+    "static/media/profile.242072b8.png": "/Frontend/static/media/profile.242072b8.png",
+    "static/media/radio-btn-out.2f2f1b58.png": "/Frontend/static/media/radio-btn-out.2f2f1b58.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.83af5df1.js",
+    "static/js/runtime-main.1c414c37.js",
     "static/css/2.f7d5a786.chunk.css",
     "static/js/2.0af585c5.chunk.js",
-    "static/css/main.84d24af1.chunk.css",
-    "static/js/main.63846ea3.chunk.js"
+    "static/css/main.4b555ec6.chunk.css",
+    "static/js/main.b9776b87.chunk.js"
   ]
 }
