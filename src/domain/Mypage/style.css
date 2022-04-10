@@ -49,6 +49,10 @@
   color: white;
   border-radius: 0.5rem;
   background-color: var(--dark-blue1);
+
+  cursor: default;
+
+  transition: background-color 300ms ease-out;
 }
 .mp-upper-right > li .beautiful-title {
   margin-left: 0.8em;
@@ -61,8 +65,10 @@
 .mp-pf-wrapper {
   width: 100%;
 
-  display: flex;
-  flex-wrap: wrap;
+  /* display: flex;
+  flex-wrap: wrap; */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .mp-pf-item {
@@ -74,6 +80,12 @@
   border: 1px solid gray;
   border-radius: 0.5rem;
   box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.16);
+
+  transition: margin 300ms;
+}
+.mp-pf-item:hover {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .mp-pf-pin {
@@ -108,14 +120,22 @@
   color: var(--dark-red);
 }
 
+@media screen and (max-width: 900px) {
+  .mp-pf-wrapper {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 @media screen and (max-width: 700px) {
   .mp-upper-left,
   .mp-upper-right {
     width: 100%;
     max-width: none;
   }
+  .mp-pf-wrapper {
+    grid-template-columns: 1fr;
+  }
   .mp-pf-item {
-    width: 100%;
     margin: 1rem 0.5rem;
   }
 }

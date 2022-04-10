@@ -41,7 +41,7 @@ const doCopy = (text) => {
   document.body.removeChild(textarea);
 };
 
-const exportHtml = (title, removeBackground) => {
+const exportHtml = (title, isPDF) => {
   return `
   <!DOCTYPE html>
   <html lang="ko-kr">
@@ -50,27 +50,63 @@ const exportHtml = (title, removeBackground) => {
       <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
       <title>${title} - Powered by.Gitppo</title>
       <style>
+        body {
+          font-size: 13px;
+        }
         body, * {
           box-sizing: border-box;
           font-family: 'Noto Sans KR', sans-serif;
+          padding: 0;
+          margin: 0;
         }
         ul, li {
           list-style: none;
         }
+        .anchor {
+          display: none;
+        }
+        .wmde-markdown h1,
+        .wmde-markdown h2,
+        .wmde-markdown h3,
+        .wmde-markdown h4 {
+          font-size: 1em;
+        }
+        ${
+          // isPDF
+          //   ? `
+          //   body {
+          //     width: fit-content;
+          //   }`
+          //   :
+          `
+            body {
+              width: 100%;
+            }
+            body > * {
+              width: 100% !important;
+            }
+            body > * > * > * {
+              max-width: 1000px;
+              margin-left: auto;
+              margin-right: auto;
+            }
+          `
+        }
       </style>
     </head>
-    <body style="padding: 0; margin: 0; width: fit-content; ${
-      removeBackground
-        ? ""
-        : "background-color: #19265a; display: flex; flex-direction: row; justify-content: center;"
-    }">
+    <body>
       ${document.getElementById("#export-portfolio-preview").innerHTML}
     </body>
   </html>
   `;
 };
 
-export default function ShareModal({setShow, link, title = "포트폴리오"}) {
+export default function ShareModal({
+  setShow,
+  link = "",
+  title = "포트폴리오",
+  isShared = false,
+}) {
   const [msg, setMsg] = useState({show: false});
   const [copied, setCopied] = useState(false);
 
@@ -118,23 +154,41 @@ export default function ShareModal({setShow, link, title = "포트폴리오"}) {
     <Modal backBlack={true}>
       <RoundContainer blueHeader={true} className={"share-modal"}>
         <h4 style={{color: "#9B9B9B"}}>공유 가능한 링크</h4>
-        <div
-          className="link-box"
-          title={"링크를 누르면 복사가 됩니다."}
-          onClick={copyLink}
-        >
-          <div> {link}</div>
-          <div className="clipboard">
-            {copied ? (
-              <FontAwesomeIcon
-                icon={faClipboardCheck}
-                color={"var(--dark-red)"}
-              />
-            ) : (
-              <FontAwesomeIcon icon={faClipboard} color={"var(--blue2)"} />
-            )}
+        {link?.length > 0 ? (
+          isShared ? (
+            <div
+              className="link-box"
+              title={"링크를 누르면 복사가 됩니다."}
+              onClick={copyLink}
+            >
+              <div> {link}</div>
+              <div className="clipboard">
+                {copied ? (
+                  <FontAwesomeIcon
+                    icon={faClipboardCheck}
+                    color={"var(--dark-red)"}
+                  />
+                ) : (
+                  <FontAwesomeIcon icon={faClipboard} color={"var(--blue2)"} />
+                )}
+              </div>
+            </div>
+          ) : (
+            <div
+              className="link-box"
+              style={{justifyContent: "center", cursor: "no-drop"}}
+            >
+              공유가 설정되어있지 않습니다.
+            </div>
+          )
+        ) : (
+          <div
+            className="link-box"
+            style={{justifyContent: "center", cursor: "no-drop"}}
+          >
+            공유 가능한 링크가 없습니다.
           </div>
-        </div>
+        )}
 
         <div className="msg">{copied && "클립보드로 복사되었습니다"}</div>
         <br />

@@ -252,7 +252,7 @@ export default function PersonalInput({match}) {
 
   useEffect(() => {
     // url check
-    if (!match.params?.hasOwnProperty("pfID")) {
+    if (!match.params?.pfID) {
       history.replace("/error");
       return;
     }
@@ -327,7 +327,7 @@ export default function PersonalInput({match}) {
               <input
                 type="text"
                 name="biBirth"
-                placeholder="생년월일 (ex.19951004)"
+                placeholder="생년월일"
                 value={basicList.biBirth || ""}
                 onChange={(e) => onJsonChange(basicList, setBasicList, e)}
                 onFocus={(e) => (e.target.type = "date")}

@@ -3,23 +3,24 @@ import {useEffect, useState} from "react";
 import {useHistory, useLocation} from "react-router-dom";
 
 import RadioBtn from "../../components/Btn/RadioBtn";
-import BeforeAfterBtn from "../../components/Btn/BeforeAfterBtn";
+import BtnModal from "../../components/Modal/BtnModal";
+import ShareModal from "../../components/Modal/ShareModal";
 import Portfolio1 from "../../components/Portfolio/Portfolio1";
 import Portfolio2 from "../../components/Portfolio/Portfolio2";
+import BeforeAfterBtn from "../../components/Btn/BeforeAfterBtn";
+import ExportUserGuide from "../../components/Modal/ExportUserGuide";
 
-import {loginBack} from "../../hooks/login";
 import {
   completePortfolio,
   getPortfolioDetail,
   userHasPortfoilo,
 } from "../../hooks/portfolio";
+import {loginBack} from "../../hooks/login";
 import {isValidUser, useUserContext} from "../../hooks/useUserContext";
 import RoundContainer from "../../components/RoundContainer/index";
 
-import ShareModal from "../../components/Modal/ShareModal";
 import {faAngleRight} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import BtnModal from "../../components/Modal/BtnModal";
 
 export default function Export({match}) {
   const history = useHistory();
@@ -29,8 +30,12 @@ export default function Export({match}) {
 
   const [pf, setPf] = useState({});
   const [styleIndex, setStyleIndex] = useState(0);
+
   const [showConsole, setShowConsle] = useState(true);
   const [showShareModal, setShowShareModal] = useState(false);
+  const [showGuide, setShowGuide] = useState(
+    !(localStorage.getItem("show-export-user-guide") === "false")
+  );
 
   const [alertMsg, setAlertMsg] = useState({});
   const [alertShow, setAlertShow] = useState(false);
@@ -38,11 +43,11 @@ export default function Export({match}) {
   const onPrev = () => {
     history.push(`/new/3/${match.params.pfID}`, {...location.state});
   };
-  const onSave = () => {
-    completePortfolio({
+  const onSave = async () => {
+    await completePortfolio({
       pfId: pf?.id,
-      pfShare: pf?.pfShare,
-      pfTemplate: styleIndex,
+      pfShare: pf?.pfShare ?? false,
+      pfTemplate: styleIndex ?? 0,
     })
       .then(() => {
         setAlertMsg({title: "저장을 완료하였습니다"});
@@ -50,8 +55,11 @@ export default function Export({match}) {
 
         history.replace(location.pathname, {
           ...location.state,
-          pfShare: pf?.pfShare,
-          pfTemplate: styleIndex,
+          data: {
+            ...(location.state?.data || {}),
+            pfShare: pf?.pfShare,
+            pfTemplate: styleIndex,
+          },
         });
       })
       .catch((e) => {
@@ -60,10 +68,15 @@ export default function Export({match}) {
         setAlertShow(true);
       });
   };
+  const onShare = async () => {
+    await onSave();
+    setAlertShow(false);
+    setShowShareModal(true);
+  };
 
   useEffect(() => {
     // url check
-    if (!match.params?.hasOwnProperty("pfID")) {
+    if (!match.params?.pfID) {
       history.replace("/error");
       return;
     }
@@ -84,7 +97,13 @@ export default function Export({match}) {
     if (!location.state?.data?.repo || !location?.state?.data?.personal) {
       getPortfolioDetail(match.params.pfID)
         .then((r) => {
-          history.replace(location.pathname, {data: r});
+          history.replace(location.pathname, {
+            data: {
+              ...r,
+              repo: r?.repo || [],
+              personal: r?.personal || {},
+            },
+          });
         })
         .catch((e) => {
           console.error(e);
@@ -117,7 +136,7 @@ export default function Export({match}) {
       }) || [];
 
     setPf(data);
-  }, [history, location.pathname, location.state, match.params, user]);
+  }, [history, location, match.params, user]);
 
   return (
     <div className="pfcon">
@@ -170,10 +189,10 @@ export default function Export({match}) {
                   <RadioBtn value={styleIndex === 0} />
                   <span>심플 다크 블루</span>
                 </li>
-                {/* <li onClick={() => setStyleIndex(1)}>
+                <li onClick={() => setStyleIndex(1)}>
                   <RadioBtn value={styleIndex === 1} />
                   <span>핑크 포인트</span>
-                </li> */}
+                </li>
               </ul>
             </div>
 
@@ -181,10 +200,7 @@ export default function Export({match}) {
               <button className="round-red-btn" onClick={onSave}>
                 저장하기
               </button>
-              <button
-                className="round-red-btn"
-                onClick={() => setShowShareModal(true)}
-              >
+              <button className="round-red-btn" onClick={onShare}>
                 공유하기
               </button>
             </div>
@@ -192,20 +208,21 @@ export default function Export({match}) {
         </div>
       </div>
 
-      {showShareModal && (
-        <ShareModal
-          setShow={setShowShareModal}
-          link={`${window.location.origin}/share?id=${pf.pfUuid}`}
-          title={pf?.pfName}
-        />
-      )}
-
       {alertShow && (
         <BtnModal
           title={alertMsg?.title}
           msg={alertMsg?.msg}
           setShow={setAlertShow}
           btns={[{name: "닫기", onClick: () => setAlertShow(false)}]}
+        />
+      )}
+      {showGuide && <ExportUserGuide setShow={setShowGuide} />}
+      {showShareModal && (
+        <ShareModal
+          setShow={setShowShareModal}
+          link={`${window.location.origin}/share?id=${pf.pfUuid}`}
+          title={pf?.pfName}
+          isShared={pf?.pfShare || false}
         />
       )}
     </div>

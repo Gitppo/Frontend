@@ -34,7 +34,7 @@ export default function GitRepoChoice({match}) {
 
   useEffect(() => {
     // url check
-    if (!match.params?.hasOwnProperty("pfID")) {
+    if (!match.params?.pfID) {
       history.replace("/error");
       return;
     }

@@ -17,5 +17,9 @@ export const loginBack = (back = "") => {
   if (back.charAt(0) === "/") {
     back = back.substring(1);
   }
-  window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${window.location.origin}/callback/${back}`;
+  console.log(
+    `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=https://gitppo.github.io/Frontend/callback/${back}`
+  );
+
+  window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=https://gitppo.github.io/Frontend/callback/${back}`;
 };

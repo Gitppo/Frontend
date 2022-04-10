@@ -11,14 +11,26 @@ function AskBtn() {
 
   return (
     <div id="ask-btn-wrapper">
-      {showAsk ? (
-        <EmailModal setShow={setShowAsk} />
-      ) : (
-        <button onClick={() => setShowAsk(true)} id={"ask-button"}>
-          <span>문의하기</span>
-          <FontAwesomeIcon icon={faComment} />
-        </button>
-      )}
+      <EmailModal
+        setShow={setShowAsk}
+        style={
+          showAsk
+            ? {opacity: "1", transform: "scale(1)"}
+            : {opacity: "0", transform: "scale(0)"}
+        }
+      />
+      <button
+        id={"ask-button"}
+        onClick={() => setShowAsk(true)}
+        style={
+          showAsk
+            ? {opacity: "0", transform: "scale(0)"}
+            : {opacity: "1", transform: "scale(1)"}
+        }
+      >
+        <span>문의하기</span>
+        <FontAwesomeIcon icon={faComment} />
+      </button>
     </div>
   );
 }

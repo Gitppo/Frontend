@@ -26,6 +26,17 @@
 .md-pv-source::-webkit-scrollbar {
   width: 0;
 }
+.md-pv-source li {
+  list-style: initial;
+}
+.md-pv-source hr {
+  border-top: 1px solid #eaecef !important;
+}
+.md-pv-source h1,
+.md-pv-source h2 {
+  border: none !important;
+  padding-bottom: 0 !important;
+}
 
 @media screen and (max-width: 700px) {
   .md-pv-container {

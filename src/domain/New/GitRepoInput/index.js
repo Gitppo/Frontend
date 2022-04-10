@@ -135,7 +135,7 @@ function GitRepoInput({match}) {
         langStr = langStr.substring(0, langStr.length - 2);
       }
 
-      tmpRepos.push({
+      let tmpRepoCon = {
         ...e,
         pfId: parseInt(match.params.pfID),
         repoGitId: e?.repoGitId || -1,
@@ -154,13 +154,36 @@ function GitRepoInput({match}) {
         skillsValue: "",
         useReadme: e?.useReadme ?? true,
         fold: false,
-      });
+      };
+
+      if (e?.html_url && tmpRepoCon.rpReadme.length > 0) {
+        const el = document.createElement("div");
+        el.innerHTML = tmpRepoCon.rpReadme;
+        document.body.appendChild(el);
+        for (let img of el.querySelectorAll("img")) {
+          let imgURL = img.getAttribute("src");
+          if (imgURL.indexOf("http") < 0) {
+            let tmpArr = e?.html_url.split("/");
+            img.setAttribute(
+              "src",
+              `https://raw.githubusercontent.com/${user.githubUserName}/${
+                tmpArr[tmpArr.length - 1]
+              }/master/${imgURL}`
+            );
+            img.style.maxWidth = "100%";
+            // img.remove();
+          }
+        }
+        tmpRepoCon.rpReadme = "&nbsp;" + el.innerHTML + "&nbsp;";
+        document.body.removeChild(el);
+      }
+      tmpRepos.push(tmpRepoCon);
     }
 
     // Deep copy
     setRepos(JSON.parse(JSON.stringify(tmpRepos)));
     setDelRepos([]);
-  }, [location.state, match.params.pfID]);
+  }, [location.state, match.params.pfID, user.githubUserName]);
 
   const onInputChange = (e, index) => {
     repos[index][e.target.name] = e.target.value;
@@ -253,7 +276,7 @@ function GitRepoInput({match}) {
 
   useEffect(() => {
     // url check
-    if (!match.params?.hasOwnProperty("pfID")) {
+    if (!match.params?.pfID) {
       history.replace("/error");
       return;
     }
@@ -322,7 +345,10 @@ function GitRepoInput({match}) {
         </div>
 
         {repos.map((e, i) => (
-          <div className="grd-inner" key={e?.name}>
+          <div
+            className="grd-inner"
+            key={e?.id > -1 ? `repo-${e?.id}` : `repo-index-${i}`}
+          >
             <div className="grd-inner-header">
               <div className="grd-inner-header-title">
                 <h3 onClick={() => onFold(i)}>{e?.rpName}</h3>

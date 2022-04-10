@@ -17,6 +17,7 @@ import Export from "./domain/Export";
 import Share from "./domain/Share";
 import Callback from "./domain/Callback";
 import Error from "./domain/Error";
+import EasterEgg from "./domain/EasterEgg";
 
 function App() {
   return (
@@ -41,6 +42,8 @@ function App() {
               <Route exact path={"/export/:pfID?"} component={Export} />
 
               <Route path={"/share"} component={Share} />
+
+              <Route exact path={"/easter-egg"} component={EasterEgg} />
 
               <Route path={"/error"} component={Error} />
               <Route component={Error} />

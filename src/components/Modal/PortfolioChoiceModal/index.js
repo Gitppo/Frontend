@@ -24,7 +24,10 @@ export default function PortfolioChoiceModal({initPersonal, onNo}) {
           if (!(r?.personal?.id >= 0)) {
             setMsg("선택한 포트폴리오의 입력 내용이 없습니다.");
           } else {
-            initPersonal(r?.personal);
+            initPersonal({
+              ...r?.personal,
+              id: -1,
+            });
             onNo();
           }
         })

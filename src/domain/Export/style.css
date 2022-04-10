@@ -64,6 +64,13 @@
   padding-right: 0;
 }
 
+.pf-pv-sect .wmde-markdown h1,
+.pf-pv-sect .wmde-markdown h2,
+.pf-pv-sect .wmde-markdown h3,
+.pf-pv-sect .wmde-markdown h4 {
+  font-size: 1em;
+}
+
 .pf-con-sect {
   position: absolute;
   top: 0;

@@ -1,6 +1,7 @@
 .share-modal {
-  text-align: center;
+  width: 40rem;
   max-width: 90%;
+  text-align: center;
 }
 .share-modal h4 {
   margin-bottom: 0.5em;
@@ -12,6 +13,7 @@
 
 .share-modal .link-box {
   width: 100%;
+  /* min-width: 20rem; */
   padding: 0.5rem 1rem;
 
   display: flex;

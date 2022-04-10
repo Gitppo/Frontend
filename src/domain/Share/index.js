@@ -7,7 +7,7 @@ import {getSharedPortfoilo} from "../../hooks/portfolio";
 import Portfolio1 from "../../components/Portfolio/Portfolio1";
 import Portfolio2 from "../../components/Portfolio/Portfolio2";
 
-export default function Share({match}) {
+export default function Share() {
   const history = useHistory();
   const location = useLocation();
 
@@ -21,7 +21,6 @@ export default function Share({match}) {
 
     getSharedPortfoilo(id)
       .then((r) => {
-        console.log(r);
         r.repo =
           r?.repo?.map((e) => {
             // language sum

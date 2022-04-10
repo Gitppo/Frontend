@@ -6,7 +6,7 @@ export default function Portfolio1({pInfo}) {
   return (
     <div
       style={{
-        fontSize: "13px",
+        fontSize: "0.9rem",
         width: "210mm",
         overflow: "hidden",
       }}
@@ -141,256 +141,293 @@ export default function Portfolio1({pInfo}) {
 
       <div style={{backgroundColor: "#F7F7F7", padding: "5mm 10mm"}}>
         {/* Career */}
-        <div style={{marginBottom: "5mm"}}>
-          <h2
-            style={{color: "#172B7A", textAlign: "center", marginBottom: "3mm"}}
-          >
-            Career
-          </h2>
-          <ul
-            style={{
-              padding: "5mm",
-              backgroundColor: "white",
-              borderRadius: "2mm",
-              boxShadow: "0 3px 6px rgba(0, 0, 0, 0.1)",
-              color: "#172B7A",
-            }}
-          >
-            {pInfo?.personal?.careers?.map((career, index) => (
-              <li
-                style={{
-                  display: "flex",
-                  gap: "3mm",
-                  alignContent: "center",
-                  marginBottom: `${
-                    index < pInfo?.personal?.careers?.length - 1 ? "2mm" : "0"
-                  }`,
-                }}
-                key={`career-${index}`}
-              >
-                <b style={{flex: "1"}}>
-                  {career?.carStartDate} ~ {career?.carEndDate}
-                </b>
-                <div
+        {pInfo?.personal?.careers?.length > 0 && (
+          <div style={{marginBottom: "5mm"}}>
+            <h2
+              style={{
+                color: "#172B7A",
+                textAlign: "center",
+                marginBottom: "3mm",
+              }}
+            >
+              Career
+            </h2>
+            <ul
+              style={{
+                padding: "5mm",
+                backgroundColor: "white",
+                borderRadius: "2mm",
+                boxShadow: "0 3px 6px rgba(0, 0, 0, 0.1)",
+                color: "#172B7A",
+              }}
+            >
+              {pInfo?.personal?.careers?.map((career, index) => (
+                <li
                   style={{
-                    flex: "3",
-                    backgroundColor: "#1C2A75",
-                    borderRadius: "2mm",
-                    color: "white",
-                    padding: "0 2mm",
+                    display: "flex",
+                    gap: "3mm",
+                    alignContent: "center",
+                    marginBottom: `${
+                      index < pInfo?.personal?.careers?.length - 1 ? "2mm" : "0"
+                    }`,
                   }}
+                  key={`career-${index}`}
                 >
-                  {career?.carName} / {career?.carDepartmentName}
-                </div>
-                <div style={{flex: "2", textAlign: "end"}}>
-                  {career?.carPosition} / {career?.carJob}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
+                  <b style={{flex: "1"}}>
+                    {career?.carStartDate} ~ {career?.carEndDate}
+                  </b>
+                  <div
+                    style={{
+                      flex: "3",
+                      backgroundColor: "#1C2A75",
+                      borderRadius: "2mm",
+                      color: "white",
+                      padding: "0 2mm",
+                    }}
+                  >
+                    {career?.carName} / {career?.carDepartmentName}
+                  </div>
+                  <div style={{flex: "2", textAlign: "end"}}>
+                    {career?.carPosition} / {career?.carJob}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
+            gridTemplateColumns:
+              pInfo?.personal?.activities?.length > 0 &&
+              pInfo?.personal?.licenses?.length > 0
+                ? "1fr 1fr"
+                : "1fr",
             gap: "2mm",
-            marginBottom: "5mm",
+            marginBottom:
+              pInfo?.personal?.activities?.length > 0 &&
+              pInfo?.personal?.licenses?.length > 0
+                ? "5mm"
+                : "0",
           }}
         >
-          {/* Other Experiences */}
-          <div>
-            <h2
-              style={{
-                color: "#172B7A",
-                textAlign: "center",
-                marginBottom: "3mm",
-              }}
-            >
-              Other Experiences
-            </h2>
-            <ul
-              style={{
-                height: "calc(100% - 2rem - 2mm)",
-                padding: "5mm",
-                backgroundColor: "white",
-                borderRadius: "2mm",
-                boxShadow: "0 3px 6px rgba(0, 0, 0, 0.1)",
-                color: "#172B7A",
-              }}
-            >
-              {pInfo?.personal?.activities?.map((entry, index) => (
-                <li
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    gap: "2mm",
-                    marginBottom: `${
-                      index < pInfo?.personal?.activities?.length - 1
-                        ? "2mm"
-                        : "0"
-                    }`,
-                  }}
-                  key={`experience-${index}`}
-                >
-                  <div style={{wordBreak: "keep-all"}}>
-                    <div>
-                      {entry?.actStartDate}~{entry?.actEndDate}
+          {pInfo?.personal?.activities?.length > 0 && (
+            //  Other Experiences
+            <div>
+              <h2
+                style={{
+                  color: "#172B7A",
+                  textAlign: "center",
+                  marginBottom: "3mm",
+                }}
+              >
+                Other Experiences
+              </h2>
+              <ul
+                style={{
+                  height: "calc(100% - 2rem - 2mm)",
+                  padding: "5mm",
+                  backgroundColor: "white",
+                  borderRadius: "2mm",
+                  boxShadow: "0 3px 6px rgba(0, 0, 0, 0.1)",
+                  color: "#172B7A",
+                }}
+              >
+                {pInfo?.personal?.activities?.map((entry, index) => (
+                  <li
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      gap: "2mm",
+                      marginBottom: `${
+                        index < pInfo?.personal?.activities?.length - 1
+                          ? "2mm"
+                          : "0"
+                      }`,
+                    }}
+                    key={`experience-${index}`}
+                  >
+                    <div style={{wordBreak: "keep-all"}}>
+                      <div>
+                        {entry?.actStartDate}~{entry?.actEndDate}
+                      </div>
+                      <b>{entry?.actName}</b>
                     </div>
-                    <b>{entry?.actName}</b>
-                  </div>
 
-                  <div style={{flex: "1"}}>
-                    <div>{entry?.actContents}</div>
-                    <div>{entry?.link}</div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
+                    <div style={{flex: "1"}}>
+                      <div>{entry?.actContents}</div>
+                      <div>{entry?.link}</div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* License / Language */}
-          <div>
-            <h2
-              style={{
-                color: "#172B7A",
-                textAlign: "center",
-                marginBottom: "3mm",
-              }}
-            >
-              License / Langugage
-            </h2>
-            <ul
-              style={{
-                height: "calc(100% - 2rem - 2mm)",
-                padding: "5mm",
-                backgroundColor: "white",
-                borderRadius: "2mm",
-                boxShadow: "0 3px 6px rgba(0, 0, 0, 0.1)",
-                color: "#172B7A",
-              }}
-            >
-              {pInfo?.personal?.licenses?.map((entry, index) => (
-                <li
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "2mm",
-                    marginBottom: `${
-                      index < pInfo?.personal?.licenses?.length - 1
-                        ? "2mm"
-                        : "0"
-                    }`,
-                  }}
-                  key={`license-${index}`}
-                >
-                  <div style={{flex: "1"}}>
-                    {entry?.licName} / {entry?.licLevel}
-                  </div>
-                  <div style={{wordBreak: "keep-all"}}>{entry?.licDate}</div>
-                  <div style={{flex: "1"}}>{entry?.licOrganization}</div>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {pInfo?.personal?.licenses?.length > 0 && (
+            <div>
+              <h2
+                style={{
+                  color: "#172B7A",
+                  textAlign: "center",
+                  marginBottom: "3mm",
+                }}
+              >
+                License / Langugage
+              </h2>
+              <ul
+                style={{
+                  height: "calc(100% - 2rem - 2mm)",
+                  padding: "5mm",
+                  backgroundColor: "white",
+                  borderRadius: "2mm",
+                  boxShadow: "0 3px 6px rgba(0, 0, 0, 0.1)",
+                  color: "#172B7A",
+                }}
+              >
+                {pInfo?.personal?.licenses?.map((entry, index) => (
+                  <li
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "2mm",
+                      marginBottom: `${
+                        index < pInfo?.personal?.licenses?.length - 1
+                          ? "2mm"
+                          : "0"
+                      }`,
+                    }}
+                    key={`license-${index}`}
+                  >
+                    <div style={{flex: "1"}}>
+                      {entry?.licName} / {entry?.licLevel}
+                    </div>
+                    <div style={{wordBreak: "keep-all"}}>{entry?.licDate}</div>
+                    <div style={{flex: "1"}}>{entry?.licOrganization}</div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
+            gridTemplateColumns:
+              pInfo?.personal?.papers?.length > 0 &&
+              pInfo?.personal?.awards?.length > 0
+                ? "1fr 1fr"
+                : "1fr",
             gap: "2mm",
-            marginBottom: "5mm",
+            marginBottom:
+              pInfo?.personal?.papers?.length > 0 &&
+              pInfo?.personal?.awards?.length > 0
+                ? "5mm"
+                : "0",
           }}
         >
           {/* Publishing */}
-          <div>
-            <h2
-              style={{
-                color: "#172B7A",
-                textAlign: "center",
-                marginBottom: "3mm",
-              }}
-            >
-              Publishing
-            </h2>
-            <ul
-              style={{
-                height: "calc(100% - 2rem - 2mm)",
-                padding: "5mm",
-                backgroundColor: "white",
-                borderRadius: "2mm",
-                boxShadow: "0 3px 6px rgba(0, 0, 0, 0.1)",
-                color: "#172B7A",
-              }}
-            >
-              {pInfo?.personal?.papers?.map((entry, index) => (
-                <li
-                  style={{
-                    marginBottom: `${
-                      index < pInfo?.personal?.papers?.length - 1 ? "2mm" : "0"
-                    }`,
-                  }}
-                  key={`publishing-${index}`}
-                >
-                  <div>
-                    <b>{entry?.ppName}</b>
-                    <span>{entry?.ppNumber}</span>
-                  </div>
-                  <div>
-                    <span>{entry?.ppPublisher}</span>{" "}
-                    <span>{entry?.ppWriter}</span> <span>{entry?.ppDate}</span>
-                  </div>
-                  <div>{entry?.ppLink}</div>
-                  <div>{entry?.ppContents}</div>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {pInfo?.personal?.papers?.length > 0 && (
+            <div>
+              <h2
+                style={{
+                  color: "#172B7A",
+                  textAlign: "center",
+                  marginBottom: "3mm",
+                }}
+              >
+                Publishing
+              </h2>
+              <ul
+                style={{
+                  height: "calc(100% - 2rem - 2mm)",
+                  padding: "5mm",
+                  backgroundColor: "white",
+                  borderRadius: "2mm",
+                  boxShadow: "0 3px 6px rgba(0, 0, 0, 0.1)",
+                  color: "#172B7A",
+                }}
+              >
+                {pInfo?.personal?.papers?.map((entry, index) => (
+                  <li
+                    style={{
+                      marginBottom: `${
+                        index < pInfo?.personal?.papers?.length - 1
+                          ? "2mm"
+                          : "0"
+                      }`,
+                    }}
+                    key={`publishing-${index}`}
+                  >
+                    <div>
+                      <b>{entry?.ppName}</b>
+                      <span>{entry?.ppNumber}</span>
+                    </div>
+                    <div>
+                      <span>{entry?.ppPublisher}</span>{" "}
+                      <span>{entry?.ppWriter}</span>{" "}
+                      <span>{entry?.ppDate}</span>
+                    </div>
+                    <div>{entry?.ppLink}</div>
+                    <div>{entry?.ppContents}</div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* Awards */}
-          <div>
-            <h2
-              style={{
-                color: "#172B7A",
-                textAlign: "center",
-                marginBottom: "3mm",
-              }}
-            >
-              Awards
-            </h2>
-            <ul
-              style={{
-                height: "calc(100% - 2rem - 2mm)",
-                padding: "5mm",
-                backgroundColor: "white",
-                borderRadius: "2mm",
-                boxShadow: "0 3px 6px rgba(0, 0, 0, 0.1)",
-                color: "#172B7A",
-              }}
-            >
-              {pInfo?.personal?.awards?.map((entry, index) => (
-                <li
-                  style={{
-                    marginBottom: `${
-                      index < pInfo?.personal?.awards?.length - 1 ? "2mm" : "0"
-                    }`,
-                  }}
-                  key={`award-${index}`}
-                >
-                  <div>
-                    <b style={{flex: "1"}}>{entry?.awName}</b>{" "}
-                    <span style={{wordBreak: "keep-all"}}>{entry?.awDate}</span>
-                  </div>
-                  <div>
-                    <span style={{flex: "1"}}>{entry?.awOrganization}</span>
-                    {" / "}
-                    <span style={{flex: "1"}}>{entry?.awContents}</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {pInfo?.personal?.awards?.length > 0 && (
+            <div>
+              <h2
+                style={{
+                  color: "#172B7A",
+                  textAlign: "center",
+                  marginBottom: "3mm",
+                }}
+              >
+                Awards
+              </h2>
+              <ul
+                style={{
+                  height: "calc(100% - 2rem - 2mm)",
+                  padding: "5mm",
+                  backgroundColor: "white",
+                  borderRadius: "2mm",
+                  boxShadow: "0 3px 6px rgba(0, 0, 0, 0.1)",
+                  color: "#172B7A",
+                }}
+              >
+                {pInfo?.personal?.awards?.map((entry, index) => (
+                  <li
+                    style={{
+                      marginBottom: `${
+                        index < pInfo?.personal?.awards?.length - 1
+                          ? "2mm"
+                          : "0"
+                      }`,
+                    }}
+                    key={`award-${index}`}
+                  >
+                    <div>
+                      <b style={{flex: "1"}}>{entry?.awName}</b>{" "}
+                      <span style={{wordBreak: "keep-all"}}>
+                        {entry?.awDate}
+                      </span>
+                    </div>
+                    <div>
+                      <span style={{flex: "1"}}>{entry?.awOrganization}</span>
+                      {" / "}
+                      <span style={{flex: "1"}}>{entry?.awContents}</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
 
@@ -429,7 +466,7 @@ export default function Portfolio1({pInfo}) {
                     style={{
                       display: "inline-block",
                       padding: "1mm 2mm",
-                      fontSize: "8px",
+                      fontSize: "0.64em",
                       backgroundColor: COLORBAR[langIndex],
                       width: `${parseFloat(lang?.perc || 100) * 0.8}mm`,
                     }}
@@ -454,7 +491,7 @@ export default function Portfolio1({pInfo}) {
               <div style={{margin: "2mm auto"}}>
                 <MarkdownPreview
                   source={entry?.rpReadme}
-                  style={{fontSize: "13px"}}
+                  style={{fontSize: "1em"}}
                 />
               </div>
 

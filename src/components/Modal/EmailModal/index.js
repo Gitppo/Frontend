@@ -5,7 +5,7 @@ import {init} from "@emailjs/browser";
 import {sendEmailJS} from "../../../hooks/email";
 import {useUserContext} from "../../../hooks/useUserContext";
 
-export default function EmailModal({setShow}) {
+export default function EmailModal({setShow, style}) {
   const {user} = useUserContext();
 
   const [msg, setMsg] = useState("");
@@ -44,7 +44,7 @@ export default function EmailModal({setShow}) {
   }, []);
 
   return (
-    <div className={"ask-modal"}>
+    <div className={"ask-modal"} style={style}>
       <img src={PinRed} alt={""} className={"pin-img"} />
       <h2 className="beautiful-title" style={{color: "white"}}>
         문의
@@ -119,10 +119,13 @@ export default function EmailModal({setShow}) {
         >
           {progress === 0 ? (
             <>
-              <button className="round-btn" onClick={sendEmail}>
+              <button className="round-red-btn" onClick={sendEmail}>
                 제출
               </button>
-              <button className="round-btn" onClick={() => setShow(false)}>
+              <button
+                className="round-white-btn"
+                onClick={() => setShow(false)}
+              >
                 취소
               </button>
             </>

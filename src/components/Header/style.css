@@ -30,6 +30,58 @@ header .left > span:hover {
   color: white;
 }
 
+header .user {
+  position: relative;
+}
+
+.header-user-info {
+  position: absolute;
+  right: 0;
+  top: 2rem;
+
+  width: fit-content;
+  min-width: 200px;
+  padding: 0 0.5em;
+
+  font-size: 0.9rem;
+  font-family: font-regular;
+  white-space: nowrap;
+  word-break: keep-all;
+
+  /* border: 1px solid var(--dark-red); */
+  border: 1px solid gray;
+  border-radius: 0.5rem;
+  box-shadow: 5px 5px 0px rgb(0 0 0 / 16%);
+
+  color: black;
+  background-color: white;
+
+  transform-origin: right top;
+  transition: all 300ms;
+}
+.header-user-info > li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5em;
+
+  width: 100%;
+  padding: 0.5em 1em;
+
+  border-bottom: 1px dotted #a3a3a3;
+}
+.header-user-info .last,
+.header-user-info > li > .title {
+  font-size: 0.9em;
+  color: #707070;
+}
+.header-user-info .last {
+  border-bottom: none;
+}
+.header-user-info .last span:hover {
+  color: var(--dark-red);
+}
+
 @media screen and (max-width: 700px) {
   header .user {
     display: none;

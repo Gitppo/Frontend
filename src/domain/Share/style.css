@@ -6,5 +6,24 @@
 
   width: 100%;
   max-width: none !important;
+
+  padding: 0 !important;
+
   background-color: var(--light-blue2);
+}
+
+.share > * {
+  width: 100% !important;
+}
+.share > * > * > * {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.share .wmde-markdown h1,
+.share .wmde-markdown h2,
+.share .wmde-markdown h3,
+.share .wmde-markdown h4 {
+  font-size: 1em;
 }

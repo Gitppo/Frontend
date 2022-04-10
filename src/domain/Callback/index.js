@@ -15,7 +15,9 @@ export default function Callback() {
   const {setUser} = useUserContext();
 
   useEffect(() => {
+    console.log(location.pathname);
     const toURL = "/" + (location.pathname.substring(10) || "my-page");
+    console.log(toURL);
 
     doLogin(location.search)
       .then((r) => {
@@ -24,6 +26,8 @@ export default function Callback() {
         const user = {
           id: r?.id,
           githubUserName: r?.githubUserName,
+          name: r?.name,
+          loginDate: r?.loginDate,
         };
 
         if (!isValidUser(user)) {

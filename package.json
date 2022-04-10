@@ -3,7 +3,7 @@
   "description": "개발자들을 위한 포트폴리오 제작 서비스",
   "version": "0.1.0",
   "private": true,
-  "homepage": "gitppo.github.io/Frontend/",
+  "homepage": "https://gitppo.github.io/Frontend/",
   "dependencies": {
     "@emailjs/browser": "^3.4.0",
     "@fortawesome/fontawesome-svg-core": "^6.1.0",

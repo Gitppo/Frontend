@@ -53,7 +53,7 @@ export default function TitleInputModal({
         <div className="alert-msg">{alert}</div>
         <div className={"yn-modal-btn-wrapper"}>
           <button
-            className={"round-btn"}
+            className={"round-red-btn"}
             onClick={() => {
               if (text?.length === 0)
                 setAlert("포트폴리오 제목을 입력해주세요.");
