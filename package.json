@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "gitppo",
   "description": "개발자들을 위한 포트폴리오 제작 서비스",
   "version": "0.1.0",
@@ -23,32 +22,14 @@
     "react-scripts": "4.0.3",
     "react-select": "^5.2.2",
     "web-vitals": "^1.0.1"
-=======
-  "name": "hosting",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.1.1",
-    "@testing-library/user-event": "^13.5.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
->>>>>>> 90d2a8e2c191fc823749e93f0fda246ea8284423
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-<<<<<<< HEAD
     "eject": "react-scripsts eject",
     "postbuild": "cp build/index.html build/404.html",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
-=======
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
->>>>>>> 90d2a8e2c191fc823749e93f0fda246ea8284423
   },
   "eslintConfig": {
     "extends": [
@@ -67,11 +48,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-<<<<<<< HEAD
   },
   "devDependencies": {
     "prettier": "^2.4.1"
-=======
->>>>>>> 90d2a8e2c191fc823749e93f0fda246ea8284423
   }
 }
